@@ -16,6 +16,7 @@
 		426DD6AD166EB60E009788A8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 426DD6AB166EB60E009788A8 /* MainStoryboard.storyboard */; };
 		426DD6B0166EB60E009788A8 /* BBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 426DD6AF166EB60E009788A8 /* BBMainViewController.m */; };
 		426DD6B3166EB60E009788A8 /* BBFlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 426DD6B2166EB60E009788A8 /* BBFlipsideViewController.m */; };
+		426DD6BA166EB6AB009788A8 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426DD6B9166EB6AB009788A8 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,17 +24,18 @@
 		426DD699166EB60E009788A8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		426DD69B166EB60E009788A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		426DD69D166EB60E009788A8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		426DD6A1166EB60E009788A8 /* Bubble Beat-Info.plist */ = {isa = PBXFileReference; path = "Bubble Beat-Info.plist"; sourceTree = "<group>"; };
+		426DD6A1166EB60E009788A8 /* Bubble Beat-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Bubble Beat-Info.plist"; sourceTree = "<group>"; };
 		426DD6A3166EB60E009788A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		426DD6A5166EB60E009788A8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		426DD6A7166EB60E009788A8 /* Bubble Beat-Prefix.pch */ = {isa = PBXFileReference; path = "Bubble Beat-Prefix.pch"; sourceTree = "<group>"; };
-		426DD6A8166EB60E009788A8 /* BBAppDelegate.h */ = {isa = PBXFileReference; path = BBAppDelegate.h; sourceTree = "<group>"; };
+		426DD6A7166EB60E009788A8 /* Bubble Beat-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bubble Beat-Prefix.pch"; sourceTree = "<group>"; };
+		426DD6A8166EB60E009788A8 /* BBAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBAppDelegate.h; sourceTree = "<group>"; };
 		426DD6A9166EB60E009788A8 /* BBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BBAppDelegate.m; sourceTree = "<group>"; };
 		426DD6AC166EB60E009788A8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		426DD6AE166EB60E009788A8 /* BBMainViewController.h */ = {isa = PBXFileReference; path = BBMainViewController.h; sourceTree = "<group>"; };
+		426DD6AE166EB60E009788A8 /* BBMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBMainViewController.h; sourceTree = "<group>"; };
 		426DD6AF166EB60E009788A8 /* BBMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BBMainViewController.m; sourceTree = "<group>"; };
-		426DD6B1166EB60E009788A8 /* BBFlipsideViewController.h */ = {isa = PBXFileReference; path = BBFlipsideViewController.h; sourceTree = "<group>"; };
+		426DD6B1166EB60E009788A8 /* BBFlipsideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBFlipsideViewController.h; sourceTree = "<group>"; };
 		426DD6B2166EB60E009788A8 /* BBFlipsideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BBFlipsideViewController.m; sourceTree = "<group>"; };
+		426DD6B9166EB6AB009788A8 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				426DD6BA166EB6AB009788A8 /* Accelerate.framework in Frameworks */,
 				426DD69A166EB60E009788A8 /* UIKit.framework in Frameworks */,
 				426DD69C166EB60E009788A8 /* Foundation.framework in Frameworks */,
 				426DD69E166EB60E009788A8 /* CoreGraphics.framework in Frameworks */,
@@ -70,6 +73,7 @@
 		426DD698166EB60E009788A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				426DD6B9166EB6AB009788A8 /* Accelerate.framework */,
 				426DD699166EB60E009788A8 /* UIKit.framework */,
 				426DD69B166EB60E009788A8 /* Foundation.framework */,
 				426DD69D166EB60E009788A8 /* CoreGraphics.framework */,
@@ -131,7 +135,7 @@
 			attributes = {
 				CLASSPREFIX = BB;
 				LastUpgradeCheck = 0430;
-				ORGANIZATIONNAME = "Georgia Institute of Technology";
+				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 426DD68F166EB60D009788A8 /* Build configuration list for PBXProject "Bubble Beat" */;
 			compatibilityVersion = "Xcode 3.2";
