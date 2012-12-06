@@ -6,8 +6,18 @@
 //  Copyright (c) 2012 Georgia Institute of Technology. All rights reserved.
 //
 
-#import "BBFlipsideViewController.h"
 
-@interface BBMainViewController : UIViewController <BBFlipsideViewControllerDelegate>
+@interface BBMainViewController : UIViewController{
+    
+    IBOutlet UIView *scrollView;
+    
+}
+    
+@property (nonatomic,retain) UIView *optionsView;
+@property (nonatomic,retain) UIView *optionsScrollView;
+    
+
+-(IBAction) optionsButtonPressed;
+-(IBAction) backButtonPressed;
 
 @end
