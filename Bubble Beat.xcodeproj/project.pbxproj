@@ -16,6 +16,7 @@
 		426DD6AD166EB60E009788A8 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 426DD6AB166EB60E009788A8 /* MainStoryboard.storyboard */; };
 		426DD6B0166EB60E009788A8 /* BBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 426DD6AF166EB60E009788A8 /* BBMainViewController.m */; };
 		426DD6BA166EB6AB009788A8 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426DD6B9166EB6AB009788A8 /* Accelerate.framework */; };
+		429F29B716725169005E0000 /* fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 429F29B416725169005E0000 /* fft.c */; };
 		609E1279166FF30200BF1C58 /* OptionsScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609E1278166FF30200BF1C58 /* OptionsScrollView.xib */; };
 		609E12831670603500BF1C58 /* OptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609E12821670603500BF1C58 /* OptionsView.xib */; };
 		609E12851670607E00BF1C58 /* bubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 609E12841670607E00BF1C58 /* bubble2.png */; };
@@ -37,6 +38,10 @@
 		426DD6AE166EB60E009788A8 /* BBMainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BBMainViewController.h; sourceTree = "<group>"; };
 		426DD6AF166EB60E009788A8 /* BBMainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BBMainViewController.m; sourceTree = "<group>"; };
 		426DD6B9166EB6AB009788A8 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		429F29B316725169005E0000 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		429F29B416725169005E0000 /* fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fft.c; sourceTree = "<group>"; };
+		429F29B516725169005E0000 /* fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fft.h; sourceTree = "<group>"; };
+		429F29B616725169005E0000 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		609E1278166FF30200BF1C58 /* OptionsScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsScrollView.xib; sourceTree = "<group>"; };
 		609E12821670603500BF1C58 /* OptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsView.xib; sourceTree = "<group>"; };
 		609E12841670607E00BF1C58 /* bubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble2.png; path = Graphics/bubble2.png; sourceTree = "<group>"; };
@@ -89,6 +94,7 @@
 		426DD69F166EB60E009788A8 /* Bubble Beat */ = {
 			isa = PBXGroup;
 			children = (
+				429F29B216725169005E0000 /* DSPLib */,
 				426DD6A8166EB60E009788A8 /* BBAppDelegate.h */,
 				426DD6A9166EB60E009788A8 /* BBAppDelegate.m */,
 				426DD6AB166EB60E009788A8 /* MainStoryboard.storyboard */,
@@ -111,6 +117,17 @@
 				426DD6A7166EB60E009788A8 /* Bubble Beat-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		429F29B216725169005E0000 /* DSPLib */ = {
+			isa = PBXGroup;
+			children = (
+				429F29B316725169005E0000 /* constants.h */,
+				429F29B416725169005E0000 /* fft.c */,
+				429F29B516725169005E0000 /* fft.h */,
+				429F29B616725169005E0000 /* util.h */,
+			);
+			path = DSPLib;
 			sourceTree = "<group>";
 		};
 		609E126B166FB39200BF1C58 /* Graphics */ = {
@@ -193,6 +210,7 @@
 				426DD6A6166EB60E009788A8 /* main.m in Sources */,
 				426DD6AA166EB60E009788A8 /* BBAppDelegate.m in Sources */,
 				426DD6B0166EB60E009788A8 /* BBMainViewController.m in Sources */,
+				429F29B716725169005E0000 /* fft.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

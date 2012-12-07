@@ -13,8 +13,8 @@
     
 }
     
-@property (nonatomic,retain) UIView *optionsView;
-@property (nonatomic,retain) UIView *optionsScrollView;
+@property (nonatomic, strong) UIView *optionsView;
+@property (nonatomic, strong) UIView *optionsScrollView;
     
 
 -(IBAction) optionsButtonPressed;
