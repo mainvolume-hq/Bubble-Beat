@@ -20,6 +20,7 @@
 		609E12831670603500BF1C58 /* OptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609E12821670603500BF1C58 /* OptionsView.xib */; };
 		609E12851670607E00BF1C58 /* bubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 609E12841670607E00BF1C58 /* bubble2.png */; };
 		609E12871670609C00BF1C58 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 609E12861670609C00BF1C58 /* Default-568h@2x.png */; };
+		609E1315167265DF00BF1C58 /* fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 609E1312167265DF00BF1C58 /* fft.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,10 @@
 		609E12821670603500BF1C58 /* OptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsView.xib; sourceTree = "<group>"; };
 		609E12841670607E00BF1C58 /* bubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble2.png; path = Graphics/bubble2.png; sourceTree = "<group>"; };
 		609E12861670609C00BF1C58 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Graphics/Default-568h@2x.png"; sourceTree = "<group>"; };
+		609E1311167265DF00BF1C58 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		609E1312167265DF00BF1C58 /* fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fft.c; sourceTree = "<group>"; };
+		609E1313167265DF00BF1C58 /* fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fft.h; sourceTree = "<group>"; };
+		609E1314167265DF00BF1C58 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +94,7 @@
 		426DD69F166EB60E009788A8 /* Bubble Beat */ = {
 			isa = PBXGroup;
 			children = (
+				609E1310167265DF00BF1C58 /* DSPLib */,
 				426DD6A8166EB60E009788A8 /* BBAppDelegate.h */,
 				426DD6A9166EB60E009788A8 /* BBAppDelegate.m */,
 				426DD6AB166EB60E009788A8 /* MainStoryboard.storyboard */,
@@ -120,6 +126,17 @@
 				609E12841670607E00BF1C58 /* bubble2.png */,
 			);
 			name = Graphics;
+			sourceTree = "<group>";
+		};
+		609E1310167265DF00BF1C58 /* DSPLib */ = {
+			isa = PBXGroup;
+			children = (
+				609E1311167265DF00BF1C58 /* constants.h */,
+				609E1312167265DF00BF1C58 /* fft.c */,
+				609E1313167265DF00BF1C58 /* fft.h */,
+				609E1314167265DF00BF1C58 /* util.h */,
+			);
+			path = DSPLib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +210,7 @@
 				426DD6A6166EB60E009788A8 /* main.m in Sources */,
 				426DD6AA166EB60E009788A8 /* BBAppDelegate.m in Sources */,
 				426DD6B0166EB60E009788A8 /* BBMainViewController.m in Sources */,
+				609E1315167265DF00BF1C58 /* fft.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
