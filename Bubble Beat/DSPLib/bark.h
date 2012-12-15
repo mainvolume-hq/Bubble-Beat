@@ -44,7 +44,11 @@ typedef struct t_bark
 
 
 BARK* newBark(int windowSize, int sampleRate);
+void freeBark(BARK* bark);
+
 void newBarkBands(BARK* bark);
+void freeBarkBands(BARK* bark);
+
 void createBarkFilterbank(BARK* bark);
 void multiplyBarkFilterbank(BARK* bark, float* analysis);
 

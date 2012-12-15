@@ -8,6 +8,8 @@
 
 #include "bark.h"
 
+#pragma mark - Bark Memory Management - 
+
 BARK* newBark(int windowSize, int sampleRate)
 {
     BARK* bark = (BARK *)malloc(sizeof(BARK));
@@ -23,6 +25,14 @@ BARK* newBark(int windowSize, int sampleRate)
     return bark;
 }
 
+void freeBark(BARK* bark)
+{
+    freeBarkBands(bark);
+    free(bark);
+}
+
+#pragma mark - Bark Band Memory Management -
+
 void newBarkBands(BARK* bark)
 {
     for (int i = 0; i < NUM_BARK_FILTER_BUFS; i++)
@@ -34,6 +44,14 @@ void newBarkBands(BARK* bark)
     }
     
 }
+
+void freeBarkBands(BARK* bark)
+{
+    for (int i = 0; i < NUM_BARK_FILTER_BUFS; i++)
+        free(bark->filterBands[i].band);
+}
+
+#pragma mark - Filterbank Functions - 
 
 void createFilterbank(BARK* bark)
 {
