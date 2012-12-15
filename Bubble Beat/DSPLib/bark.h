@@ -9,9 +9,13 @@
 //  with the bark frequency bounds and filter banks
 //
 //
-
 #ifndef DSPLIB_BARK
 #define DSPLIB_BARK
+
+#include <stdlib.h>
+#include <assert.h>
+#include "constants.h"
+#include "util.h"
 
 #define NUM_BARKS 24
 #define NUM_BARK_FILTER_BUFS 2
@@ -27,16 +31,21 @@ typedef struct t_bark_bin
     
 } BARK_BIN;
 
-typedef struct t_bark;
+
+typedef struct t_bark
 {
     BARK_BIN  filterBands[2];
     float*    filteredOdd;
     float*    filteredEven;
+    
+    int       windowSize;
+    int       sampleRate;
 } BARK;
 
 
-void newBarkBands(void);
-void createBarkFilterbank(void);
-void multiplyBarkFilterbank(void);
+BARK* newBark(int windowSize, int sampleRate);
+void newBarkBands(BARK* bark);
+void createBarkFilterbank(BARK* bark);
+void multiplyBarkFilterbank(BARK* bark, float* analysis);
 
 #endif
