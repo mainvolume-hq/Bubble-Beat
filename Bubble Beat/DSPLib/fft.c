@@ -29,7 +29,8 @@ FFT* newFFT(int size)
     
     // create fft setup
     vDSP_Length logTwo = log2f(fft->size);
-    fft->fftSetup = create_fftsetup(logTwo, FFT_RADIX2);
+    fft->fftSetup = vDSP_create_fftsetup(logTwo, FFT_RADIX2);
+    
     if (fft->fftSetup == 0)
         return NULL;
 
@@ -41,7 +42,7 @@ FFT* newFFT(int size)
 void freeFFT(FFT* fft)
 {
 	// destroy the fft setup object
-	destroy_fftsetup(fft->fftSetup);	
+	vDSP_destroy_fftsetup(fft->fftSetup);
 	// if the window exists, destroy it
 	if (fft->window != NULL)
 		free(fft->window);
@@ -79,41 +80,65 @@ void freeFFTFrame(FFT_FRAME* frame)
 
 #pragma mark - Perform Foward / Reverse FFT -
 
-void computeFFT(FFT_FRAME* frame, float* audioBuffer)
+void fft(FFT_FRAME* frame, float* audioBuffer)
 {
-	// Do some data packing stuff
 	FFT* fft = frame->fft;
-    ctoz((COMPLEX*)audioBuffer, 2, &frame->buffer, 1, fft->sizeOverTwo);
-    
+
     // This applies the windowing
     if (fft->window != NULL)
-    	vmul(audioBuffer, 1, fft->window, 1, audioBuffer, 1, fft->size);
+    	vDSP_vmul(audioBuffer, 1, fft->window, 1, audioBuffer, 1, fft->size);
+    
+    // Do some data packing stuff
+    vDSP_ctoz((COMPLEX*)audioBuffer, 2, &frame->buffer, 1, fft->sizeOverTwo);
     
     // Actually perform the fft
-    fft_zrip(fft->fftSetup, &frame->buffer, 1, fft->logTwo, FFT_FORWARD);
+    vDSP_fft_zrip(fft->fftSetup, &frame->buffer, 1, fft->logTwo, FFT_FORWARD);
     
     // Do some scaling
-    vsmul(frame->buffer.realp, 1, &fft->normalize, frame->buffer.realp, 1, fft->sizeOverTwo);
-    vsmul(frame->buffer.imagp, 1, &fft->normalize, frame->buffer.imagp, 1, fft->sizeOverTwo);
+    vDSP_vsmul(frame->buffer.realp, 1, &fft->normalize, frame->buffer.realp, 1, fft->sizeOverTwo);
+    vDSP_vsmul(frame->buffer.imagp, 1, &fft->normalize, frame->buffer.imagp, 1, fft->sizeOverTwo);
     
     // Zero out DC offset
     frame->buffer.imagp[0] = 0.0;
 }
 
-void inverseFFT(FFT_FRAME* frame, float* outputBuffer)
+void fftIp(FFT* fftObject, float* audioBuffer)
+{
+    // Creating pointer of COMPLEX_SPLIT to use in calculations (points to same data as audioBuffer)
+    COMPLEX_SPLIT* fftBuffer = (COMPLEX_SPLIT*)audioBuffer;
+    
+    // Apply windowing
+    if (fftObject->window != NULL)
+        vDSP_vmul(audioBuffer, 1, fftObject->window, 1, audioBuffer, 1, fftObject->size);
+    
+    // This seems correct-ish TODO: check casting
+    vDSP_ctoz((COMPLEX*)audioBuffer, 2, fftBuffer, 1, fftObject->sizeOverTwo);
+    
+    // Perform fft
+    vDSP_fft_zrip(fftObject->fftSetup, fftBuffer, 1, fftObject->logTwo, FFT_FORWARD);
+    
+    // Do scaling
+    vDSP_vsmul(fftBuffer->realp, 1, &fftObject->normalize, fftBuffer->realp, 1, fftObject->sizeOverTwo);
+    vDSP_vsmul(fftBuffer->imagp, 1, &fftObject->normalize, fftBuffer->imagp, 1, fftObject->sizeOverTwo);
+    
+    // zero out DC offset
+    fftBuffer->imagp[0] = 0.0;
+}
+
+void ifft(FFT_FRAME* frame, float* outputBuffer)
 {
     // get pointer to fft object
     FFT* fft = frame->fft;
 
     // perform in-place fft inverse
-    fft_zrip(fft->fftSetup, &frame->buffer, 1, fft->logTwo, FFT_INVERSE);
+    vDSP_fft_zrip(fft->fftSetup, &frame->buffer, 1, fft->logTwo, FFT_INVERSE);
     
     // The output signal is now in a split real form.  Use the  function vDSP_ztoc to get a split real vector. 
-    ztoc(&frame->buffer, 1, (COMPLEX *)outputBuffer, 2, fft->sizeOverTwo);
+    vDSP_ztoc(&frame->buffer, 1, (COMPLEX *)outputBuffer, 2, fft->sizeOverTwo);
     
     // This applies the windowing
     if (fft->window != NULL)
-    	vmul(outputBuffer, 1, fft->window, 1, outputBuffer, 1, fft->size);
+    	vDSP_vmul(outputBuffer, 1, fft->window, 1, outputBuffer, 1, fft->size);
 }
 
 #pragma mark - Windowing -

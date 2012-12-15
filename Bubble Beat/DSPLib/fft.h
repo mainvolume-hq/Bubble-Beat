@@ -16,6 +16,7 @@
 #include "constants.h"
 #include "util.h"
 #include <assert.h>
+#include <stdlib.h>
 
 #import <Accelerate/Accelerate.h>
 
@@ -48,8 +49,9 @@ FFT_FRAME* newFFTFrame(FFT* fft);
 void freeFFTFrame(FFT_FRAME* frame);
 
 // FFT computation functions
-void computeFFT(FFT_FRAME* fftFrame, float* audioBuffer);
-void inverseFFT(FFT_FRAME* fftFrame, float* outputBuffer);
+void fft(FFT_FRAME* fftFrame, float* audioBuffer);       // Out of place fft
+void fftIp(FFT* fftObject, float* audioBuffer);                          // In place fft (i.e. just replaces audiobuffer with fft contents
+void ifft(FFT_FRAME* fftFrame, float* outputBuffer);
 
 // Windowing
 void createWindow(FFT* fft, int windowType);

@@ -11,8 +11,8 @@
 //
 
 
-#ifndef UTIL
-#define UTIL
+#ifndef DSPLIB_UTIL
+#define DSPLIB_UTIL
 
 #define POWER_OF_TWO(x) ((x != 0) && ((x & (~x + 1)) == x))
 

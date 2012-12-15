@@ -10,8 +10,8 @@
 //	
 //
 
-#ifndef CONSTANTS
-#define CONSTANTS
+#ifndef DSPLIB_CONSTANTS
+#define DSPLIB_CONSTANTS
 
 #define PI 3.14159265359
 #define TWO_PI (2 * PI)
