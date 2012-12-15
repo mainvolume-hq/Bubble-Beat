@@ -16,4 +16,6 @@
 
 #define POWER_OF_TWO(x) ((x != 0) && ((x & (~x + 1)) == x))
 
+float halfwaveRectify(float value);
+
 #endif

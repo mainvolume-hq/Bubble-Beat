@@ -17,6 +17,7 @@
 		426DD6B0166EB60E009788A8 /* BBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 426DD6AF166EB60E009788A8 /* BBMainViewController.m */; };
 		426DD6BA166EB6AB009788A8 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426DD6B9166EB6AB009788A8 /* Accelerate.framework */; };
 		426EE343167CC54F00197912 /* bark.c in Sources */ = {isa = PBXBuildFile; fileRef = 426EE342167CC54F00197912 /* bark.c */; };
+		426EE345167CC74200197912 /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 426EE344167CC74200197912 /* util.c */; };
 		609E1279166FF30200BF1C58 /* OptionsScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609E1278166FF30200BF1C58 /* OptionsScrollView.xib */; };
 		609E12831670603500BF1C58 /* OptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609E12821670603500BF1C58 /* OptionsView.xib */; };
 		609E12851670607E00BF1C58 /* bubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 609E12841670607E00BF1C58 /* bubble2.png */; };
@@ -41,6 +42,7 @@
 		426DD6B9166EB6AB009788A8 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		426EE340167CC49300197912 /* bark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bark.h; sourceTree = "<group>"; };
 		426EE342167CC54F00197912 /* bark.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bark.c; sourceTree = "<group>"; };
+		426EE344167CC74200197912 /* util.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = util.c; sourceTree = "<group>"; };
 		609E1278166FF30200BF1C58 /* OptionsScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsScrollView.xib; sourceTree = "<group>"; };
 		609E12821670603500BF1C58 /* OptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsView.xib; sourceTree = "<group>"; };
 		609E12841670607E00BF1C58 /* bubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble2.png; path = Graphics/bubble2.png; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				609E1312167265DF00BF1C58 /* fft.c */,
 				609E1313167265DF00BF1C58 /* fft.h */,
 				609E1314167265DF00BF1C58 /* util.h */,
+				426EE344167CC74200197912 /* util.c */,
 				426EE340167CC49300197912 /* bark.h */,
 				426EE342167CC54F00197912 /* bark.c */,
 			);
@@ -217,6 +220,7 @@
 				426DD6B0166EB60E009788A8 /* BBMainViewController.m in Sources */,
 				609E1315167265DF00BF1C58 /* fft.c in Sources */,
 				426EE343167CC54F00197912 /* bark.c in Sources */,
+				426EE345167CC74200197912 /* util.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
