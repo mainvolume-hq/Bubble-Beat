@@ -26,6 +26,12 @@ static OSStatus renderCallback(void *inRefCon,
                                AudioBufferList *ioData)
 {
     BBAudioModel* model = (__bridge BBAudioModel*)inRefCon;
+    float* buffer = NULL;
+    
+    if (model->inputType == NO)
+        buffer = model->buffer;
+    //else
+        //buffer = model->audioInputBuffer;
     
     // Loop through each audio channel
     for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
@@ -161,6 +167,16 @@ static OSStatus renderCallback(void *inRefCon,
     NSLog(@"AudioSession === CurrentHardwareIOBufferDuration: %3.2fms", audioSessionProperty32 * 1000.0f);
     NSLog(@"AudioSession === block size: %i", blockSizeCheck);
     
+}
+
+- (void)setMicrophoneInput
+{
+    inputType = YES;
+}
+
+- (void)setMusicInput
+{
+    inputType = NO;
 }
 
 @end
