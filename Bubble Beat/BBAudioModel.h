@@ -17,12 +17,19 @@
     
     int       blockSize;
     int       sampleRate;
+    
+    float*    buffer;
+    BOOL      inputType;                // YES = Microphone, NO = Music
 }
 
 + (BBAudioModel *)sharedAudioModel;
 - (void)setupAudioUnit;
 - (void)setupAudioSession;
+- (void)setMicrophoneInput;
+- (void)setMusicInput;
 
-// TODO: make properties for set-able values (blocksize, sr, etc...)
+@property int blockSize;
+@property int sampleRate;
+@property float* buffer;
 
 @end

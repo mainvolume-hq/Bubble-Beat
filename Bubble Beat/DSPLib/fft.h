@@ -50,7 +50,7 @@ void freeFFTFrame(FFT_FRAME* frame);
 
 // FFT computation functions
 void fft(FFT_FRAME* fftFrame, float* audioBuffer);       // Out of place fft
-void fftIp(FFT* fftObject, float* audioBuffer);                          // In place fft (i.e. just replaces audiobuffer with fft contents
+void fftIp(FFT* fftObject, float* audioBuffer);          // In place fft (i.e. just replaces audiobuffer with fft contents
 void ifft(FFT_FRAME* fftFrame, float* outputBuffer);
 
 // Windowing

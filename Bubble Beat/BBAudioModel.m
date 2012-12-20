@@ -9,8 +9,13 @@
 //  all the audio processing in the application. 
 
 #import "BBAudioModel.h"
+#define NUM_SECONDS 8           // This is 2 * number of seconds in buffer 8 = 4 seconds of stereo audio
 
 @implementation BBAudioModel
+
+@synthesize blockSize;
+@synthesize sampleRate;
+@synthesize buffer;
 
 #pragma mark - Audio Render Callback -
 static OSStatus renderCallback(void *inRefCon,
@@ -20,6 +25,21 @@ static OSStatus renderCallback(void *inRefCon,
                                UInt32 inNumberFrames,
                                AudioBufferList *ioData)
 {
+    BBAudioModel* model = (__bridge BBAudioModel*)inRefCon;
+    
+    // Loop through each audio channel
+    for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
+    {
+        // Get reference to buffer for channel we're on
+        Float32* output = (Float32 *)ioData->mBuffers[channel].mData;
+        
+        // Loop through the blocksize
+        for (int frame = 0; frame < inNumberFrames; frame++)
+        {
+            output[frame] = 0.0;
+        }
+    }
+    
     return noErr;
 }
 
@@ -43,11 +63,20 @@ static OSStatus renderCallback(void *inRefCon,
     
     if (self)
     {
-
+        sampleRate = 44100;
+        buffer = (float *)malloc(NUM_SECONDS * sampleRate * sizeof(float));
     }
     
     return self;
 }
+
+
+#pragma mark - Audio Model Dealloc -
+- (void)dealloc
+{
+    free(buffer);
+}
+
 
 #pragma mark - Audio Unit Setup -
 

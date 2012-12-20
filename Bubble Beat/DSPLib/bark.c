@@ -101,3 +101,5 @@ void multiplyBarkFilterbank(BARK* bark, float* analysis)
         analysis[i] = bark->filteredOdd[i] + bark->filteredEven[i];
     }
 }
+
+

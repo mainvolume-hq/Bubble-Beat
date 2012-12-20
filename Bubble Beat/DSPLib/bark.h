@@ -28,7 +28,6 @@ float bandWeightings[24] = { 0.7762, 0.6854, 0.6647, 0.6373, 0.6255, 0.6170, 0.6
 typedef struct t_bark_bin
 {
     float*  band;
-    
 } BARK_BIN;
 
 
