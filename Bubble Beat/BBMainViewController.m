@@ -7,6 +7,7 @@
 //
 
 #import "BBMainViewController.h"
+#import "BBGLKitViewController.h"
 
 @interface BBMainViewController ()
 
@@ -14,7 +15,7 @@
 
 
 @implementation BBMainViewController
-@synthesize optionsView,optionsScrollView;
+@synthesize optionsView,optionsScrollView,bubbleFactory;
 
 
 - (void)viewDidLoad
@@ -23,6 +24,11 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     [self setUpOptionsView];
+    
+    bubbleFactory = [[BBGLKitViewController alloc] initWithNibName:@"BBGLKitView" bundle:[NSBundle mainBundle]];
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    [bubbleFactory.view setFrame:rect];
+    [self.view insertSubview:bubbleFactory.view atIndex:0];
     
 }
 

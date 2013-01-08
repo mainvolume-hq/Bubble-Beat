@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Georgia Institute of Technology. All rights reserved.
 //
 
+#import "BBGLKitViewController.h"
 
 @interface BBMainViewController : UIViewController{
     
@@ -15,7 +16,7 @@
     
 @property (nonatomic,strong) UIView *optionsView;
 @property (nonatomic,strong) UIView *optionsScrollView;
-    
+@property (nonatomic,strong) BBGLKitViewController *bubbleFactory;
 
 -(IBAction) optionsButtonPressed;
 -(IBAction) backButtonPressed;

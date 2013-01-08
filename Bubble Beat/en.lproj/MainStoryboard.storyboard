@@ -8,12 +8,12 @@
         <scene sceneID="5">
             <objects>
                 <viewController id="2" customClass="BBMainViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="bottomRight" id="3">
+                    <view key="view" opaque="NO" contentMode="bottomRight" id="3">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="bubble2.png" id="Fsz-jS-LFj">
-                                <rect key="frame" x="258" y="85" width="223" height="236"/>
+                                <rect key="frame" x="257" y="84" width="223" height="236"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" heightSizable="YES"/>
                             </imageView>
                             <button opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.20000000000000015" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoDark" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="10">
@@ -32,7 +32,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.98179794239505025" blue="0.79274585801116171" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.95448022959183676" green="0.90812194855545825" blue="0.79560461157663054" alpha="1" colorSpace="calibratedRGB"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
