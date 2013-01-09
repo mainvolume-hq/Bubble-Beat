@@ -179,15 +179,20 @@
         {
             [optionsView setHidden:NO];
             [UIView animateWithDuration: 1.0
-                             animations:^{[optionsView setAlpha:1.0];}
-                             completion:^(BOOL finished){;}];
+                             animations:^{[optionsView setAlpha:1.0];
+                                 [optionsButton setAlpha:0.0];}
+                             completion:^(BOOL finished){
+                                 ;}];
             break;
         }
         case FALSE: //Fade Out
         {
             [UIView animateWithDuration: 1.0
-                             animations:^{[optionsView setAlpha:0.0];}
-                             completion:^(BOOL finished){[optionsView setHidden:YES];}];
+                             animations:^{[optionsView setAlpha:0.0];
+                                 [optionsButton setAlpha:0.3];}
+                             completion:^(BOOL finished){[optionsView setHidden:YES];
+                                 ;
+                             }];
             break;
         }
     }

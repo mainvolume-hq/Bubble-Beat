@@ -12,7 +12,7 @@
 @interface BBMainViewController : UIViewController{
     
     IBOutlet UIView *scrollView;
-    
+    IBOutlet UIButton *optionsButton;
     BBAudioModel* audioModel;
 }
     
