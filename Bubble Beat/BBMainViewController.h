@@ -7,11 +7,13 @@
 //
 
 #import "BBGLKitViewController.h"
+#import "BBAudioModel.h"
 
 @interface BBMainViewController : UIViewController{
     
     IBOutlet UIView *scrollView;
     
+    BBAudioModel* audioModel;
 }
     
 @property (nonatomic,strong) UIView *optionsView;
