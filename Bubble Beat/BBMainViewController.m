@@ -7,6 +7,7 @@
 //
 
 #import "BBMainViewController.h"
+#import "BBAudioModel.h"
 
 @interface BBMainViewController ()
 
@@ -28,6 +29,13 @@
     CGRect rect = [[UIScreen mainScreen] bounds];
     [bubbleFactory.view setFrame:rect];
     [self.view insertSubview:bubbleFactory.view atIndex:0];
+    
+    
+    audioModel = [[BBAudioModel alloc] init];
+    [audioModel setupAudioSession];
+    [audioModel setupAudioUnit];
+    [audioModel startAudioUnit];
+    [audioModel startAudioSession];
     
 }
 

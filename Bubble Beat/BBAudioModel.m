@@ -26,14 +26,11 @@ static OSStatus renderCallback(void *inRefCon,
                                AudioBufferList *ioData)
 {
     BBAudioModel* model = (__bridge BBAudioModel*)inRefCon;
-    float* buffer = NULL;
+    AudioUnitRender(model->bbUnit, ioActionFlags, inTimeStamp, 1, inNumberFrames, ioData);
     
-    if (model->inputType == NO)
-        buffer = model->buffer;
-    //else
-        //buffer = model->audioInputBuffer;
+    // Left channel = ioData->mBuffers[0];
+    // Right channel = ioData->mBuffers[1];
     
-    // Loop through each audio channel
     for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
     {
         // Get reference to buffer for channel we're on
@@ -42,7 +39,7 @@ static OSStatus renderCallback(void *inRefCon,
         // Loop through the blocksize
         for (int frame = 0; frame < inNumberFrames; frame++)
         {
-            output[frame] = 0.0;
+
         }
     }
     
@@ -70,6 +67,7 @@ static OSStatus renderCallback(void *inRefCon,
     if (self)
     {
         sampleRate = 44100;
+        blockSize = 512;
         buffer = (float *)malloc(NUM_SECONDS * sampleRate * sizeof(float));
     }
     
@@ -108,6 +106,11 @@ static OSStatus renderCallback(void *inRefCon,
     err = AudioUnitSetProperty(bbUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Output, 0, &flag, sizeof(flag));
     NSAssert1(err == noErr, @"Error setting output IO", err);
     
+    // Enable IO for input / recording
+    UInt32 enableInput = 1;
+    AudioUnitElement inputBus = 1;
+    AudioUnitSetProperty(bbUnit, kAudioOutputUnitProperty_EnableIO, kAudioUnitScope_Input, inputBus, &enableInput, sizeof(enableInput));
+    
     // set format to 32 bit, single channel, floating point, linear PCM
     const int fourBytesPerFloat = 4;
     const int eightBitsPerByte = 8;
@@ -119,10 +122,14 @@ static OSStatus renderCallback(void *inRefCon,
     streamFormat.mBytesPerPacket =   fourBytesPerFloat;
     streamFormat.mFramesPerPacket =  1;
     streamFormat.mBytesPerFrame =    fourBytesPerFloat;
-    streamFormat.mChannelsPerFrame = 1;
+    streamFormat.mChannelsPerFrame = 2;
     streamFormat.mBitsPerChannel =   fourBytesPerFloat * eightBitsPerByte;
     
+    // set format for output (bus 0)
     err = AudioUnitSetProperty(bbUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &streamFormat, sizeof(AudioStreamBasicDescription));
+    
+    // set format for input (bus 1) 
+    err = AudioUnitSetProperty(bbUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &streamFormat, sizeof(AudioStreamBasicDescription));
     NSAssert1(err == noErr, @"Error setting stream format: %hd", err);
     
     // Output
@@ -135,13 +142,17 @@ static OSStatus renderCallback(void *inRefCon,
     err = AudioUnitSetProperty(bbUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Global, 0, &input, sizeof(input));
     NSAssert1(err == noErr, @"Error setting callback: %hd", err);
     
+    // Input
+    // Setup audio input handling function
+    // AUInputSample
+    
 }
 
 - (void)setupAudioSession
 {
     OSStatus status;
     Float32 bufferDuration = (blockSize + 0.5) / sampleRate;           // add 0.5 to blockSize, need to so bufferDuration is correct value
-    UInt32 category = kAudioSessionCategory_MediaPlayback;
+    UInt32 category = kAudioSessionCategory_PlayAndRecord;
     
     status = AudioSessionInitialize(NULL, NULL, NULL, (__bridge void *)self);
     status = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
@@ -177,6 +188,21 @@ static OSStatus renderCallback(void *inRefCon,
 - (void)setMusicInput
 {
     inputType = NO;
+}
+
+- (void)startAudioSession
+{
+    AudioSessionSetActive(true);
+    
+    // Start playback
+    OSErr err = AudioOutputUnitStart(bbUnit);
+    NSAssert1(err == noErr, @"Error starting unit: %hd", err);
+}
+
+- (void)startAudioUnit
+{
+    OSErr err = AudioUnitInitialize(bbUnit);
+    NSAssert1(err == noErr, @"Error initializing unit: %hd", err);
 }
 
 @end

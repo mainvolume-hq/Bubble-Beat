@@ -24,7 +24,11 @@
 
 + (BBAudioModel *)sharedAudioModel;
 - (void)setupAudioUnit;
+- (void)startAudioUnit;
+
 - (void)setupAudioSession;
+- (void)startAudioSession;
+
 - (void)setMicrophoneInput;
 - (void)setMusicInput;
 
