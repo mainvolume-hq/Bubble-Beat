@@ -24,6 +24,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [self.view setFrame: super.view.frame];
     }
     return self;
 }
@@ -42,23 +43,46 @@
     view.drawableMultisample = GLKViewDrawableMultisample4X;
     view.multipleTouchEnabled = YES;
     
-    alphaDecay = 0.005;
-    radiusSwell = 0.5;
+    alphaDecay = 0.008;
+    radiusSwell = 0.75;
     bubbles = [[NSMutableArray alloc]init];
-    [self makeBubbleWithSize:20];
+    [self.view setFrame:[[UIScreen mainScreen] bounds]];
+    
+    backgroundColor = arc4random_uniform(1000)/1000.0f;
+    backgroundDirection = TRUE;
+
 }
 
 -(void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
-    glClearColor(0.1, 0.5, 0.5, 1);
+    
+    [self updateBackground];
     glClear(GL_COLOR_BUFFER_BIT);
     
     [self updateBubbles];
+
  
 }
 
 -(void)glkViewControllerUpdate:(GLKViewController *)controller{
     
     
+}
+
+-(void)updateBackground{
+    
+    if (backgroundColor >= 1) {
+        backgroundDirection = FALSE;
+    }
+    else if (backgroundColor <= 0){
+        backgroundDirection = TRUE;
+    }
+    
+    backgroundColor += backgroundDirection ? 0.001 : -0.001;
+    UIColor *color = [UIColor colorWithHue:backgroundColor saturation:0.15 brightness:1 alpha:1];
+    CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+
+    glClearColor(red, green, blue, 1);
 }
 
 -(void)updateBubbles{
@@ -83,21 +107,24 @@
 -(void)makeBubbleWithSize:(float) bubbleSize{
     
     float radius = bubbleSize;
-    float transparency = 1;
-    float x_vel = 4;
-    float y_vel = arc4random() % 2 - 1;
+    float transparency = 0.75;
+    float x_vel = 8;
+    float y_vel = arc4random_uniform(1000)/125.0f - 2;
+    
+    UIColor *color = [UIColor colorWithHue:arc4random_uniform(1000)/1000.f saturation:1 brightness:1 alpha:1];
+    CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
     
     TREEllipse *ellipse = [[TREEllipse alloc] init];
     [ellipse setRadius:radius];
-    [ellipse setColor:GLKVector4Make(1, 1, 1, transparency)];
-    [ellipse setPosition:GLKVector2Make(self.view.frame.size.height-150, self.view.frame.size.width-140)];
-    //[ellipse setPosition:GLKVector2Make(100, 100)];
-    ellipse.left = 0.0;
-    ellipse.top = 0.0;
-    ellipse.bottom = self.view.frame.size.width;
-    ellipse.right = self.view.frame.size.height;
-    [ellipse setDrawingStyle:GL_TRIANGLE_FAN];
+    [ellipse setColor:GLKVector4Make(red, green, blue, transparency)];
+    [ellipse setPosition:GLKVector2Make([[UIScreen mainScreen] bounds].size.height - 115 - radius, [[UIScreen mainScreen] bounds].size.width - 140)];
+    ellipse.left = 0;
+    ellipse.top = 0;
+    ellipse.bottom = [[UIScreen mainScreen] bounds].size.width;
+    ellipse.right = [[UIScreen mainScreen] bounds].size.height;
     
+    [ellipse setDrawingStyle:GL_TRIANGLE_FAN];
     [ellipse setX_velocity:x_vel];
     [ellipse setY_velocity:y_vel];
      

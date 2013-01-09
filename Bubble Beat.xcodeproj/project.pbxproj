@@ -138,10 +138,7 @@
 				60BBB6D2169B8AC100E8E155 /* BBGLKitViewController.h */,
 				60BBB6D3169B8AC100E8E155 /* BBGLKitViewController.m */,
 				60BBB6CD169B89BA00E8E155 /* BBGLKitView.xib */,
-				60BBB6D9169C7F3B00E8E155 /* TREEllipse.h */,
-				60BBB6DA169C7F3B00E8E155 /* TREEllipse.m */,
-				60BBB6DB169C7F3C00E8E155 /* TREShape.h */,
-				60BBB6DC169C7F3C00E8E155 /* TREShape.m */,
+				60BBB6DF169DE9F800E8E155 /* Shapes */,
 				609E126B166FB39200BF1C58 /* Graphics */,
 				426DD6A0166EB60E009788A8 /* Supporting Files */,
 			);
@@ -180,6 +177,17 @@
 				426EE342167CC54F00197912 /* bark.c */,
 			);
 			path = DSPLib;
+			sourceTree = "<group>";
+		};
+		60BBB6DF169DE9F800E8E155 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				60BBB6D9169C7F3B00E8E155 /* TREEllipse.h */,
+				60BBB6DA169C7F3B00E8E155 /* TREEllipse.m */,
+				60BBB6DB169C7F3C00E8E155 /* TREShape.h */,
+				60BBB6DC169C7F3C00E8E155 /* TREShape.m */,
+			);
+			name = Shapes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

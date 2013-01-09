@@ -14,8 +14,12 @@
     
     float alphaDecay;
     float radiusSwell;
+    bool backgroundDirection;
+    float backgroundColor;
 }
 
 @property (nonatomic,strong) NSMutableArray *bubbles;
+
+-(void)makeBubbleWithSize:(float) bubbleSize;
 
 @end

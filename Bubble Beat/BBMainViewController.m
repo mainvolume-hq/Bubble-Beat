@@ -7,7 +7,6 @@
 //
 
 #import "BBMainViewController.h"
-#import "BBGLKitViewController.h"
 
 @interface BBMainViewController ()
 
@@ -136,8 +135,9 @@
 
 -(IBAction)optionsButtonPressed{
     
-    [self animateOptionsView:YES];
-
+    //[self animateOptionsView:YES];
+    [bubbleFactory makeBubbleWithSize:20.0];
+    
 }
 
 -(IBAction)backButtonPressed{

@@ -30,10 +30,10 @@
 				<string key="IBProxiedObjectIdentifier">IBFirstResponder</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBGLKView" id="677393705">
+			<object class="IBGLKView" id="624987567">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
-				<string key="NSFrameSize">{320, 568}</string>
+				<string key="NSFrameSize">{417, 342}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView"/>
@@ -43,6 +43,7 @@
 					<bytes key="NSRGB">MC4wNjIwOTY0NjQwOSAxIDAgMC41AA</bytes>
 				</object>
 				<bool key="IBUIOpaque">NO</bool>
+				<bool key="IBUIAutoresizesSubviews">NO</bool>
 				<bool key="IBUIClipsSubviews">YES</bool>
 				<int key="IBUIContentMode">4</int>
 				<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -55,7 +56,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">view</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="677393705"/>
+						<reference key="destination" ref="624987567"/>
 					</object>
 					<int key="connectionID">10</int>
 				</object>
@@ -81,7 +82,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">9</int>
-						<reference key="object" ref="677393705"/>
+						<reference key="object" ref="624987567"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</array>
