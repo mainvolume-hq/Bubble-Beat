@@ -31,6 +31,10 @@
 		60BBB6D4169B8AC100E8E155 /* BBGLKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BBB6D3169B8AC100E8E155 /* BBGLKitViewController.m */; };
 		60BBB6DD169C81F100E8E155 /* TREEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BBB6DA169C7F3B00E8E155 /* TREEllipse.m */; };
 		60BBB6DE169C81F700E8E155 /* TREShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BBB6DC169C7F3C00E8E155 /* TREShape.m */; };
+		60BBB6E9169DFCF900E8E155 /* thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 60BBB6E8169DFCF900E8E155 /* thumb.png */; };
+		60BBB6EB169DFEFC00E8E155 /* track.png in Resources */ = {isa = PBXBuildFile; fileRef = 60BBB6EA169DFEFC00E8E155 /* track.png */; };
+		60BBB6ED169E01C300E8E155 /* sizeSlider.png in Resources */ = {isa = PBXBuildFile; fileRef = 60BBB6EC169E01C300E8E155 /* sizeSlider.png */; };
+		60BBB6EF169E138400E8E155 /* amtSlider.png in Resources */ = {isa = PBXBuildFile; fileRef = 60BBB6EE169E138400E8E155 /* amtSlider.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +75,10 @@
 		60BBB6DA169C7F3B00E8E155 /* TREEllipse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TREEllipse.m; sourceTree = "<group>"; };
 		60BBB6DB169C7F3C00E8E155 /* TREShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TREShape.h; sourceTree = "<group>"; };
 		60BBB6DC169C7F3C00E8E155 /* TREShape.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TREShape.m; sourceTree = "<group>"; };
+		60BBB6E8169DFCF900E8E155 /* thumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thumb.png; path = Graphics/thumb.png; sourceTree = "<group>"; };
+		60BBB6EA169DFEFC00E8E155 /* track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = track.png; path = Graphics/track.png; sourceTree = "<group>"; };
+		60BBB6EC169E01C300E8E155 /* sizeSlider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sizeSlider.png; path = Graphics/sizeSlider.png; sourceTree = "<group>"; };
+		60BBB6EE169E138400E8E155 /* amtSlider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = amtSlider.png; path = Graphics/amtSlider.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,8 +167,12 @@
 		609E126B166FB39200BF1C58 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				60BBB6EC169E01C300E8E155 /* sizeSlider.png */,
 				609E12861670609C00BF1C58 /* Default-568h@2x.png */,
 				609E12841670607E00BF1C58 /* bubble2.png */,
+				60BBB6E8169DFCF900E8E155 /* thumb.png */,
+				60BBB6EA169DFEFC00E8E155 /* track.png */,
+				60BBB6EE169E138400E8E155 /* amtSlider.png */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -249,6 +261,10 @@
 				609E12851670607E00BF1C58 /* bubble2.png in Resources */,
 				609E12871670609C00BF1C58 /* Default-568h@2x.png in Resources */,
 				60BBB6CE169B89BA00E8E155 /* BBGLKitView.xib in Resources */,
+				60BBB6E9169DFCF900E8E155 /* thumb.png in Resources */,
+				60BBB6EB169DFEFC00E8E155 /* track.png in Resources */,
+				60BBB6ED169E01C300E8E155 /* sizeSlider.png in Resources */,
+				60BBB6EF169E138400E8E155 /* amtSlider.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

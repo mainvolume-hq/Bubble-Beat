@@ -108,7 +108,7 @@
     
     float radius = bubbleSize;
     float transparency = 0.75;
-    float x_vel = 8;
+    float x_vel = 8 + arc4random_uniform(100/500.0f)-1;
     float y_vel = arc4random_uniform(1000)/125.0f - 2;
     
     UIColor *color = [UIColor colorWithHue:arc4random_uniform(1000)/1000.f saturation:1 brightness:1 alpha:1];

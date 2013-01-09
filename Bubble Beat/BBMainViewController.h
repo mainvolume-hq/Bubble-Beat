@@ -20,5 +20,6 @@
 
 -(IBAction) optionsButtonPressed;
 -(IBAction) backButtonPressed;
+-(IBAction) bubbleButtonPressed;
 
 @end

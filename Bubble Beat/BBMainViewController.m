@@ -86,7 +86,7 @@
     float height = optionsView.frame.size.width-2*upperLowerPadding;
     
     //size slider
-    CGRect frame = CGRectMake(-height/2+leftRightPadding, optionsView.frame.size.width/2, height, 10.0);
+    CGRect frame = CGRectMake(-height/2+leftRightPadding, optionsView.frame.size.width/2+20, height, 10.0);
     UISlider *sizeSlider = [[UISlider alloc] initWithFrame:frame];
     [sizeSlider addTarget:self action:@selector(sizeChanged:) forControlEvents:UIControlEventValueChanged];
     [sizeSlider setBackgroundColor:[UIColor clearColor]];
@@ -95,17 +95,30 @@
     [sizeSlider setMaximumValue:maxBubbleScale];
     [sizeSlider setMinimumValue:minBubbleScale];
     [sizeSlider setValue:defaultBubbleScale];
+    [sizeSlider setThumbImage: [UIImage imageNamed:@"thumb.png"] forState:UIControlStateNormal];
+    [sizeSlider setThumbImage: [UIImage imageNamed:@"thumb.png"] forState:UIControlStateHighlighted];
+    [sizeSlider setMinimumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateNormal];
+    [sizeSlider setMinimumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateHighlighted];
+    [sizeSlider setMaximumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateNormal];
+    [sizeSlider setMaximumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateHighlighted];
     [optionsView addSubview:sizeSlider];
     
     //quantity slider
-    CGRect frame2 = CGRectMake(optionsView.frame.size.height-height/2-leftRightPadding, optionsView.frame.size.width/2, height, 10.0);
+    CGRect frame2 = CGRectMake(optionsView.frame.size.height-height/2-leftRightPadding, optionsView.frame.size.width/2+20, height, 10.0);
     UISlider *quantitySlider = [[UISlider alloc] initWithFrame:frame2];
     [quantitySlider addTarget:self action:@selector(quantityChanged:) forControlEvents:UIControlEventValueChanged];
     [quantitySlider setBackgroundColor:[UIColor clearColor]];
     quantitySlider.transform = trans;
-    [sizeSlider setMaximumValue:maxUpperThreshold];
-    [sizeSlider setMinimumValue:minUpperThreshold];
+    [quantitySlider setMaximumValue:maxUpperThreshold];
+    [quantitySlider setMinimumValue:minUpperThreshold];
     [quantitySlider setValue:defaultUpperThresholdScale];
+    [quantitySlider setThumbImage: [UIImage imageNamed:@"thumb.png"] forState:UIControlStateNormal];
+    [quantitySlider setThumbImage: [UIImage imageNamed:@"thumb.png"] forState:UIControlStateHighlighted];
+    [quantitySlider setMinimumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateNormal];
+    [quantitySlider setMinimumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateHighlighted];
+    [quantitySlider setMaximumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateNormal];
+    [quantitySlider setMaximumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateHighlighted];
+    
     [optionsView addSubview:quantitySlider];
     
 }
@@ -130,13 +143,18 @@
     
 }
 
+-(IBAction)bubbleButtonPressed{
+    
+    [bubbleFactory makeBubbleWithSize:20.0];
+    
+}
+
 
 #pragma mark - Navigation -
 
 -(IBAction)optionsButtonPressed{
     
-    //[self animateOptionsView:YES];
-    [bubbleFactory makeBubbleWithSize:20.0];
+    [self animateOptionsView:YES];
     
 }
 

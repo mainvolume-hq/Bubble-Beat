@@ -31,6 +31,21 @@
                                     <action selector="optionsButtonPressed" destination="2" eventType="touchUpInside" id="khJ-Ld-76W"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dMh-ck-gU0">
+                                <rect key="frame" x="322" y="84" width="158" height="241"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="bubbleButtonPressed" destination="2" eventType="touchUpInside" id="rkB-rc-nJf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.95448022959183676" green="0.90812194855545825" blue="0.79560461157663054" alpha="1" colorSpace="calibratedRGB"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
@@ -51,6 +66,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/BBMainViewController.h"/>
             <relationships>
                 <relationship kind="action" name="backButtonPressed"/>
+                <relationship kind="action" name="bubbleButtonPressed"/>
                 <relationship kind="action" name="optionsButtonPressed"/>
                 <relationship kind="outlet" name="scrollView" candidateClass="UIView"/>
             </relationships>
