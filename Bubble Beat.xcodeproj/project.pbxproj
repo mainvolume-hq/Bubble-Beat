@@ -20,6 +20,8 @@
 		426EE345167CC74200197912 /* util.c in Sources */ = {isa = PBXBuildFile; fileRef = 426EE344167CC74200197912 /* util.c */; };
 		426EE348167CE74D00197912 /* BBAudioModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 426EE347167CE74D00197912 /* BBAudioModel.m */; };
 		426EE34B167CE79500197912 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426EE349167CE79500197912 /* AudioToolbox.framework */; };
+		4285DAF716A3758900000B31 /* BBGLKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4285DAF416A3758900000B31 /* BBGLKitView.xib */; };
+		4285DAF816A3758900000B31 /* BBGLKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4285DAF616A3758900000B31 /* BBGLKitViewController.m */; };
 		609E1279166FF30200BF1C58 /* OptionsScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609E1278166FF30200BF1C58 /* OptionsScrollView.xib */; };
 		609E12831670603500BF1C58 /* OptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 609E12821670603500BF1C58 /* OptionsView.xib */; };
 		609E12851670607E00BF1C58 /* bubble2.png in Resources */ = {isa = PBXBuildFile; fileRef = 609E12841670607E00BF1C58 /* bubble2.png */; };
@@ -27,8 +29,6 @@
 		609E1315167265DF00BF1C58 /* fft.c in Sources */ = {isa = PBXBuildFile; fileRef = 609E1312167265DF00BF1C58 /* fft.c */; };
 		60BBB6CB169B898500E8E155 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BBB6C9169B896500E8E155 /* GLKit.framework */; };
 		60BBB6CC169B898C00E8E155 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60BBB6C6169B895B00E8E155 /* OpenGLES.framework */; };
-		60BBB6CE169B89BA00E8E155 /* BBGLKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60BBB6CD169B89BA00E8E155 /* BBGLKitView.xib */; };
-		60BBB6D4169B8AC100E8E155 /* BBGLKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BBB6D3169B8AC100E8E155 /* BBGLKitViewController.m */; };
 		60BBB6DD169C81F100E8E155 /* TREEllipse.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BBB6DA169C7F3B00E8E155 /* TREEllipse.m */; };
 		60BBB6DE169C81F700E8E155 /* TREShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 60BBB6DC169C7F3C00E8E155 /* TREShape.m */; };
 		60BBB6E9169DFCF900E8E155 /* thumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 60BBB6E8169DFCF900E8E155 /* thumb.png */; };
@@ -59,6 +59,9 @@
 		426EE346167CE74D00197912 /* BBAudioModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBAudioModel.h; sourceTree = "<group>"; };
 		426EE347167CE74D00197912 /* BBAudioModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBAudioModel.m; sourceTree = "<group>"; };
 		426EE349167CE79500197912 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4285DAF416A3758900000B31 /* BBGLKitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BBGLKitView.xib; sourceTree = "<group>"; };
+		4285DAF516A3758900000B31 /* BBGLKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBGLKitViewController.h; sourceTree = "<group>"; };
+		4285DAF616A3758900000B31 /* BBGLKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBGLKitViewController.m; sourceTree = "<group>"; };
 		609E1278166FF30200BF1C58 /* OptionsScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsScrollView.xib; sourceTree = "<group>"; };
 		609E12821670603500BF1C58 /* OptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionsView.xib; sourceTree = "<group>"; };
 		609E12841670607E00BF1C58 /* bubble2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bubble2.png; path = Graphics/bubble2.png; sourceTree = "<group>"; };
@@ -69,9 +72,6 @@
 		609E1314167265DF00BF1C58 /* util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = util.h; sourceTree = "<group>"; };
 		60BBB6C6169B895B00E8E155 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		60BBB6C9169B896500E8E155 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		60BBB6CD169B89BA00E8E155 /* BBGLKitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBGLKitView.xib; path = ../BBGLKitView.xib; sourceTree = "<group>"; };
-		60BBB6D2169B8AC100E8E155 /* BBGLKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BBGLKitViewController.h; path = ../BBGLKitViewController.h; sourceTree = "<group>"; };
-		60BBB6D3169B8AC100E8E155 /* BBGLKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BBGLKitViewController.m; path = ../BBGLKitViewController.m; sourceTree = "<group>"; };
 		60BBB6D9169C7F3B00E8E155 /* TREEllipse.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TREEllipse.h; sourceTree = "<group>"; };
 		60BBB6DA169C7F3B00E8E155 /* TREEllipse.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TREEllipse.m; sourceTree = "<group>"; };
 		60BBB6DB169C7F3C00E8E155 /* TREShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TREShape.h; sourceTree = "<group>"; };
@@ -145,9 +145,9 @@
 				426EE347167CE74D00197912 /* BBAudioModel.m */,
 				609E12821670603500BF1C58 /* OptionsView.xib */,
 				609E1278166FF30200BF1C58 /* OptionsScrollView.xib */,
-				60BBB6D2169B8AC100E8E155 /* BBGLKitViewController.h */,
-				60BBB6D3169B8AC100E8E155 /* BBGLKitViewController.m */,
-				60BBB6CD169B89BA00E8E155 /* BBGLKitView.xib */,
+				4285DAF416A3758900000B31 /* BBGLKitView.xib */,
+				4285DAF516A3758900000B31 /* BBGLKitViewController.h */,
+				4285DAF616A3758900000B31 /* BBGLKitViewController.m */,
 				60BBB6DF169DE9F800E8E155 /* Shapes */,
 				609E126B166FB39200BF1C58 /* Graphics */,
 				426DD6A0166EB60E009788A8 /* Supporting Files */,
@@ -263,12 +263,12 @@
 				609E12831670603500BF1C58 /* OptionsView.xib in Resources */,
 				609E12851670607E00BF1C58 /* bubble2.png in Resources */,
 				609E12871670609C00BF1C58 /* Default-568h@2x.png in Resources */,
-				60BBB6CE169B89BA00E8E155 /* BBGLKitView.xib in Resources */,
 				60BBB6E9169DFCF900E8E155 /* thumb.png in Resources */,
 				60BBB6EB169DFEFC00E8E155 /* track.png in Resources */,
 				60BBB6ED169E01C300E8E155 /* sizeSlider.png in Resources */,
 				60BBB6EF169E138400E8E155 /* amtSlider.png in Resources */,
 				60BBB6F1169E1EE500E8E155 /* button.png in Resources */,
+				4285DAF716A3758900000B31 /* BBGLKitView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,9 +286,9 @@
 				426EE343167CC54F00197912 /* bark.c in Sources */,
 				426EE345167CC74200197912 /* util.c in Sources */,
 				426EE348167CE74D00197912 /* BBAudioModel.m in Sources */,
-				60BBB6D4169B8AC100E8E155 /* BBGLKitViewController.m in Sources */,
 				60BBB6DD169C81F100E8E155 /* TREEllipse.m in Sources */,
 				60BBB6DE169C81F700E8E155 /* TREShape.m in Sources */,
+				4285DAF816A3758900000B31 /* BBGLKitViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

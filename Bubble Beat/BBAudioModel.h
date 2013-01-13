@@ -37,3 +37,7 @@
 @property float* buffer;
 
 @end
+
+// C Functions
+static float outerEarFilter(float input);
+static float middleEarFilter(float input);

@@ -39,11 +39,51 @@ static OSStatus renderCallback(void *inRefCon,
         // Loop through the blocksize
         for (int frame = 0; frame < inNumberFrames; frame++)
         {
-
+            if (model->inputType == YES)    // If we're using the microphone set output to 0.0 so we don't feedback
+                output[frame] = 0.0;
         }
     }
     
     return noErr;
+}
+
+#pragma mark - Ear Filtering Functions -
+static float outerEarFilter(float input)
+{
+    //a(1)*y(n) = b(1)*x(n) + b(2)*x(n-1) + ... + b(nb+1)*x(n-nb) - a(2)*y(n-1) - ... - a(na+1)*y(n-na)
+    static float o_x1 = 0.0;
+    static float o_x2 = 0.0;
+    static float o_y1 = 0.0;
+    static float o_y2 = 0.0;
+    float output = 0.0;
+    
+    output = (0.7221 * o_x1) + (-0.6918 * o_x2);
+    
+    o_x2 = o_x1;
+    o_x1 = input;
+    o_y2 = o_y1;
+    o_y1 = output;
+    
+    return output;
+}
+
+static float middleEarFilter(float input)
+{
+    static float m_x1 = 0.0;
+    static float m_x2 = 0.0;
+    static float m_y1 = 0.0;
+    static float m_y2 = 0.0;
+    float output = 0.0;
+    
+    m_y1 = (0.8383 * input) + (-0.8383 * m_x2) - ( 0.6791 * m_y2);
+    output = 0.6791 * m_y1;
+    
+    m_x2 = m_x1;
+    m_x1 = input;
+    m_y2 = m_y1;
+    m_y1 = output;
+    
+    return output;
 }
 
 #pragma mark - Audio Model Init -
