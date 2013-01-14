@@ -21,6 +21,7 @@
 		426EE34B167CE79500197912 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426EE349167CE79500197912 /* AudioToolbox.framework */; };
 		4285DAF716A3758900000B31 /* BBGLKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4285DAF416A3758900000B31 /* BBGLKitView.xib */; };
 		4285DAF816A3758900000B31 /* BBGLKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4285DAF616A3758900000B31 /* BBGLKitViewController.m */; };
+		6007408416A46ECB00D09911 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6007408316A46ECB00D09911 /* Icon@2x.png */; };
 		602A4AE516A3D8A400BC4043 /* MySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 602A4AE416A3D8A400BC4043 /* MySlider.m */; };
 		602A4AE916A3D8BF00BC4043 /* BBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 602A4AE816A3D8BF00BC4043 /* BBMainViewController.m */; };
 		602A4AFA16A3D8F900BC4043 /* amtSlider.png in Resources */ = {isa = PBXBuildFile; fileRef = 602A4AEB16A3D8F900BC4043 /* amtSlider.png */; };
@@ -69,6 +70,7 @@
 		4285DAF416A3758900000B31 /* BBGLKitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BBGLKitView.xib; sourceTree = "<group>"; };
 		4285DAF516A3758900000B31 /* BBGLKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBGLKitViewController.h; sourceTree = "<group>"; };
 		4285DAF616A3758900000B31 /* BBGLKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBGLKitViewController.m; sourceTree = "<group>"; };
+		6007408316A46ECB00D09911 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		602A4AE316A3D8A400BC4043 /* MySlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySlider.h; sourceTree = "<group>"; };
 		602A4AE416A3D8A400BC4043 /* MySlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySlider.m; sourceTree = "<group>"; };
 		602A4AE716A3D8BF00BC4043 /* BBMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBMainViewController.h; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				602A4AEB16A3D8F900BC4043 /* amtSlider.png */,
 				602A4AEC16A3D8F900BC4043 /* bubble2.png */,
+				6007408316A46ECB00D09911 /* Icon@2x.png */,
 				602A4AED16A3D8F900BC4043 /* button.png */,
 				602A4AEE16A3D8F900BC4043 /* Default-568h@2x.png */,
 				602A4AEF16A3D8F900BC4043 /* Default.png */,
@@ -306,6 +309,7 @@
 				602A4B0616A3D8F900BC4043 /* Splash_5.png in Resources */,
 				602A4B0716A3D8F900BC4043 /* thumb.png in Resources */,
 				602A4B0816A3D8F900BC4043 /* track.png in Resources */,
+				6007408416A46ECB00D09911 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

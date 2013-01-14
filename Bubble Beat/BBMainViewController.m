@@ -88,7 +88,7 @@
                         options: UIViewAnimationOptionCurveEaseInOut
                      animations:^{[splashView setAlpha:0.0];}
                      completion:^(BOOL finished){
-                         //[self.view delete:splashView];
+                         [splashView setHidden:YES];
                          ;
                      }];
 
