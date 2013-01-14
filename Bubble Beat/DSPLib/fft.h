@@ -56,6 +56,9 @@ void ifft(FFT_FRAME* fftFrame, float* outputBuffer);
 // Windowing
 void createWindow(FFT* fft, int windowType);
 
+// FFT Transformations (TODO: Generalize in the future)
+void magnitude(COMPLEX_SPLIT* buffer, int size);
+
 
 
 #endif

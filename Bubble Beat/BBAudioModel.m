@@ -15,7 +15,7 @@
 
 @synthesize blockSize;
 @synthesize sampleRate;
-@synthesize buffer;
+@synthesize musicLibraryBuffer;
 
 #pragma mark - Audio Render Callback -
 static OSStatus renderCallback(void *inRefCon,
@@ -28,9 +28,36 @@ static OSStatus renderCallback(void *inRefCon,
     BBAudioModel* model = (__bridge BBAudioModel*)inRefCon;
     AudioUnitRender(model->bbUnit, ioActionFlags, inTimeStamp, 1, inNumberFrames, ioData);
     
-    // Left channel = ioData->mBuffers[0];
-    // Right channel = ioData->mBuffers[1];
+    // TODO: make this a member variable
+    float numInputChannels;
+    if (model->inputType == YES)
+        numInputChannels = 1;
+    else
+        numInputChannels = 2;
     
+    Float32* left = (Float32 *)ioData->mBuffers[0].mData;
+    Float32* right = (Float32 *)ioData->mBuffers[1].mData;
+    
+    int sizeDiff = model->windowSize - inNumberFrames;
+    // shift previous values into front
+    for (int i = 0; i < sizeDiff; i++)
+        model->monoAnalysisBuffer[i] = model->monoAnalysisBuffer[i + inNumberFrames];
+    
+    // input convert to mono and shift into analysis buffer
+    for (int i = 0; i < inNumberFrames; i++)
+    {
+        float mono = (left[i] + right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
+        mono = outerEarFilter(mono);
+        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
+    }
+    
+    // fftIp() takes care of windowing for us
+    //fftIp(model->fft, model->monoAnalysisBuffer);
+    
+    // get magnitude
+    //magnitude((COMPLEX_SPLIT *)model->monoAnalysisBuffer, model->windowSize / 2);
+    
+    // Dealing with output
     for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
     {
         // Get reference to buffer for channel we're on
@@ -107,8 +134,14 @@ static float middleEarFilter(float input)
     if (self)
     {
         sampleRate = 44100;
-        blockSize = 512;
-        buffer = (float *)malloc(NUM_SECONDS * sampleRate * sizeof(float));
+        blockSize = 512;                // equals hopsize also
+        hopSize = blockSize;
+        windowSize = 2 * hopSize;       // 2x overlap
+        musicLibraryBuffer = (float *)malloc(NUM_SECONDS * sampleRate * sizeof(float));
+        monoAnalysisBuffer = (float *)malloc(windowSize * sizeof(float));
+        
+        fft = newFFT(windowSize);
+        createWindow(fft, HANN);
     }
     
     return self;
@@ -118,7 +151,10 @@ static float middleEarFilter(float input)
 #pragma mark - Audio Model Dealloc -
 - (void)dealloc
 {
-    free(buffer);
+    free(musicLibraryBuffer);
+    free(monoAnalysisBuffer);
+    
+    freeFFT(fft);
 }
 
 

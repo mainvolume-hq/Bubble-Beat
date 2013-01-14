@@ -163,3 +163,9 @@ void createWindow(FFT* fft, int windowType)
     		break;
     }
 }
+
+
+void magnitude(COMPLEX_SPLIT* buffer, int size)
+{
+    vDSP_vdist(buffer->realp, 1, buffer->imagp, 1, buffer->realp, 1, size);
+}

@@ -10,6 +10,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import "fft.h"
 
 @interface BBAudioModel : NSObject
 {
@@ -17,9 +18,14 @@
     
     int       blockSize;
     int       sampleRate;
+    int       hopSize;
+    int       windowSize;
     
-    float*    buffer;
+    float*    monoAnalysisBuffer;       // mono signal that we do analysis on
+    float*    musicLibraryBuffer;       // An intermediate buffer for audio content from music library
     BOOL      inputType;                // YES = Microphone, NO = Music
+    
+    FFT*      fft;
 }
 
 + (BBAudioModel *)sharedAudioModel;
@@ -34,7 +40,7 @@
 
 @property int blockSize;
 @property int sampleRate;
-@property float* buffer;
+@property float* musicLibraryBuffer;
 
 @end
 
