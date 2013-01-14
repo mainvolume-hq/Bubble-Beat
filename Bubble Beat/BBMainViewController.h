@@ -14,10 +14,12 @@
     IBOutlet UIView *scrollView;
     IBOutlet UIButton *optionsButton;
     BBAudioModel* audioModel;
+    UIImageView *splashView;
 }
     
 @property (nonatomic,strong) UIView *optionsView;
 @property (nonatomic,strong) UIView *optionsScrollView;
+@property (nonatomic,strong) UIImageView *splashView;
 @property (nonatomic,strong) BBGLKitViewController *bubbleFactory;
 
 -(IBAction) optionsButtonPressed;

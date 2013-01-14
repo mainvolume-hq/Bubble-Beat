@@ -8,6 +8,7 @@
 
 #import "BBMainViewController.h"
 #import "BBAudioModel.h"
+#import "MySlider.h"
 
 @interface BBMainViewController ()
 
@@ -15,7 +16,7 @@
 
 
 @implementation BBMainViewController
-@synthesize optionsView,optionsScrollView,bubbleFactory;
+@synthesize optionsView,optionsScrollView,bubbleFactory,splashView;
 
 
 - (void)viewDidLoad
@@ -37,6 +38,60 @@
     [audioModel startAudioUnit];
     [audioModel startAudioSession];
     
+    [self animateSplashScreens];
+    
+}
+
+-(void)animateSplashScreens{
+    
+    int device = 0;
+    
+    // 1 = low res iphone / ipod
+    // 2 = retina iphone
+    // 3 = iphone 5
+    
+    int deviceHeight = [[UIScreen mainScreen]bounds].size.height;
+    if (deviceHeight == 480) {
+        
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] == YES && [[UIScreen mainScreen] scale] == 2.00) {
+            // RETINA DISPLAY
+            device = 2;
+        }
+        else device = 1;
+    }
+    else if (deviceHeight == 568){
+        device = 3;
+    }
+    
+    switch (device) {
+        case 1:
+            splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, 480, 320)];
+            [splashView setImage:[UIImage imageNamed:@"Splash2_3G.png"]];
+            break;
+        case 2:
+            splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, 480, 320)];
+            [splashView setImage:[UIImage imageNamed:@"Splash2_4.png"]];
+            break;
+        case 3:
+            splashView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0, 568, 320)];
+            [splashView setImage:[UIImage imageNamed:@"Splash2_5.png"]];
+            break;
+        default:
+            break;
+    }
+    
+    [self.view addSubview:splashView];
+    [self.view bringSubviewToFront:splashView];
+    
+    [UIView animateWithDuration: 2.0
+                          delay: 2.0
+                        options: UIViewAnimationOptionCurveEaseInOut
+                     animations:^{[splashView setAlpha:0.0];}
+                     completion:^(BOOL finished){
+                         //[self.view delete:splashView];
+                         ;
+                     }];
+
 }
 
 - (void)viewDidUnload
@@ -95,7 +150,7 @@
     
     //size slider
     CGRect frame = CGRectMake(-height/2+leftRightPadding, optionsView.frame.size.width/2+20, height, 10.0);
-    UISlider *sizeSlider = [[UISlider alloc] initWithFrame:frame];
+    MySlider *sizeSlider = [[MySlider alloc] initWithFrame:frame];
     [sizeSlider addTarget:self action:@selector(sizeChanged:) forControlEvents:UIControlEventValueChanged];
     [sizeSlider setBackgroundColor:[UIColor clearColor]];
     CGAffineTransform trans = CGAffineTransformMakeRotation(M_PI * -0.5);
@@ -113,7 +168,7 @@
     
     //quantity slider
     CGRect frame2 = CGRectMake(optionsView.frame.size.height-height/2-leftRightPadding, optionsView.frame.size.width/2+20, height, 10.0);
-    UISlider *quantitySlider = [[UISlider alloc] initWithFrame:frame2];
+    MySlider *quantitySlider = [[MySlider alloc] initWithFrame:frame2];
     [quantitySlider addTarget:self action:@selector(quantityChanged:) forControlEvents:UIControlEventValueChanged];
     [quantitySlider setBackgroundColor:[UIColor clearColor]];
     quantitySlider.transform = trans;
@@ -154,7 +209,7 @@
 -(IBAction)bubbleButtonPressed{
     
     [bubbleFactory makeBubbleWithSize:20.0];
-    
+    //[bubbleFactory MakeBubbleBackground];
 }
 
 
