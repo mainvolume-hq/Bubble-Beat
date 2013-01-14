@@ -8,6 +8,10 @@
 
 #include "bark.h"
 
+int barkCenterFreq[26] = {0, 50, 150, 250, 350, 450, 570, 700, 840, 1000, 1170, 1370, 1600, 1850, 2150, 2500, 2900, 3400, 4000, 4800, 5800, 7000, 8500, 10500, 13500, 15500};
+
+float bandWeightings[24] = { 0.7762, 0.6854, 0.6647, 0.6373, 0.6255, 0.6170, 0.6139, 0.6107, 0.6127, 0.6329, 0.6380, 0.6430, 0.6151, 0.6033, 0.5914, 0.5843, 0.5895, 0.5947, 0.6237, 0.6703, 0.6920, 0.7137, 0.7217, 0.7217 };
+
 #pragma mark - Bark Memory Management - 
 
 BARK* newBark(int windowSize, int sampleRate)
@@ -22,12 +26,17 @@ BARK* newBark(int windowSize, int sampleRate)
     
     newBarkBands(bark);
     
+    bark->filteredOdd = (float *)malloc((bark->windowSize / 2) * sizeof(float));
+    bark->filteredEven = (float *)malloc((bark->windowSize / 2) * sizeof(float));
+    
     return bark;
 }
 
 void freeBark(BARK* bark)
 {
     freeBarkBands(bark);
+    free(bark->filteredOdd);
+    free(bark->filteredEven);
     free(bark);
 }
 
@@ -53,7 +62,7 @@ void freeBarkBands(BARK* bark)
 
 #pragma mark - Filterbank Functions - 
 
-void createFilterbank(BARK* bark)
+void createBarkFilterbank(BARK* bark)
 {
     float period = bark->sampleRate / bark->windowSize;
     int direction = 0;                     // direction is either +1 for increasing or -1 for decreasing

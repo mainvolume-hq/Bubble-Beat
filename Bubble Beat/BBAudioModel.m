@@ -57,6 +57,9 @@ static OSStatus renderCallback(void *inRefCon,
     // get magnitude
     magnitude(&model->fftFrame->buffer, model->monoAnalysisBuffer, model->fft->sizeOverTwo);
     
+    // multiply analysis buffer by the filterbank
+    multiplyBarkFilterbank(model->bark, model->monoAnalysisBuffer);
+    
     // Dealing with output
     for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
     {
@@ -143,6 +146,11 @@ static float middleEarFilter(float input)
         fft = newFFT(windowSize);
         createWindow(fft, HANN);
         fftFrame = newFFTFrame(fft);
+        
+        bark = newBark(windowSize, sampleRate);
+        createBarkFilterbank(bark);
+        
+        inputType = NO;
     }
     
     return self;
@@ -154,9 +162,12 @@ static float middleEarFilter(float input)
 {
     free(musicLibraryBuffer);
     free(monoAnalysisBuffer);
-    
-    freeFFT(fft);
+    // free fft stuffs
     freeFFTFrame(fftFrame);
+    freeFFT(fft);
+    // free bark stuffs
+    freeBarkBands(bark);
+    freeBark(bark);
 }
 
 

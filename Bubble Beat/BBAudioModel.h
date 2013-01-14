@@ -11,6 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "fft.h"
+#import "bark.h"
 
 @interface BBAudioModel : NSObject
 {
@@ -27,6 +28,8 @@
     
     FFT*       fft;
     FFT_FRAME* fftFrame;
+    
+    BARK*     bark;
 }
 
 + (BBAudioModel *)sharedAudioModel;

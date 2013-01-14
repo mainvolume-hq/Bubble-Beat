@@ -32,7 +32,10 @@ FFT* newFFT(int size)
     fft->fftSetup = vDSP_create_fftsetup(logTwo, FFT_RADIX2);
     
     if (fft->fftSetup == 0)
+    {
+        freeFFT(fft);
         return NULL;
+    }
 
     fft->window = NULL;
     
