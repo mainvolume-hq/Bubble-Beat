@@ -111,4 +111,28 @@ void multiplyBarkFilterbank(BARK* bark, float* analysis)
     }
 }
 
+# pragma mark - Bark Utility Functions -
+
+void condenseAnalysis(BARK* bark, float* analysis)
+{
+    float period = bark->sampleRate / bark->windowSize;
+    
+    for (int i = 0; i < NUM_BARKS; i++)
+    {
+        for (int j = 0; j < (bark->windowSize / 2); j++)
+        {
+            float frequency = period * j;
+            
+            if (frequency >= barkCenterFreq[i] && frequency < barkCenterFreq[i + 2])
+                bark->barkBins[i] += analysis[j];
+        }
+    }
+}
+
+void multiplyLoudness(BARK* bark)
+{
+    for (int i = 0; i < NUM_BARKS; i++)
+        bark->barkBins[i] *= bandWeightings[i];
+}
+
 

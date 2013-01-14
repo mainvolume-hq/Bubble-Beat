@@ -60,6 +60,12 @@ static OSStatus renderCallback(void *inRefCon,
     // multiply analysis buffer by the filterbank
     multiplyBarkFilterbank(model->bark, model->monoAnalysisBuffer);
     
+    // Condense everything
+    condenseAnalysis(model->bark, model->monoAnalysisBuffer);
+    
+    // Multiply by loudness curves
+    multiplyLoudness(model->bark);
+    
     // Dealing with output
     for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
     {

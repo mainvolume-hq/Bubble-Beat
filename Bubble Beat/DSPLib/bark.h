@@ -30,6 +30,8 @@ typedef struct t_bark_bin
 typedef struct t_bark
 {
     BARK_BIN  filterBands[2];
+    float     barkBins[NUM_BARKS];
+    float     prevBarkBins[NUM_BARKS];
     float*    filteredOdd;
     float*    filteredEven;
     
@@ -46,5 +48,9 @@ void freeBarkBands(BARK* bark);
 
 void createBarkFilterbank(BARK* bark);
 void multiplyBarkFilterbank(BARK* bark, float* analysis);
+
+// Bark utility functions
+void condenseAnalysis(BARK* bark, float* analysis);
+void multiplyLoudness(BARK* bark);
 
 #endif
