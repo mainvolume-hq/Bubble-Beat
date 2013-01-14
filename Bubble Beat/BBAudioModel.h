@@ -25,7 +25,8 @@
     float*    musicLibraryBuffer;       // An intermediate buffer for audio content from music library
     BOOL      inputType;                // YES = Microphone, NO = Music
     
-    FFT*      fft;
+    FFT*       fft;
+    FFT_FRAME* fftFrame;
 }
 
 + (BBAudioModel *)sharedAudioModel;

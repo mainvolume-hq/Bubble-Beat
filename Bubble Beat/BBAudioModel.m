@@ -52,10 +52,10 @@ static OSStatus renderCallback(void *inRefCon,
     }
     
     // fftIp() takes care of windowing for us
-    //fftIp(model->fft, model->monoAnalysisBuffer);
+    fft(model->fftFrame, model->monoAnalysisBuffer);
     
     // get magnitude
-    //magnitude((COMPLEX_SPLIT *)model->monoAnalysisBuffer, model->windowSize / 2);
+    magnitude(&model->fftFrame->buffer, model->monoAnalysisBuffer, model->fft->sizeOverTwo);
     
     // Dealing with output
     for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
@@ -142,6 +142,7 @@ static float middleEarFilter(float input)
         
         fft = newFFT(windowSize);
         createWindow(fft, HANN);
+        fftFrame = newFFTFrame(fft);
     }
     
     return self;
@@ -155,6 +156,7 @@ static float middleEarFilter(float input)
     free(monoAnalysisBuffer);
     
     freeFFT(fft);
+    freeFFTFrame(fftFrame);
 }
 
 

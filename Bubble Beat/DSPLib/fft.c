@@ -105,7 +105,7 @@ void fft(FFT_FRAME* frame, float* audioBuffer)
 void fftIp(FFT* fftObject, float* audioBuffer)
 {
     // Creating pointer of COMPLEX_SPLIT to use in calculations (points to same data as audioBuffer)
-    COMPLEX_SPLIT* fftBuffer = (COMPLEX_SPLIT*)audioBuffer;
+    COMPLEX_SPLIT* fftBuffer = (COMPLEX_SPLIT *)&audioBuffer[0];
     
     // Apply windowing
     if (fftObject->window != NULL)
@@ -165,7 +165,7 @@ void createWindow(FFT* fft, int windowType)
 }
 
 
-void magnitude(COMPLEX_SPLIT* buffer, int size)
+void magnitude(COMPLEX_SPLIT* inputBuffer, float* outputBuffer, int size)
 {
-    vDSP_vdist(buffer->realp, 1, buffer->imagp, 1, buffer->realp, 1, size);
+    vDSP_vdist(inputBuffer->realp, 1, inputBuffer->imagp, 1, outputBuffer, 1, size);
 }
