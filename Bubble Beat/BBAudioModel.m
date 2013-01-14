@@ -163,10 +163,9 @@ static float middleEarFilter(float input)
     free(musicLibraryBuffer);
     free(monoAnalysisBuffer);
     // free fft stuffs
-    freeFFTFrame(fftFrame);
     freeFFT(fft);
+    freeFFTFrame(fftFrame);
     // free bark stuffs
-    freeBarkBands(bark);
     freeBark(bark);
 }
 

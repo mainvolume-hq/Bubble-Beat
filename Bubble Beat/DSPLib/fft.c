@@ -28,8 +28,8 @@ FFT* newFFT(int size)
     fft->normalize = 1.0 / (2.0 * fft->size);
     
     // create fft setup
-    vDSP_Length logTwo = log2f(fft->size);
-    fft->fftSetup = vDSP_create_fftsetup(logTwo, FFT_RADIX2);
+    fft->logTwo = log2f(fft->size);
+    fft->fftSetup = vDSP_create_fftsetup(fft->logTwo, FFT_RADIX2);
     
     if (fft->fftSetup == 0)
     {
@@ -86,13 +86,13 @@ void freeFFTFrame(FFT_FRAME* frame)
 void fft(FFT_FRAME* frame, float* audioBuffer)
 {
 	FFT* fft = frame->fft;
-
-    // This applies the windowing
-    if (fft->window != NULL)
-    	vDSP_vmul(audioBuffer, 1, fft->window, 1, audioBuffer, 1, fft->size);
     
     // Do some data packing stuff
     vDSP_ctoz((COMPLEX*)audioBuffer, 2, &frame->buffer, 1, fft->sizeOverTwo);
+    
+    // This applies the windowing
+    if (fft->window != NULL)
+    	vDSP_vmul(audioBuffer, 1, fft->window, 1, audioBuffer, 1, fft->size);
     
     // Actually perform the fft
     vDSP_fft_zrip(fft->fftSetup, &frame->buffer, 1, fft->logTwo, FFT_FORWARD);
