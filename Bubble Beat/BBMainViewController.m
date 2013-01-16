@@ -31,6 +31,11 @@
     [bubbleFactory.view setFrame:rect];
     [self.view insertSubview:bubbleFactory.view atIndex:0];
     
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(eventHandler:)
+     name:@"onsetDetected"
+     object:nil ];
     
     audioModel = [[BBAudioModel alloc] init];
     [audioModel setupAudioSession];
@@ -251,6 +256,11 @@
             break;
         }
     }
+}
+
+-(void)eventHandler: (NSNotification *) notification
+{
+    [bubbleFactory makeBubbleWithSize:20];
 }
 
 

@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Bubble Beat/BBMainViewController.m"
-         timestampString = "379836768.707797"
+         timestampString = "380062445.565741"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "86"
-         endingLineNumber = "86"
+         startingLineNumber = "91"
+         endingLineNumber = "91"
          landmarkName = "-animateSplashScreens"
          landmarkType = "5">
       </FileBreakpoint>

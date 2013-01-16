@@ -79,7 +79,9 @@ static OSStatus renderCallback(void *inRefCon,
         filterConsecutiveOnsets(model->peak_picker);
         
         //find peaks
-        int peak = pickPeaks(model->peak_picker);
+        if(pickPeaks(model->peak_picker)) {
+            [model onsetDetected];
+        }
         
         
     }
@@ -323,6 +325,9 @@ static float middleEarFilter(float input)
 
 - (void)onsetDetected{
     
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"onsetDetected"
+     object:nil ];
 
 }
 
