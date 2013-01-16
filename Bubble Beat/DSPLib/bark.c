@@ -111,6 +111,13 @@ void multiplyBarkFilterbank(BARK* bark, float* analysis)
     }
 }
 
+void iterateBarkBins(BARK* bark){
+    int length = sizeof(bark->barkBins) / sizeof(float);
+    for (int i = 0; i<length; i++) {
+        bark->prevBarkBins[i] = bark->barkBins[i];
+    }
+}
+
 # pragma mark - Bark Utility Functions -
 
 void condenseAnalysis(BARK* bark, float* analysis)

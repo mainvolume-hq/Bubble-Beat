@@ -66,6 +66,25 @@ static OSStatus renderCallback(void *inRefCon,
     // Multiply by loudness curves
     multiplyLoudness(model->bark);
     
+    // -- Spectral Flux peak picking -- //
+    if (model->bark->prevBarkBins != NULL) {
+        
+        //get into our feature space
+        accumulate_bin_differences(model->peak_picker, model->bark);
+        
+        //apply perceptual mask
+//        applyMask(model->peak_picker);
+        
+        //consecutive onset filtering
+//        filterConsecutiveOnsets(model->peak_picker);
+        
+        //find peaks
+        pickPeaks(model->peak_picker);
+        
+        
+    }
+    iterateBarkBins(model->bark);
+    
     // Dealing with output
     for (int channel = 0; channel < ioData->mNumberBuffers; channel++)
     {
@@ -157,6 +176,7 @@ static float middleEarFilter(float input)
         createBarkFilterbank(bark);
         
         inputType = NO;
+        peak_picker = newPeakPicker();
     }
     
     return self;
@@ -173,6 +193,7 @@ static float middleEarFilter(float input)
     freeFFTFrame(fftFrame);
     // free bark stuffs
     freeBark(bark);
+    freePP(peak_picker);
 }
 
 

@@ -22,6 +22,7 @@
 		4285DAF716A3758900000B31 /* BBGLKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4285DAF416A3758900000B31 /* BBGLKitView.xib */; };
 		4285DAF816A3758900000B31 /* BBGLKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4285DAF616A3758900000B31 /* BBGLKitViewController.m */; };
 		6007408416A46ECB00D09911 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6007408316A46ECB00D09911 /* Icon@2x.png */; };
+		600740E816A7139100D09911 /* peak_picker.c in Sources */ = {isa = PBXBuildFile; fileRef = 600740E716A7139100D09911 /* peak_picker.c */; };
 		602A4AE516A3D8A400BC4043 /* MySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 602A4AE416A3D8A400BC4043 /* MySlider.m */; };
 		602A4AE916A3D8BF00BC4043 /* BBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 602A4AE816A3D8BF00BC4043 /* BBMainViewController.m */; };
 		602A4AFA16A3D8F900BC4043 /* amtSlider.png in Resources */ = {isa = PBXBuildFile; fileRef = 602A4AEB16A3D8F900BC4043 /* amtSlider.png */; };
@@ -71,6 +72,8 @@
 		4285DAF516A3758900000B31 /* BBGLKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBGLKitViewController.h; sourceTree = "<group>"; };
 		4285DAF616A3758900000B31 /* BBGLKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBGLKitViewController.m; sourceTree = "<group>"; };
 		6007408316A46ECB00D09911 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		600740E516A7108100D09911 /* peak_picker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = peak_picker.h; sourceTree = "<group>"; };
+		600740E716A7139100D09911 /* peak_picker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = peak_picker.c; sourceTree = "<group>"; };
 		602A4AE316A3D8A400BC4043 /* MySlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySlider.h; sourceTree = "<group>"; };
 		602A4AE416A3D8A400BC4043 /* MySlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySlider.m; sourceTree = "<group>"; };
 		602A4AE716A3D8BF00BC4043 /* BBMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBMainViewController.h; sourceTree = "<group>"; };
@@ -222,6 +225,8 @@
 				426EE344167CC74200197912 /* util.c */,
 				426EE340167CC49300197912 /* bark.h */,
 				426EE342167CC54F00197912 /* bark.c */,
+				600740E516A7108100D09911 /* peak_picker.h */,
+				600740E716A7139100D09911 /* peak_picker.c */,
 			);
 			path = DSPLib;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				4285DAF816A3758900000B31 /* BBGLKitViewController.m in Sources */,
 				602A4AE516A3D8A400BC4043 /* MySlider.m in Sources */,
 				602A4AE916A3D8BF00BC4043 /* BBMainViewController.m in Sources */,
+				600740E816A7139100D09911 /* peak_picker.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

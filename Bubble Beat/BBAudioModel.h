@@ -12,6 +12,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "fft.h"
 #import "bark.h"
+#import "peak_picker.h"
 
 @interface BBAudioModel : NSObject
 {
@@ -30,6 +31,7 @@
     FFT_FRAME* fftFrame;
     
     BARK*     bark;
+    PEAK_PICKER* peak_picker;
 }
 
 + (BBAudioModel *)sharedAudioModel;

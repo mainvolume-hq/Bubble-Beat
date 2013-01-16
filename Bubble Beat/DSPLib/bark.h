@@ -49,6 +49,8 @@ void freeBarkBands(BARK* bark);
 void createBarkFilterbank(BARK* bark);
 void multiplyBarkFilterbank(BARK* bark, float* analysis);
 
+void iterateBarkBins(BARK* bark);
+
 // Bark utility functions
 void condenseAnalysis(BARK* bark, float* analysis);
 void multiplyLoudness(BARK* bark);
