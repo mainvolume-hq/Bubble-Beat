@@ -12,5 +12,5 @@
 
 float halfwaveRectify(float value)
 {
-    return (value + fabs(value) / 2);
+    return (value + fabsf(value) / 2);
 }

@@ -20,11 +20,11 @@ PEAK_PICKER* newPeakPicker()
     peakPicker-> flag =                 0;
     peakPicker-> debounce_iterator =    0;
     peakPicker-> debounce_threshold =   0;
-    peakPicker-> u_threshold =          0.5;
-    peakPicker-> l_threshold =          0.1;
+    peakPicker-> u_threshold =          0.01;
+    peakPicker-> l_threshold =          0;
     peakPicker-> u_threshold_scale =    10.0;
     peakPicker-> l_threshold_scale =    1.0;
-    peakPicker-> cof_threshold =        10;
+    peakPicker-> cof_threshold =        1;
     peakPicker-> cof_iterator =         0;
     peakPicker-> cof_flag =             0;
     peakPicker-> maskingDecay =         0.7;
@@ -46,12 +46,12 @@ void accumulate_bin_differences(PEAK_PICKER* pp, BARK* bark){
     float diff = 0;
     int length = sizeof(bark->barkBins) / sizeof(float);
     for (int i=0; i<length; i++) {
-        diff += halfwaveRectify(fabsf(bark->barkBins[i]) - fabsf(bark->prevBarkBins[i]));
+        diff = diff + (bark->barkBins[i] - bark->prevBarkBins[i]);
     }
-    
+
     pp->bark_difference = diff;
     
-    //printf("diff: %f \n",diff);
+    
     
 }
 
@@ -95,8 +95,10 @@ void filterConsecutiveOnsets(PEAK_PICKER* pp){
     }
 }
 
-void pickPeaks(PEAK_PICKER* pp){
+int pickPeaks(PEAK_PICKER* pp){
 
+    int onset = 0;
+    
     switch (pp->flag) {
         case 0:
             //flag is down
@@ -106,10 +108,10 @@ void pickPeaks(PEAK_PICKER* pp){
                 
                 //and we're not filtering consecutive onsets,
                 if (pp->cof_flag == 0) {
-                    
+
                     //Let's flag this spot for a potential onset and hang on to that peak value if it ends up being one.
                     pp->flag = 1;
-                    pp->debounce_iterator = 1;
+                    pp->debounce_iterator = 0;
                     pp->peak_value = pp->bark_difference;
                     
                 }
@@ -131,7 +133,7 @@ void pickPeaks(PEAK_PICKER* pp){
                     //flag this as a better estimate for the onset
                     
                     pp->flag = 1;
-                    pp->debounce_iterator = 1;
+                    pp->debounce_iterator = 0;
                     pp->peak_value = pp->bark_difference;
                     
                 }
@@ -148,7 +150,7 @@ void pickPeaks(PEAK_PICKER* pp){
                         //onset verified!
                         
                         // TODO: communicate with view controller
-                        printf("ONSET!");
+                        onset = 1;
                         
                         pp->debounce_iterator = 0;
                         pp->flag = 0;
@@ -168,7 +170,7 @@ void pickPeaks(PEAK_PICKER* pp){
                             //onset verified!
                             
                             //TODO: communicate with view controller
-                            printf("ONSET!");
+                            onset = 1;
                             
                             pp->debounce_iterator=0;
                             pp->flag = 0;
@@ -187,6 +189,8 @@ void pickPeaks(PEAK_PICKER* pp){
             }
             break;
     }
+    
+    return onset;
 }
 
 

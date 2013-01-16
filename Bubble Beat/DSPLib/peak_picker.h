@@ -35,7 +35,7 @@ PEAK_PICKER* newPeakPicker();
 void accumulate_bin_differences(PEAK_PICKER* pp, BARK* bark);
 void applyMask(PEAK_PICKER* pp);
 void filterConsecutiveOnsets(PEAK_PICKER* pp);
-void pickPeaks(PEAK_PICKER* pp);
+int pickPeaks(PEAK_PICKER* pp);
 void freePP(PEAK_PICKER *pp);
 
 #endif

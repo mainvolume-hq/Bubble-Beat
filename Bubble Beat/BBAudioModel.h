@@ -43,6 +43,7 @@
 
 - (void)setMicrophoneInput;
 - (void)setMusicInput;
+- (void)onsetDetected;
 
 @property int blockSize;
 @property int sampleRate;

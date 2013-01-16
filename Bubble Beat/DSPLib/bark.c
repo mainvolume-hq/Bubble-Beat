@@ -26,8 +26,9 @@ BARK* newBark(int windowSize, int sampleRate)
     
     newBarkBands(bark);
     
-    bark->filteredOdd = (float *)malloc((bark->windowSize / 2) * sizeof(float));
-    bark->filteredEven = (float *)malloc((bark->windowSize / 2) * sizeof(float));
+    float halfWave = bark->windowSize / 2;
+    bark->filteredOdd = (float *)malloc(halfWave * sizeof(float));
+    bark->filteredEven = (float *)malloc(halfWave * sizeof(float));
     
     return bark;
 }
@@ -46,7 +47,8 @@ void newBarkBands(BARK* bark)
 {
     for (int i = 0; i < NUM_BARK_FILTER_BUFS; i++)
     {
-        bark->filterBands[i].band = (float *)malloc((bark->windowSize / 2) * sizeof(float));
+        float halfWave = bark->windowSize / 2;
+        bark->filterBands[i].band = (float *)malloc(halfWave * sizeof(float));
         
         for (int j = 0; j < bark->windowSize / 2; j++)
             bark->filterBands[i].band[j] = 0.0;
@@ -139,7 +141,7 @@ void condenseAnalysis(BARK* bark, float* analysis)
 void multiplyLoudness(BARK* bark)
 {
     for (int i = 0; i < NUM_BARKS; i++)
-        bark->barkBins[i] *= bandWeightings[i];
+        bark->barkBins[i] = bark->barkBins[i]*bandWeightings[i];
 }
 
 

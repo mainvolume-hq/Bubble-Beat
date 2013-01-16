@@ -76,13 +76,14 @@ static OSStatus renderCallback(void *inRefCon,
 //        applyMask(model->peak_picker);
         
         //consecutive onset filtering
-//        filterConsecutiveOnsets(model->peak_picker);
+        filterConsecutiveOnsets(model->peak_picker);
         
         //find peaks
-        pickPeaks(model->peak_picker);
+        int peak = pickPeaks(model->peak_picker);
         
         
     }
+    
     iterateBarkBins(model->bark);
     
     // Dealing with output
@@ -318,6 +319,11 @@ static float middleEarFilter(float input)
 {
     OSErr err = AudioUnitInitialize(bbUnit);
     NSAssert1(err == noErr, @"Error initializing unit: %hd", err);
+}
+
+- (void)onsetDetected{
+    
+
 }
 
 @end
