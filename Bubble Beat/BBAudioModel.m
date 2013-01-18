@@ -16,6 +16,7 @@
 @synthesize blockSize;
 @synthesize sampleRate;
 @synthesize musicLibraryBuffer;
+@synthesize canReadMusicFile;
 
 #pragma mark - Audio Render Callback -
 static OSStatus renderCallback(void *inRefCon,
@@ -184,6 +185,7 @@ static float middleEarFilter(float input)
         mic = YES;
         music = NO;
         inputType = mic;
+        canReadMusicFile = NO;                  // initially say that we can't read from this buffer
         peak_picker = newPeakPicker();
     }
     

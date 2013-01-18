@@ -22,6 +22,8 @@
 		4285DAF716A3758900000B31 /* BBGLKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4285DAF416A3758900000B31 /* BBGLKitView.xib */; };
 		4285DAF816A3758900000B31 /* BBGLKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4285DAF616A3758900000B31 /* BBGLKitViewController.m */; };
 		42B3556C16A9D6A10039D1FF /* BBOptionsScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3556B16A9D6A10039D1FF /* BBOptionsScrollViewController.m */; };
+		42B3556F16A9E06B0039D1FF /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B3556E16A9E06B0039D1FF /* MediaPlayer.framework */; };
+		42B3557116A9E07B0039D1FF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B3557016A9E07B0039D1FF /* AVFoundation.framework */; };
 		6007408416A46ECB00D09911 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6007408316A46ECB00D09911 /* Icon@2x.png */; };
 		600740E816A7139100D09911 /* peak_picker.c in Sources */ = {isa = PBXBuildFile; fileRef = 600740E716A7139100D09911 /* peak_picker.c */; };
 		602A4AE516A3D8A400BC4043 /* MySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 602A4AE416A3D8A400BC4043 /* MySlider.m */; };
@@ -74,6 +76,8 @@
 		4285DAF616A3758900000B31 /* BBGLKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBGLKitViewController.m; sourceTree = "<group>"; };
 		42B3556A16A9D6A10039D1FF /* BBOptionsScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBOptionsScrollViewController.h; sourceTree = "<group>"; };
 		42B3556B16A9D6A10039D1FF /* BBOptionsScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBOptionsScrollViewController.m; sourceTree = "<group>"; };
+		42B3556E16A9E06B0039D1FF /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		42B3557016A9E07B0039D1FF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6007408316A46ECB00D09911 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		600740E516A7108100D09911 /* peak_picker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = peak_picker.h; sourceTree = "<group>"; };
 		600740E716A7139100D09911 /* peak_picker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = peak_picker.c; sourceTree = "<group>"; };
@@ -115,6 +119,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42B3557116A9E07B0039D1FF /* AVFoundation.framework in Frameworks */,
+				42B3556F16A9E06B0039D1FF /* MediaPlayer.framework in Frameworks */,
 				60BBB6CC169B898C00E8E155 /* OpenGLES.framework in Frameworks */,
 				60BBB6CB169B898500E8E155 /* GLKit.framework in Frameworks */,
 				426EE34B167CE79500197912 /* AudioToolbox.framework in Frameworks */,
@@ -148,6 +154,8 @@
 		426DD698166EB60E009788A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42B3557016A9E07B0039D1FF /* AVFoundation.framework */,
+				42B3556E16A9E06B0039D1FF /* MediaPlayer.framework */,
 				60BBB6C9169B896500E8E155 /* GLKit.framework */,
 				60BBB6C6169B895B00E8E155 /* OpenGLES.framework */,
 				426EE349167CE79500197912 /* AudioToolbox.framework */,

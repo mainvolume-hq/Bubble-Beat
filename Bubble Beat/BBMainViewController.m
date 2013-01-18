@@ -138,6 +138,7 @@
     CGRect rect = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
     [optionsScrollView setFrame:rect];
     [scrollView addSubview:optionsScrollView];
+    [optionsScrollViewController setParentViewController:self];
     
 }
 

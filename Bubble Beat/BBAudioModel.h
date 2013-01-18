@@ -53,6 +53,7 @@
 @property int blockSize;
 @property int sampleRate;
 @property float* musicLibraryBuffer;
+@property BOOL canReadMusicFile;
 
 @end
 
