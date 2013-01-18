@@ -151,7 +151,7 @@ int pickPeaks(PEAK_PICKER* pp){
                         
                         // TODO: communicate with view controller
                         onset = 1;
-                        printf("onset!");
+                        //printf("onset!");
                         
                         pp->debounce_iterator = 0;
                         pp->flag = 0;
@@ -172,7 +172,7 @@ int pickPeaks(PEAK_PICKER* pp){
                             
                             //TODO: communicate with view controller
                             onset = 1;
-                            printf("onset!");
+                            //printf("onset!");
                             
                             pp->debounce_iterator=0;
                             pp->flag = 0;

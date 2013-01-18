@@ -26,12 +26,17 @@
     float*    monoAnalysisBuffer;       // mono signal that we do analysis on
     float*    musicLibraryBuffer;       // An intermediate buffer for audio content from music library
     BOOL      inputType;                // YES = Microphone, NO = Music
+    BOOL      mic;
+    BOOL      music;
     
     FFT*       fft;
     FFT_FRAME* fftFrame;
     
     BARK*     bark;
     PEAK_PICKER* peak_picker;
+    
+    Float32* left;
+    Float32* right;
 }
 
 + (BBAudioModel *)sharedAudioModel;

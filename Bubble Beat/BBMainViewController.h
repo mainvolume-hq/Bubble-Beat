@@ -8,6 +8,7 @@
 
 #import "BBGLKitViewController.h"
 #import "BBAudioModel.h"
+#import "BBOptionsScrollViewController.h"
 
 @interface BBMainViewController : UIViewController{
     
@@ -21,6 +22,7 @@
 @property (nonatomic,strong) UIView *optionsScrollView;
 @property (nonatomic,strong) UIImageView *splashView;
 @property (nonatomic,strong) BBGLKitViewController *bubbleFactory;
+@property (nonatomic,strong) BBOptionsScrollViewController* optionsScrollViewController;
 
 -(IBAction) optionsButtonPressed;
 -(IBAction) backButtonPressed;

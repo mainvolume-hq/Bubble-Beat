@@ -17,6 +17,7 @@
 
 @implementation BBMainViewController
 @synthesize optionsView,optionsScrollView,bubbleFactory,splashView;
+@synthesize optionsScrollViewController;
 
 
 - (void)viewDidLoad
@@ -129,8 +130,11 @@
 
 -(void)setUpScrollView{
     
-    NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"OptionsScrollView" owner:self options:nil];
-    optionsScrollView = [subviewArray objectAtIndex:0];
+//    NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"OptionsScrollView" owner:self options:nil];
+//    optionsScrollView = [subviewArray objectAtIndex:0];
+    
+    optionsScrollViewController = [[BBOptionsScrollViewController alloc] initWithNibName:@"OptionsScrollView" bundle:[NSBundle mainBundle]];
+    optionsScrollView = optionsScrollViewController.view;
     CGRect rect = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
     [optionsScrollView setFrame:rect];
     [scrollView addSubview:optionsScrollView];

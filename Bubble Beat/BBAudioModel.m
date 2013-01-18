@@ -30,13 +30,16 @@ static OSStatus renderCallback(void *inRefCon,
     
     // TODO: make this a member variable
     float numInputChannels;
-    if (model->inputType == YES)
+    if (model->inputType == model->mic)
+    {
         numInputChannels = 1;
+        model->left = (Float32 *)ioData->mBuffers[0].mData;
+        model->right = (Float32 *)ioData->mBuffers[1].mData;
+    }
     else
+    {
         numInputChannels = 2;
-    
-    Float32* left = (Float32 *)ioData->mBuffers[0].mData;
-    Float32* right = (Float32 *)ioData->mBuffers[1].mData;
+    }
     
     int sizeDiff = model->windowSize - inNumberFrames;
     // shift previous values into front
@@ -46,7 +49,7 @@ static OSStatus renderCallback(void *inRefCon,
     // input convert to mono and shift into analysis buffer
     for (int i = 0; i < inNumberFrames; i++)
     {
-        float mono = (left[i] + right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
+        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
         mono = outerEarFilter(mono);
         model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
     }
@@ -97,7 +100,7 @@ static OSStatus renderCallback(void *inRefCon,
         // Loop through the blocksize
         for (int frame = 0; frame < inNumberFrames; frame++)
         {
-            if (model->inputType == YES)    // If we're using the microphone set output to 0.0 so we don't feedback
+            if (model->inputType == model->mic)    // If we're using the microphone set output to 0.0 so we don't feedback
                 output[frame] = 0.0;
         }
     }
@@ -178,7 +181,9 @@ static float middleEarFilter(float input)
         bark = newBark(windowSize, sampleRate);
         createBarkFilterbank(bark);
         
-        inputType = NO;
+        mic = YES;
+        music = NO;
+        inputType = mic;
         peak_picker = newPeakPicker();
     }
     
@@ -300,12 +305,12 @@ static float middleEarFilter(float input)
 
 - (void)setMicrophoneInput
 {
-    inputType = YES;
+    inputType = mic;
 }
 
 - (void)setMusicInput
 {
-    inputType = NO;
+    inputType = music;
 }
 
 - (void)startAudioSession
