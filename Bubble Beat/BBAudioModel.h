@@ -25,6 +25,8 @@
     
     float*    monoAnalysisBuffer;       // mono signal that we do analysis on
     float*    musicLibraryBuffer;       // An intermediate buffer for audio content from music library
+    int*      musicLibraryReadPosition;
+    int       musicLibraryBufferSize;
     BOOL      inputType;                // YES = Microphone, NO = Music
     BOOL      mic;
     BOOL      music;
@@ -37,6 +39,8 @@
     
     Float32* left;
     Float32* right;
+    
+    int test;
 }
 
 + (BBAudioModel *)sharedAudioModel;
@@ -49,11 +53,14 @@
 - (void)setMicrophoneInput;
 - (void)setMusicInput;
 - (void)onsetDetected;
+- (void)setupMediaBuffers:(float *)readBuffer position:(int *)readPosition size:(int)size;
 
 @property int blockSize;
 @property int sampleRate;
 @property float* musicLibraryBuffer;
 @property BOOL canReadMusicFile;
+@property BOOL inputType;
+@property int test;
 
 @end
 

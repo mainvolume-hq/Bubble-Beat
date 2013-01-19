@@ -21,6 +21,7 @@
 		426EE34B167CE79500197912 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426EE349167CE79500197912 /* AudioToolbox.framework */; };
 		4285DAF716A3758900000B31 /* BBGLKitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4285DAF416A3758900000B31 /* BBGLKitView.xib */; };
 		4285DAF816A3758900000B31 /* BBGLKitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4285DAF616A3758900000B31 /* BBGLKitViewController.m */; };
+		42AC0C1116AA0155000AE082 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0C1016AA0155000AE082 /* CoreMedia.framework */; };
 		42B3556C16A9D6A10039D1FF /* BBOptionsScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B3556B16A9D6A10039D1FF /* BBOptionsScrollViewController.m */; };
 		42B3556F16A9E06B0039D1FF /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B3556E16A9E06B0039D1FF /* MediaPlayer.framework */; };
 		42B3557116A9E07B0039D1FF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B3557016A9E07B0039D1FF /* AVFoundation.framework */; };
@@ -74,6 +75,7 @@
 		4285DAF416A3758900000B31 /* BBGLKitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BBGLKitView.xib; sourceTree = "<group>"; };
 		4285DAF516A3758900000B31 /* BBGLKitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBGLKitViewController.h; sourceTree = "<group>"; };
 		4285DAF616A3758900000B31 /* BBGLKitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBGLKitViewController.m; sourceTree = "<group>"; };
+		42AC0C1016AA0155000AE082 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		42B3556A16A9D6A10039D1FF /* BBOptionsScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBOptionsScrollViewController.h; sourceTree = "<group>"; };
 		42B3556B16A9D6A10039D1FF /* BBOptionsScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBOptionsScrollViewController.m; sourceTree = "<group>"; };
 		42B3556E16A9E06B0039D1FF /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -119,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AC0C1116AA0155000AE082 /* CoreMedia.framework in Frameworks */,
 				42B3557116A9E07B0039D1FF /* AVFoundation.framework in Frameworks */,
 				42B3556F16A9E06B0039D1FF /* MediaPlayer.framework in Frameworks */,
 				60BBB6CC169B898C00E8E155 /* OpenGLES.framework in Frameworks */,
@@ -154,6 +157,7 @@
 		426DD698166EB60E009788A8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42AC0C1016AA0155000AE082 /* CoreMedia.framework */,
 				42B3557016A9E07B0039D1FF /* AVFoundation.framework */,
 				42B3556E16A9E06B0039D1FF /* MediaPlayer.framework */,
 				60BBB6C9169B896500E8E155 /* GLKit.framework */,

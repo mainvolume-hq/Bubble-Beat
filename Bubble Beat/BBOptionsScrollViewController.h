@@ -16,10 +16,11 @@
 {
     int mic;
     int music;
-    BOOL importFlag;                        // YES = currently importing, NO = not importing
+
     MPMediaPickerController* mediaPicker;
     NSURL* previousSong;
     NSURL* currentSong;
+    NSOperationQueue* queue;
     
     float* mediaBuffer;                     // audio buffer for the iTunes song
     int mediaBufferSize;
@@ -27,7 +28,11 @@
     int readPosition;
     
     BOOL playing;                           // YES = audio currently playing, NO = not playing
-    BOOL initialRead;                       // 
+    BOOL initialRead;                       //
+    BOOL loadingInBackground;               // YES = loading audio file in background, NO = yeah you get it
+    BOOL importFlag;                        // YES = currently importing, NO = not importing
+    BOOL earlyFinish;
+    BOOL restart;
 }
 
 @property (nonatomic, weak) UIViewController* parentViewController;

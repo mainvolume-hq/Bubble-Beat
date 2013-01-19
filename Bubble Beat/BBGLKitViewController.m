@@ -90,8 +90,9 @@
     for(int i=0;i<[bubbles count];i++){
         TREEllipse *bubble = [bubbles objectAtIndex:i];
         
-        if (bubble.position.x<0-bubble.radius | bubble.color.a <0)
-        {[bubbles removeObjectAtIndex:i];
+        if (bubble.position.x<0-bubble.radius || bubble.color.a <0)
+        {
+            [bubbles removeObjectAtIndex:i];
         }
         else{
         [bubble setPosition:GLKVector2Make(bubble.position.x - bubble.x_velocity, bubble.position.y - bubble.y_velocity)];

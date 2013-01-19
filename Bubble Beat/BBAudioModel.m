@@ -17,6 +17,8 @@
 @synthesize sampleRate;
 @synthesize musicLibraryBuffer;
 @synthesize canReadMusicFile;
+@synthesize inputType;
+@synthesize test;
 
 #pragma mark - Audio Render Callback -
 static OSStatus renderCallback(void *inRefCon,
@@ -29,8 +31,9 @@ static OSStatus renderCallback(void *inRefCon,
     BBAudioModel* model = (__bridge BBAudioModel*)inRefCon;
     AudioUnitRender(model->bbUnit, ioActionFlags, inTimeStamp, 1, inNumberFrames, ioData);
     
-    // TODO: make this a member variable
     float numInputChannels;
+    int musicPosition;
+
     if (model->inputType == model->mic)
     {
         numInputChannels = 1;
@@ -40,6 +43,26 @@ static OSStatus renderCallback(void *inRefCon,
     else
     {
         numInputChannels = 2;
+        if (model->canReadMusicFile == YES) // If we are allowed to read from these buffers
+        {
+            musicPosition = (*model->musicLibraryReadPosition);
+            for (int sample = 0; sample < inNumberFrames; sample++)
+            {
+                model->left[sample] = model->musicLibraryBuffer[musicPosition];
+                model->right[sample] = model->musicLibraryBuffer[musicPosition + 1];
+                musicPosition = (musicPosition + 2) % model->musicLibraryBufferSize;
+            }
+            
+            (*(model->musicLibraryReadPosition)) = musicPosition;
+        }
+        else    // we're not allowed to read from these buffers, spit out 0.0's
+        {
+            for (int sample = 0; sample < inNumberFrames; sample++)
+            {
+                model->left[sample] = 0.0;
+                model->right[sample] = 0.0;
+            }
+        }
     }
     
     int sizeDiff = model->windowSize - inNumberFrames;
@@ -103,6 +126,14 @@ static OSStatus renderCallback(void *inRefCon,
         {
             if (model->inputType == model->mic)    // If we're using the microphone set output to 0.0 so we don't feedback
                 output[frame] = 0.0;
+            else
+            {
+                // TODO: clean this up
+                if (channel == 0)
+                    output[frame] = model->left[frame];
+                else if (channel == 1)
+                    output[frame] = model->right[frame];
+            }
         }
     }
     
@@ -278,9 +309,11 @@ static float middleEarFilter(float input)
     OSStatus status;
     Float32 bufferDuration = (blockSize + 0.5) / sampleRate;           // add 0.5 to blockSize, need to so bufferDuration is correct value
     UInt32 category = kAudioSessionCategory_PlayAndRecord;
+    UInt32 speaker = kAudioSessionOverrideAudioRoute_Speaker;
     
     status = AudioSessionInitialize(NULL, NULL, NULL, (__bridge void *)self);
     status = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
+    status = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(speaker), &speaker);
     status = AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareSampleRate, sizeof(sampleRate), &sampleRate);
     status = AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(bufferDuration), &bufferDuration);
     
@@ -307,12 +340,13 @@ static float middleEarFilter(float input)
 
 - (void)setMicrophoneInput
 {
-    inputType = mic;
+    self.inputType = mic;
 }
 
 - (void)setMusicInput
 {
-    inputType = music;
+    self.inputType = music;
+    self.test = 10000;
 }
 
 - (void)startAudioSession
@@ -336,6 +370,14 @@ static float middleEarFilter(float input)
      postNotificationName:@"onsetDetected"
      object:nil ];
 
+}
+
+- (void)setupMediaBuffers:(float *)readBuffer position:(int *)readPosition size:(int)size
+{
+    musicLibraryBuffer = readBuffer;
+    musicLibraryReadPosition = readPosition;
+    musicLibraryBufferSize = size;
+    canReadMusicFile = NO;
 }
 
 @end

@@ -38,11 +38,10 @@
      name:@"onsetDetected"
      object:nil ];
     
-    audioModel = [[BBAudioModel alloc] init];
-    [audioModel setupAudioSession];
-    [audioModel setupAudioUnit];
-    [audioModel startAudioUnit];
-    [audioModel startAudioSession];
+    [[BBAudioModel sharedAudioModel] setupAudioSession];
+    [[BBAudioModel sharedAudioModel] setupAudioUnit];
+    [[BBAudioModel sharedAudioModel] startAudioUnit];
+    [[BBAudioModel sharedAudioModel] startAudioSession];
     
     [self animateSplashScreens];
     
