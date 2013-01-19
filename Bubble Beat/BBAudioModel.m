@@ -100,19 +100,19 @@ static OSStatus renderCallback(void *inRefCon,
         accumulate_bin_differences(model->peak_picker, model->bark);
         
         //apply perceptual mask
-//        applyMask(model->peak_picker);
+        applyMask(model->peak_picker);
         
         //consecutive onset filtering
         filterConsecutiveOnsets(model->peak_picker);
         
         //find peaks
         if(pickPeaks(model->peak_picker)) {
-            [model onsetDetected];
+            [model onsetDetected:model->peak_picker->peak_value];
         }
-        
         
     }
     
+    updateQueue(model->peak_picker);
     iterateBarkBins(model->bark);
     
     // Dealing with output
@@ -364,11 +364,14 @@ static float middleEarFilter(float input)
     NSAssert1(err == noErr, @"Error initializing unit: %hd", err);
 }
 
-- (void)onsetDetected{
+- (void)onsetDetected:(float)salience{
+    
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:salience] forKey:@"salience"];
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onsetDetected"
-     object:nil ];
+     object:nil
+     userInfo:userInfo];
 
 }
 

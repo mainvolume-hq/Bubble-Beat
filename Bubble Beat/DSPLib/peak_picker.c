@@ -20,18 +20,22 @@ PEAK_PICKER* newPeakPicker()
     peakPicker-> flag =                 0;
     peakPicker-> debounce_iterator =    0;
     peakPicker-> debounce_threshold =   0;
+    
     peakPicker-> u_threshold =          0.01;
     peakPicker-> l_threshold =          0;
-    peakPicker-> u_threshold_scale =    10.0;
-    peakPicker-> l_threshold_scale =    1.0;
-    peakPicker-> cof_threshold =        1;
+    peakPicker-> u_threshold_scale =    4;
+    peakPicker-> l_threshold_scale =    2;
+    
+    peakPicker-> cof_threshold =        5;
     peakPicker-> cof_iterator =         0;
     peakPicker-> cof_flag =             0;
     peakPicker-> maskingDecay =         0.7;
-    peakPicker-> masking_threshold =    4;
+    peakPicker-> masking_threshold =    10;
     peakPicker-> mask_iterator =        0;
     peakPicker-> mask_flag =            0;
     
+    peakPicker-> firstQueue =           1;
+    peakPicker-> queueIterator =        0;
     
     return peakPicker;
 }
@@ -94,6 +98,33 @@ void filterConsecutiveOnsets(PEAK_PICKER* pp){
     else pp->cof_iterator++;
     }
 }
+
+void updateQueue(PEAK_PICKER* pp){
+    
+    if (pp->bark_difference >0) {
+        
+        pp->queue[pp->queueIterator] = pp->bark_difference;
+        
+        float sum = 0;
+        for (int i =0; i< (pp->firstQueue ? pp->queueIterator : 100); i++) {
+            sum += pp->queue[i];
+        }
+        
+        pp->queueMean = sum / (float)(pp->firstQueue ? pp->queueIterator : 100.0);
+        
+        pp->u_threshold = pp->queueMean * pp->u_threshold_scale;
+        pp->l_threshold = pp->queueMean * pp->l_threshold_scale;
+        
+        pp->queueIterator++;
+        if (pp->queueIterator >= 100) {
+            pp->queueIterator = 0;
+            pp->firstQueue = 0;
+        }
+        
+    }
+ 
+}
+
 
 int pickPeaks(PEAK_PICKER* pp){
 
@@ -192,6 +223,7 @@ int pickPeaks(PEAK_PICKER* pp){
             break;
     }
     
+    updateQueue(pp);
     return onset;
 }
 

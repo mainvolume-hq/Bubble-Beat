@@ -52,8 +52,9 @@
 
 - (void)setMicrophoneInput;
 - (void)setMusicInput;
-- (void)onsetDetected;
+
 - (void)setupMediaBuffers:(float *)readBuffer position:(int *)readPosition size:(int)size;
+- (void)onsetDetected:(float)salience;
 
 @property int blockSize;
 @property int sampleRate;
