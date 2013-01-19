@@ -10,7 +10,12 @@
 #import "BBAudioModel.h"
 #import "MySlider.h"
 
-@interface BBMainViewController ()
+@interface BBMainViewController () {
+    float bubbleSizeScale;
+    
+    
+    
+}
 
 @end
 
@@ -34,7 +39,7 @@
     
     [[NSNotificationCenter defaultCenter]
      addObserver:self
-     selector:@selector(eventHandler:)
+     selector:@selector(onsetDetected:)
      name:@"onsetDetected"
      object:nil ];
     
@@ -145,7 +150,7 @@
 -(void)setUpSliders{
     
     //-- Default and max/min values --//
-    float defaultBubbleScale = 0.5;
+    bubbleSizeScale = 0.5;
     float defaultUpperThresholdScale = 0.5;
     float maxBubbleScale = 1;
     float minBubbleScale = 0;
@@ -167,7 +172,7 @@
     sizeSlider.transform = trans;
     [sizeSlider setMaximumValue:maxBubbleScale];
     [sizeSlider setMinimumValue:minBubbleScale];
-    [sizeSlider setValue:defaultBubbleScale];
+    [sizeSlider setValue:bubbleSizeScale];
     [sizeSlider setThumbImage: [UIImage imageNamed:@"thumb.png"] forState:UIControlStateNormal];
     [sizeSlider setThumbImage: [UIImage imageNamed:@"thumb.png"] forState:UIControlStateHighlighted];
     [sizeSlider setMinimumTrackImage:[UIImage imageNamed:@"track.png"] forState:UIControlStateNormal];
@@ -198,12 +203,8 @@
 
 -(void)sizeChanged:(id) sender{
     UISlider *tempSlider = sender;
-    float newBubbleSizeScale = tempSlider.value;
-    //use newBubbleSizeScale to set the new bubble scaling factor
-    
-    //supress the unused warning for now
-    #pragma unused(newBubbleSizeScale)
-    
+    bubbleSizeScale = tempSlider.value;
+ 
 }
 
 -(void)quantityChanged:(id) sender{
@@ -263,9 +264,13 @@
     }
 }
 
--(void)eventHandler: (NSNotification *) notification
+-(void)onsetDetected: (NSNotification *) notification
 {
-    [bubbleFactory makeBubbleWithSize:20];
+    float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];    
+    float size = salience*bubbleSizeScale*100;
+    
+    [bubbleFactory makeBubbleWithSize:size];
+    
 }
 
 

@@ -28,6 +28,10 @@ typedef struct t_peak_picker {
     int    mask_flag;
     int     mask_iterator;
     int    automatic_thresholding;
+    double queue[100];
+    int    firstQueue;
+    int     queueIterator;
+    float   queueMean;
     
 } PEAK_PICKER;
 
@@ -37,5 +41,6 @@ void applyMask(PEAK_PICKER* pp);
 void filterConsecutiveOnsets(PEAK_PICKER* pp);
 int pickPeaks(PEAK_PICKER* pp);
 void freePP(PEAK_PICKER *pp);
+void updateQueue();
 
 #endif

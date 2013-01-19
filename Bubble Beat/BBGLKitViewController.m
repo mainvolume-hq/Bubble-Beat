@@ -8,6 +8,8 @@
 
 #import "BBGLKitViewController.h"
 
+#define biggestBubble 200
+#define smallestBubble 20
 
 @interface BBGLKitViewController ()
 
@@ -18,6 +20,7 @@
 @implementation BBGLKitViewController
 @synthesize context = _context;
 @synthesize bubbles;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,7 +47,7 @@
     view.multipleTouchEnabled = YES;
     
     alphaDecay = 0.008;
-    radiusSwell = 0.75;
+    radiusSwell = 1.01;
     bubbles = [[NSMutableArray alloc]init];
     [self.view setFrame:[[UIScreen mainScreen] bounds]];
     
@@ -90,13 +93,13 @@
     for(int i=0;i<[bubbles count];i++){
         TREEllipse *bubble = [bubbles objectAtIndex:i];
         
-        if (bubble.position.x<0-bubble.radius | bubble.color.a <0)
+        if (bubble.position.x<0-bubble.radius || bubble.color.a <0)
         {[bubbles removeObjectAtIndex:i];
         }
         else{
         [bubble setPosition:GLKVector2Make(bubble.position.x - bubble.x_velocity, bubble.position.y - bubble.y_velocity)];
         [bubble setColor:GLKVector4Make(bubble.color.r, bubble.color.g, bubble.color.b, bubble.color.a - alphaDecay)];
-        [bubble setRadius:bubble.radius+radiusSwell];
+        [bubble setRadius:bubble.radius*radiusSwell];
         [bubble render];
         }
     }
@@ -107,8 +110,10 @@
 -(void)makeBubbleWithSize:(float) bubbleSize{
     
     float radius = bubbleSize;
-    float transparency = 0.75;
-    float x_vel = 8 + arc4random_uniform(100/500.0f)-1;
+    if (radius<smallestBubble) radius=smallestBubble;
+    if (radius>biggestBubble) radius = biggestBubble;
+    float transparency = bubbleSize/50;
+    float x_vel = 8 + arc4random_uniform(100)/500.0f - 1;
     float y_vel = arc4random_uniform(1000)/125.0f - 2;
     
     UIColor *color = [UIColor colorWithHue:arc4random_uniform(1000)/1000.f saturation:1 brightness:1 alpha:1];

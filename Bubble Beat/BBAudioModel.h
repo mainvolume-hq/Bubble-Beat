@@ -48,7 +48,7 @@
 
 - (void)setMicrophoneInput;
 - (void)setMusicInput;
-- (void)onsetDetected;
+- (void)onsetDetected:(float)salience;
 
 @property int blockSize;
 @property int sampleRate;
