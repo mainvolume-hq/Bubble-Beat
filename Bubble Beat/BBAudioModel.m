@@ -9,7 +9,7 @@
 //  all the audio processing in the application. 
 
 #import "BBAudioModel.h"
-#define NUM_SECONDS 8           // This is 2 * number of seconds in buffer 8 = 4 seconds of stereo audio
+#define NUM_SECONDS 24           // This is 2 * number of seconds in buffer 8 = 4 seconds of stereo audio
 
 @implementation BBAudioModel
 
@@ -18,7 +18,7 @@
 @synthesize musicLibraryBuffer;
 @synthesize canReadMusicFile;
 @synthesize inputType;
-@synthesize test;
+@synthesize musicLibraryDuration;
 
 #pragma mark - Audio Render Callback -
 static OSStatus renderCallback(void *inRefCon,
@@ -53,6 +53,11 @@ static OSStatus renderCallback(void *inRefCon,
                 musicPosition = (musicPosition + 2) % model->musicLibraryBufferSize;
             }
             
+            // update position through the songfile to determine where we're at
+            model->musicLibraryCurrentPosition += inNumberFrames;
+            if (model->musicLibraryCurrentPosition >= model->musicLibraryDuration)
+                model->canReadMusicFile = NO;
+            
             (*(model->musicLibraryReadPosition)) = musicPosition;
         }
         else    // we're not allowed to read from these buffers, spit out 0.0's
@@ -78,7 +83,7 @@ static OSStatus renderCallback(void *inRefCon,
         model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
     }
     
-    // fftIp() takes care of windowing for us
+    // fft takes care of windowing for us
     fft(model->fftFrame, model->monoAnalysisBuffer);
     
     // get magnitude
@@ -100,7 +105,7 @@ static OSStatus renderCallback(void *inRefCon,
         accumulate_bin_differences(model->peak_picker, model->bark);
         
         //apply perceptual mask
-        applyMask(model->peak_picker);
+        //applyMask(model->peak_picker);
         
         //consecutive onset filtering
         filterConsecutiveOnsets(model->peak_picker);
@@ -112,7 +117,7 @@ static OSStatus renderCallback(void *inRefCon,
         
     }
     
-    updateQueue(model->peak_picker);
+    //updateQueue(model->peak_picker);
     iterateBarkBins(model->bark);
     
     // Dealing with output
@@ -346,7 +351,17 @@ static float middleEarFilter(float input)
 - (void)setMusicInput
 {
     self.inputType = music;
-    self.test = 10000;
+}
+
+- (void)setMusicLibraryDuration:(double)newMusicLibraryDuration
+{
+    musicLibraryDuration = newMusicLibraryDuration * sampleRate;
+    musicLibraryCurrentPosition = 0;
+}
+
+- (double)musicLibraryDuration
+{
+    return musicLibraryDuration;
 }
 
 - (void)startAudioSession

@@ -93,7 +93,7 @@
     for(int i=0;i<[bubbles count];i++){
         TREEllipse *bubble = [bubbles objectAtIndex:i];
         
-        if (bubble.position.x<0-bubble.radius || bubble.color.a <0)
+        if (bubble.position.x <= (0.0 - bubble.radius) || bubble.color.a <= 0.0)
         {[bubbles removeObjectAtIndex:i];
         }
         else{

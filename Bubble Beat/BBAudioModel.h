@@ -27,6 +27,9 @@
     float*    musicLibraryBuffer;       // An intermediate buffer for audio content from music library
     int*      musicLibraryReadPosition;
     int       musicLibraryBufferSize;
+    double    musicLibraryDuration;     // this is the duration of the audio file so we can figure out when it's done
+    int       musicLibraryCurrentPosition;
+    
     BOOL      inputType;                // YES = Microphone, NO = Music
     BOOL      mic;
     BOOL      music;
@@ -39,8 +42,6 @@
     
     Float32* left;
     Float32* right;
-    
-    int test;
 }
 
 + (BBAudioModel *)sharedAudioModel;
@@ -61,7 +62,7 @@
 @property float* musicLibraryBuffer;
 @property BOOL canReadMusicFile;
 @property BOOL inputType;
-@property int test;
+@property double musicLibraryDuration;
 
 @end
 
