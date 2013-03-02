@@ -37,10 +37,14 @@
 }
 
 @property (nonatomic, weak) UIViewController* parentViewController;
+@property (weak, nonatomic) IBOutlet UILabel *artistLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 - (IBAction)valueChanged:(UISegmentedControl *)sender;
 
 - (IBAction)transportButtonPressed:(UIButton *)sender;
+
+- (IBAction)musicLibraryPressed:(UIButton *)sender;
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection;
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker;

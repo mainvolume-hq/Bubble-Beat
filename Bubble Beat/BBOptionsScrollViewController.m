@@ -14,6 +14,8 @@
 
 @implementation BBOptionsScrollViewController
 @synthesize parentViewController;
+@synthesize artistLabel;
+@synthesize titleLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,6 +53,10 @@
     [[BBAudioModel sharedAudioModel] setMicrophoneInput];
     [[BBAudioModel sharedAudioModel] setupMediaBuffers:mediaBuffer position:&readPosition size:mediaBufferSize];
     
+    // Keep these hidden at first;
+    [artistLabel setHidden:YES];
+    [titleLabel setHidden:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,7 +70,7 @@
 {
     if (sender.selectedSegmentIndex == music)
     {
-        [self pickSong];
+        //[self pickSong];
         [[BBAudioModel sharedAudioModel] setMusicInput];
     }
     else if (sender.selectedSegmentIndex == mic)
@@ -111,6 +117,11 @@
         // eesh, don't know how to get the next song
         NSLog(@"Next button pressed...still need to figure this one out");
     }
+}
+
+- (IBAction)musicLibraryPressed:(UIButton *)sender
+{
+    [self pickSong];
 }
 
 #pragma mark - Song Related Methods -
@@ -351,6 +362,9 @@
 {
 	for (MPMediaItem* item in mediaItemCollection.items)
     {
+        NSString* artistString = @"Artist: ";
+        NSString* titleString = @"Title: ";
+        
 		NSString* title = [item valueForProperty:MPMediaItemPropertyTitle];
 		NSString* artist = [item valueForProperty:MPMediaItemPropertyArtist];
 		NSNumber* dur = [item valueForProperty:MPMediaItemPropertyPlaybackDuration];
@@ -369,6 +383,14 @@
         
         fileSelected = YES;
 		[self exportAssetAtURL:assetURL withTitle:title withArtist:artist];
+        
+        
+        [artistLabel setText:[artistString stringByAppendingString:artist]];
+        [titleLabel setText:[titleString stringByAppendingString:title]];
+        
+        // make labels visible
+        [artistLabel setHidden:NO];
+        [titleLabel setHidden:NO];
 	}
     
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
