@@ -43,6 +43,7 @@
     loadingInBackground = NO;
     initialRead = NO;
     earlyFinish = NO;
+    fileSelected = NO;
     
     writePosition = 0;
     readPosition = 0;
@@ -72,6 +73,46 @@
     }
 }
 
+- (IBAction)transportButtonPressed:(UIButton *)sender
+{
+    NSString* buttonLabel = sender.currentTitle;
+    
+    if ([buttonLabel isEqualToString:@">"])
+    {
+        // play button pressed
+        [sender setTitle:@"||" forState:UIControlStateNormal];
+        
+        // set state to playing
+        playing = YES;
+        
+        // start background process to load audio file if new file recently loaded
+        if (fileSelected == YES)
+        {
+            [self startAudioFileOperation];
+            fileSelected = NO;
+        }
+        
+        [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
+    }
+    else if ([buttonLabel isEqualToString:@"||"])
+    {
+        // pause button pressed
+        [sender setTitle:@">" forState:UIControlStateNormal];
+        
+        playing = NO;
+    }
+    else if ([buttonLabel isEqualToString:@"<<"])
+    {
+        // back button pressed
+        restart = YES;
+    }
+    else if ([buttonLabel isEqualToString:@">>"])
+    {
+        // eesh, don't know how to get the next song
+        NSLog(@"Next button pressed...still need to figure this one out");
+    }
+}
+
 #pragma mark - Song Related Methods -
 
 - (void)exportAssetAtURL:(NSURL*)assetURL withTitle:(NSString*)title withArtist:(NSString*)artist
@@ -86,8 +127,11 @@
 	
 	for (int i = 0; i < mediaBufferSize; ++i)
 		mediaBuffer[0] = 0.0; //zero out contents of buffer
-	
-	playing = YES;
+
+}
+
+- (void)startAudioFileOperation
+{
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc]
 										initWithTarget:self
 										selector:@selector(loadAudioFile)
@@ -154,6 +198,16 @@
                 {
                     earlyFinish = NO;
                     break;
+                }
+                if (playing == NO)
+                {
+                    // while playing flag is set at NO, just hang around
+                    while (playing == NO)
+                    {
+                        [BBAudioModel sharedAudioModel].canReadMusicFile = NO;
+                        usleep(100);            // TODO: This is the best option I can think of at the moment, maybe not ideal
+                    }
+                    
                 }
                 if (restart == YES)
                 {
@@ -245,9 +299,6 @@
             }
         }
 			
-		//any cleanup?
-		//for later, to tell main thread done...?
-		//performSelectorOnMainThread
 		[filereader cancelReading];
 		loadingInBackground = NO;
 		
@@ -259,8 +310,8 @@
 
 #pragma mark - Display Media Picker -
 
-- (void)showMediaPicker {
-	
+- (void)showMediaPicker
+{
 	mediaPicker = [[MPMediaPickerController alloc] initWithMediaTypes:MPMediaTypeMusic];
 	mediaPicker.delegate = self;
     [mediaPicker setAllowsPickingMultipleItems:NO];
@@ -296,29 +347,31 @@
 
 #pragma mark - Media Picking Delegate Methods -
 
-- (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection
+- (void)mediaPicker:(MPMediaPickerController *)inputMediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection
 {
 	for (MPMediaItem* item in mediaItemCollection.items)
     {
 		NSString* title = [item valueForProperty:MPMediaItemPropertyTitle];
 		NSString* artist = [item valueForProperty:MPMediaItemPropertyArtist];
-		//NSNumber* dur = [item valueForProperty:MPMediaItemPropertyPlaybackDuration];
-		//NSTimeInterval is a double
+		NSNumber* dur = [item valueForProperty:MPMediaItemPropertyPlaybackDuration];
 		
-        //duration_ = [dur doubleValue];
+        double duration = [dur doubleValue];
+        
+        [[BBAudioModel sharedAudioModel] setMusicLibraryDuration:duration];
 		
 		//MPMediaItemPropertyArtist
 		NSURL* assetURL = [item valueForProperty:MPMediaItemPropertyAssetURL];
-		if (nil == assetURL) {
-			/**
-			 * !!!: When MPMediaItemPropertyAssetURL is nil, it typically means the file
-			 * in question is protected by DRM. (old m4p files)
-			 */
+		if (nil == assetURL)
+        {
+            // TODO: have a message saying that we can't play this filef or some reason
 			return;
 		}
         
+        fileSelected = YES;
 		[self exportAssetAtURL:assetURL withTitle:title withArtist:artist];
 	}
+    
+    [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)inputMediaPicker

@@ -33,11 +33,14 @@
     BOOL importFlag;                        // YES = currently importing, NO = not importing
     BOOL earlyFinish;
     BOOL restart;
+    BOOL fileSelected;
 }
 
 @property (nonatomic, weak) UIViewController* parentViewController;
 
 - (IBAction)valueChanged:(UISegmentedControl *)sender;
+
+- (IBAction)transportButtonPressed:(UIButton *)sender;
 
 - (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection;
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker;
