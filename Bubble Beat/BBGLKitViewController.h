@@ -19,6 +19,7 @@
 }
 
 @property (nonatomic,strong) NSMutableArray *bubbles;
+@property (nonatomic,strong) NSMutableArray *removeBubbleArray;
 
 -(void)makeBubbleWithSize:(float) bubbleSize;
 

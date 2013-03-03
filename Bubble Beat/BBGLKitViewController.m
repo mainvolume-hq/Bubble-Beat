@@ -21,6 +21,7 @@
 @implementation BBGLKitViewController
 @synthesize context = _context;
 @synthesize bubbles;
+@synthesize removeBubbleArray;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -50,6 +51,7 @@
     alphaDecay = 0.008;
     radiusSwell = 1.01;
     bubbles = [[NSMutableArray alloc]init];
+    removeBubbleArray = [[NSMutableArray alloc] init];
     [self.view setFrame:[[UIScreen mainScreen] bounds]];
     
     backgroundColor = arc4random_uniform(1000)/1000.0f;
@@ -98,20 +100,25 @@
     {
         TREEllipse *bubble = [bubbles objectAtIndex:i];
         
-        if (bubble.position.x <= (0.0 - bubble.radius) || bubble.color.a <= 0.0)
+        if (bubble.position.x <= (0.0 - bubble.radius) || bubble.color.a < 0.0)
         {
-            [bubbles removeObjectAtIndex:i];
+            [removeBubbleArray addObject:bubble];
         }
         else
         {
             [bubble setPosition:GLKVector2Make(bubble.position.x - bubble.x_velocity, bubble.position.y - bubble.y_velocity)];
             [bubble setColor:GLKVector4Make(bubble.color.r, bubble.color.g, bubble.color.b, bubble.color.a - alphaDecay)];
             [bubble setRadius:bubble.radius*radiusSwell];
-            //[bubble render];
         }
     }
     
+    for (TREEllipse* index in removeBubbleArray)
+    {
+        [bubbles removeObject:index];
+    }
     
+    if ([removeBubbleArray count] > 0)
+        [removeBubbleArray removeAllObjects];
 }
 
 -(void)makeBubbleWithSize:(float) bubbleSize{

@@ -266,7 +266,7 @@
 -(void)onsetDetected: (NSNotification *) notification
 {
     float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];    
-    float size = salience*bubbleSizeScale*100;
+    float size = salience * bubbleSizeScale * 40;
     
     [bubbleFactory makeBubbleWithSize:size];
     

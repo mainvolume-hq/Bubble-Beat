@@ -389,7 +389,7 @@ static float middleEarFilter(float input)
 - (void)onsetDetected:(float)salience
 {
     
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:salience] forKey:@"salience"];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:exp(salience)] forKey:@"salience"];
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onsetDetected"
