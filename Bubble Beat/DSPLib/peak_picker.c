@@ -23,7 +23,7 @@ PEAK_PICKER* newPeakPicker()
     
     peakPicker-> u_threshold =          0.01;
     peakPicker-> l_threshold =          0;
-    peakPicker-> u_threshold_scale =    4;
+    peakPicker-> u_threshold_scale =    2;
     peakPicker-> l_threshold_scale =    2;
     
     peakPicker-> cof_threshold =        5;
@@ -223,7 +223,7 @@ int pickPeaks(PEAK_PICKER* pp){
             break;
     }
     
-    updateQueue(pp);
+    //updateQueue(pp);
     return onset;
 }
 
