@@ -8,6 +8,9 @@
 
 #import "BBOptionsScrollViewController.h"
 
+#define MIC 0
+#define MUSIC 1
+
 @interface BBOptionsScrollViewController ()
 
 @end
@@ -16,6 +19,10 @@
 @synthesize parentViewController;
 @synthesize artistLabel;
 @synthesize titleLabel;
+@synthesize playPauseButton;
+@synthesize restartButton;
+@synthesize musicLibraryButton;
+@synthesize nextButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,10 +45,11 @@
     mediaBufferSize = 44100 * 8;
     mediaBuffer = (float *)malloc(mediaBufferSize * sizeof(float));
     
-	mic = 1;
-    music = 0;
+	mic = 0;
+    music = 1;
     importFlag = NO;
     playing = NO;
+    playButtonState = NO;
     loadingInBackground = NO;
     initialRead = NO;
     earlyFinish = NO;
@@ -54,8 +62,7 @@
     [[BBAudioModel sharedAudioModel] setupMediaBuffers:mediaBuffer position:&readPosition size:mediaBufferSize];
     
     // Keep these hidden at first;
-    [artistLabel setHidden:YES];
-    [titleLabel setHidden:YES];
+    [self musicButtonsSetHidden:YES];
     
 }
 
@@ -66,16 +73,33 @@
 }
 
 
+#pragma mark - Button Methods -
+
+- (void)musicButtonsSetHidden:(BOOL)visible
+{
+    // labels
+    [artistLabel setHidden:visible];
+    [titleLabel setHidden:visible];
+    
+    // buttons
+    [musicLibraryButton setHidden:visible];
+    [restartButton setHidden:visible];
+    [playPauseButton setHidden:visible];
+    [nextButton setHidden:visible];
+}
+
+
 - (IBAction)valueChanged:(UISegmentedControl *)sender
 {
-    if (sender.selectedSegmentIndex == music)
+    if (sender.selectedSegmentIndex == MUSIC)
     {
-        //[self pickSong];
         [[BBAudioModel sharedAudioModel] setMusicInput];
+        [self musicButtonsSetHidden:NO];
     }
-    else if (sender.selectedSegmentIndex == mic)
+    else if (sender.selectedSegmentIndex == MIC)
     {
         [[BBAudioModel sharedAudioModel] setMicrophoneInput];
+        [self musicButtonsSetHidden:YES];
     }
 }
 
@@ -208,12 +232,13 @@
                 if(earlyFinish == YES)
                 {
                     earlyFinish = NO;
+                    [[BBAudioModel sharedAudioModel] clearMusicLibraryBuffer];
                     break;
                 }
                 if (playing == NO)
                 {
                     // while playing flag is set at NO, just hang around
-                    while (playing == NO)
+                    while (playing == NO && earlyFinish == NO)
                     {
                         [BBAudioModel sharedAudioModel].canReadMusicFile = NO;
                         usleep(100);            // TODO: This is the best option I can think of at the moment, maybe not ideal
@@ -303,7 +328,7 @@
                     }
                     else
                     {
-                        usleep(100); //1000 = 1 msec
+                        usleep(100);
                     }
 				
                 }
@@ -342,10 +367,10 @@
 - (void)freeAudio
 {
     if (playing == YES)
-    {
-        [[BBAudioModel sharedAudioModel] setCanReadMusicFile:NO];
         playing = NO;
-    }
+    
+    [[BBAudioModel sharedAudioModel] setCanReadMusicFile:NO];
+    
     //stop background loading thread
 	if(loadingInBackground == YES)
 		earlyFinish = YES;
@@ -389,8 +414,7 @@
         [titleLabel setText:[titleString stringByAppendingString:title]];
         
         // make labels visible
-        [artistLabel setHidden:NO];
-        [titleLabel setHidden:NO];
+        //[self musicButtonsSetHidden:NO];
 	}
     
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];

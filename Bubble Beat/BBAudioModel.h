@@ -56,6 +56,7 @@
 
 - (void)setupMediaBuffers:(float *)readBuffer position:(int *)readPosition size:(int)size;
 - (void)onsetDetected:(float)salience;
+- (void)clearMusicLibraryBuffer;
 
 @property int blockSize;
 @property int sampleRate;
