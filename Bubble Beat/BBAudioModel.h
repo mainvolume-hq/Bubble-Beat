@@ -42,6 +42,11 @@
     
     Float32* left;
     Float32* right;
+    
+    NSOperationQueue* queue;            // onset detection queue
+//    BOOL    gotOnset;
+//    float   salience;
+    
 }
 
 + (BBAudioModel *)sharedAudioModel;

@@ -7,6 +7,7 @@
 //
 
 #import "BBGLKitViewController.h"
+#import "BBAudioModel.h"
 
 #define biggestBubble 200
 #define smallestBubble 20
@@ -58,17 +59,20 @@
 
 -(void)glkView:(GLKView *)view drawInRect:(CGRect)rect{
     
-    [self updateBackground];
     glClear(GL_COLOR_BUFFER_BIT);
-    
-    [self updateBubbles];
-
+    [bubbles makeObjectsPerformSelector:@selector(render)];
  
 }
 
--(void)glkViewControllerUpdate:(GLKViewController *)controller{
+-(void)glkViewControllerUpdate:(GLKViewController *)controller
+{
     
-    
+}
+
+- (void)update
+{
+    [self updateBackground];
+    [self updateBubbles];
 }
 
 -(void)updateBackground{
@@ -88,19 +92,22 @@
     glClearColor(red, green, blue, 1);
 }
 
--(void)updateBubbles{
-    
-    for(int i=0;i<[bubbles count];i++){
+-(void)updateBubbles
+{    
+    for(int i = 0; i < [bubbles count]; i++)
+    {
         TREEllipse *bubble = [bubbles objectAtIndex:i];
         
         if (bubble.position.x <= (0.0 - bubble.radius) || bubble.color.a <= 0.0)
-        {[bubbles removeObjectAtIndex:i];
+        {
+            [bubbles removeObjectAtIndex:i];
         }
-        else{
-        [bubble setPosition:GLKVector2Make(bubble.position.x - bubble.x_velocity, bubble.position.y - bubble.y_velocity)];
-        [bubble setColor:GLKVector4Make(bubble.color.r, bubble.color.g, bubble.color.b, bubble.color.a - alphaDecay)];
-        [bubble setRadius:bubble.radius*radiusSwell];
-        [bubble render];
+        else
+        {
+            [bubble setPosition:GLKVector2Make(bubble.position.x - bubble.x_velocity, bubble.position.y - bubble.y_velocity)];
+            [bubble setColor:GLKVector4Make(bubble.color.r, bubble.color.g, bubble.color.b, bubble.color.a - alphaDecay)];
+            [bubble setRadius:bubble.radius*radiusSwell];
+            //[bubble render];
         }
     }
     

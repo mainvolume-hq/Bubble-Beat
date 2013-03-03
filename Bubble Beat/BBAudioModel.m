@@ -21,6 +21,7 @@
 @synthesize musicLibraryDuration;
 
 #pragma mark - Audio Render Callback -
+
 static OSStatus renderCallback(void *inRefCon,
                                AudioUnitRenderActionFlags *ioActionFlags,
                                const AudioTimeStamp *inTimeStamp,
@@ -111,7 +112,8 @@ static OSStatus renderCallback(void *inRefCon,
         filterConsecutiveOnsets(model->peak_picker);
         
         //find peaks
-        if(pickPeaks(model->peak_picker)) {
+        if(pickPeaks(model->peak_picker))
+        {
             [model onsetDetected:model->peak_picker->peak_value];
         }
         
@@ -223,6 +225,11 @@ static float middleEarFilter(float input)
         inputType = mic;
         canReadMusicFile = NO;                  // initially say that we can't read from this buffer
         peak_picker = newPeakPicker();
+        
+        queue = [[NSOperationQueue alloc] init];
+        
+//        gotOnset = NO;
+//        salience = 0.0;
     }
     
     return self;
@@ -379,7 +386,8 @@ static float middleEarFilter(float input)
     NSAssert1(err == noErr, @"Error initializing unit: %hd", err);
 }
 
-- (void)onsetDetected:(float)salience{
+- (void)onsetDetected:(float)salience
+{
     
     NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:salience] forKey:@"salience"];
     
