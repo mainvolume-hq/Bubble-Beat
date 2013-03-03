@@ -64,12 +64,24 @@
     // Keep these hidden at first;
     [self musicButtonsSetHidden:YES];
     
+    // Setup notification center method for changing playback parameters when app is closing
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationClosing)name:UIApplicationWillResignActiveNotification object:NULL];
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void) applicationClosing
+{
+    playing = NO;
+    [playPauseButton setTitle:@">" forState:UIControlStateNormal];
+    [queue setSuspended:YES];
+    restart = YES;
 }
 
 
@@ -123,6 +135,9 @@
         }
         
         [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
+        
+        if ([queue isSuspended] == YES)
+            [queue setSuspended:NO];
     }
     else if ([buttonLabel isEqualToString:@"||"])
     {
