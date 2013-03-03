@@ -367,9 +367,11 @@
 - (void)freeAudio
 {
     if (playing == YES)
+    {
         playing = NO;
-    
-    [[BBAudioModel sharedAudioModel] setCanReadMusicFile:NO];
+        [[BBAudioModel sharedAudioModel] setCanReadMusicFile:NO];
+        [playPauseButton setTitle:@">" forState:UIControlStateNormal];
+    }
     
     //stop background loading thread
 	if(loadingInBackground == YES)
@@ -413,8 +415,6 @@
         [artistLabel setText:[artistString stringByAppendingString:artist]];
         [titleLabel setText:[titleString stringByAppendingString:title]];
         
-        // make labels visible
-        //[self musicButtonsSetHidden:NO];
 	}
     
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
