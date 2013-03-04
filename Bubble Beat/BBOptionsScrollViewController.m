@@ -73,12 +73,24 @@
     [restartButton setEnabled:NO];
     [restartButton setAlpha:0.3];
     
+    // Setup notification center method for changing playback parameters when app is closing
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationClosing)name:UIApplicationWillResignActiveNotification object:NULL];
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+- (void) applicationClosing
+{
+    playing = NO;
+    [playPauseButton setTitle:@">" forState:UIControlStateNormal];
+    [queue setSuspended:YES];
+    restart = YES;
 }
 
 
