@@ -12,6 +12,7 @@
 
 @interface BBMainViewController () {
     float bubbleSizeScale;
+    bool firstLoad;
     
     
     
@@ -30,6 +31,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    firstLoad = YES;
     [self setUpOptionsView];
     
     bubbleFactory = [[BBGLKitViewController alloc] initWithNibName:@"BBGLKitView" bundle:[NSBundle mainBundle]];
@@ -127,9 +129,18 @@
     [optionsView setHidden:YES];
     
     [self setUpSliders];
-    [self setUpScrollView];
     [self.view addSubview:optionsView];
     
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:NO];
+    if (firstLoad) {
+        firstLoad = NO;
+    [self setUpScrollView];
+    }
 }
 
 -(void)setUpScrollView{

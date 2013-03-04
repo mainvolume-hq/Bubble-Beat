@@ -35,9 +35,11 @@
     BOOL restart;
     BOOL fileSelected;
     BOOL playButtonState;                   // YES = Playing, NO = Paused
+    BOOL firstLoad;
 }
 
 @property (nonatomic, weak) UIViewController* parentViewController;
+@property (weak, nonatomic) IBOutlet UIView *musicOptionsView;
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *playPauseButton;

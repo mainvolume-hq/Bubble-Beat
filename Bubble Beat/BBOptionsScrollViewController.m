@@ -17,6 +17,7 @@
 
 @implementation BBOptionsScrollViewController
 @synthesize parentViewController;
+@synthesize musicOptionsView;
 @synthesize artistLabel;
 @synthesize titleLabel;
 @synthesize playPauseButton;
@@ -54,6 +55,7 @@
     initialRead = NO;
     earlyFinish = NO;
     fileSelected = NO;
+    firstLoad = YES;
     
     writePosition = 0;
     readPosition = 0;
@@ -62,7 +64,14 @@
     [[BBAudioModel sharedAudioModel] setupMediaBuffers:mediaBuffer position:&readPosition size:mediaBufferSize];
     
     // Keep these hidden at first;
-    [self musicButtonsSetHidden:YES];
+    [artistLabel setText:@""];
+    [titleLabel setText:@""];
+    [musicOptionsView setAlpha:0.3];
+    [musicOptionsView setUserInteractionEnabled:NO];
+    [playPauseButton setEnabled:NO];
+    [playPauseButton setAlpha:0.3];
+    [restartButton setEnabled:NO];
+    [restartButton setAlpha:0.3];
     
 }
 
@@ -75,71 +84,61 @@
 
 #pragma mark - Button Methods -
 
-- (void)musicButtonsSetHidden:(BOOL)visible
-{
-    // labels
-    [artistLabel setHidden:visible];
-    [titleLabel setHidden:visible];
-    
-    // buttons
-    [musicLibraryButton setHidden:visible];
-    [restartButton setHidden:visible];
-    [playPauseButton setHidden:visible];
-    [nextButton setHidden:visible];
-}
-
-
 - (IBAction)valueChanged:(UISegmentedControl *)sender
 {
     if (sender.selectedSegmentIndex == MUSIC)
     {
         [[BBAudioModel sharedAudioModel] setMusicInput];
-        [self musicButtonsSetHidden:NO];
+        [musicOptionsView setAlpha:1];
+        [musicOptionsView setUserInteractionEnabled:YES];
+
     }
     else if (sender.selectedSegmentIndex == MIC)
     {
         [[BBAudioModel sharedAudioModel] setMicrophoneInput];
-        [self musicButtonsSetHidden:YES];
+        [musicOptionsView setAlpha:0.3];
+        [musicOptionsView setUserInteractionEnabled:NO];
     }
 }
 
 - (IBAction)transportButtonPressed:(UIButton *)sender
 {
-    NSString* buttonLabel = sender.currentTitle;
+    int tag = sender.tag;
     
-    if ([buttonLabel isEqualToString:@">"])
-    {
-        // play button pressed
-        [sender setTitle:@"||" forState:UIControlStateNormal];
+    switch (tag) {
+        case 1:
+            
+            if (playing) {
+                [sender setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
+                playing = NO;
+            }
+            else{
+
+                [sender setImage:[UIImage imageNamed:@"pauseButton.png"] forState:UIControlStateNormal];
+            
+            
+            // set state to playing
+            playing = YES;
+            
+            // start background process to load audio file if new file recently loaded
+            if (fileSelected == YES)
+            {
+                [self startAudioFileOperation];
+                fileSelected = NO;
+            }
+            
+            [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
+                
+            }
+            
+            break;
         
-        // set state to playing
-        playing = YES;
-        
-        // start background process to load audio file if new file recently loaded
-        if (fileSelected == YES)
-        {
-            [self startAudioFileOperation];
-            fileSelected = NO;
-        }
-        
-        [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
-    }
-    else if ([buttonLabel isEqualToString:@"||"])
-    {
-        // pause button pressed
-        [sender setTitle:@">" forState:UIControlStateNormal];
-        
-        playing = NO;
-    }
-    else if ([buttonLabel isEqualToString:@"<<"])
-    {
-        // back button pressed
-        restart = YES;
-    }
-    else if ([buttonLabel isEqualToString:@">>"])
-    {
-        // eesh, don't know how to get the next song
-        NSLog(@"Next button pressed...still need to figure this one out");
+        case 2: restart = YES;
+            
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -389,8 +388,6 @@
 {
 	for (MPMediaItem* item in mediaItemCollection.items)
     {
-        NSString* artistString = @"Artist: ";
-        NSString* titleString = @"Title: ";
         
 		NSString* title = [item valueForProperty:MPMediaItemPropertyTitle];
 		NSString* artist = [item valueForProperty:MPMediaItemPropertyArtist];
@@ -404,16 +401,24 @@
 		NSURL* assetURL = [item valueForProperty:MPMediaItemPropertyAssetURL];
 		if (nil == assetURL)
         {
-            // TODO: have a message saying that we can't play this filef or some reason
+            // TODO: have a message saying that we can't play this file for some reason
 			return;
 		}
         
         fileSelected = YES;
+        if (firstLoad){
+            firstLoad = NO;
+            [playPauseButton setEnabled:YES];
+            [playPauseButton setAlpha:1];
+            [restartButton setEnabled:YES];
+            [restartButton setAlpha:1];
+        }
+        
 		[self exportAssetAtURL:assetURL withTitle:title withArtist:artist];
         
         
-        [artistLabel setText:[artistString stringByAppendingString:artist]];
-        [titleLabel setText:[titleString stringByAppendingString:title]];
+        [artistLabel setText:artist];
+        [titleLabel setText:title];
         
 	}
     
