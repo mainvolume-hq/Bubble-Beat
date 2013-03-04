@@ -128,6 +128,8 @@
             }
             
             [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
+                if ([queue isSuspended] == YES)
+                    [queue setSuspended:NO];
                 
             }
             
