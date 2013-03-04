@@ -32,10 +32,13 @@ static OSStatus renderCallback(void *inRefCon,
     BBAudioModel* model = (__bridge BBAudioModel*)inRefCon;
     AudioUnitRender(model->bbUnit, ioActionFlags, inTimeStamp, 1, inNumberFrames, ioData);
     
+    // Use this variable to remove audio glitch moving from mic to music
+    BOOL audioInputSource = model->inputType;
+    
     float numInputChannels;
     int musicPosition;
 
-    if (model->inputType == model->mic)
+    if (audioInputSource == model->mic)
     {
         numInputChannels = 1;
         model->left = (Float32 *)ioData->mBuffers[0].mData;
@@ -131,7 +134,7 @@ static OSStatus renderCallback(void *inRefCon,
         // Loop through the blocksize
         for (int frame = 0; frame < inNumberFrames; frame++)
         {
-            if (model->inputType == model->mic)    // If we're using the microphone set output to 0.0 so we don't feedback
+            if (audioInputSource == model->mic)    // If we're using the microphone set output to 0.0 so we don't feedback
                 output[frame] = 0.0;
             else
             {
