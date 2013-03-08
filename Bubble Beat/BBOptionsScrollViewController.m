@@ -157,11 +157,6 @@
 
 - (IBAction)musicLibraryPressed:(UIButton *)sender
 {
-    if (playing == YES)
-    {
-        playing = NO;
-        [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
-    }
     [self pickSong];
 }
 
@@ -379,7 +374,7 @@
     if (importFlag == NO)
     {
         importFlag = YES;
-        [self freeAudio];
+        //[self freeAudio];
         [self showMediaPicker];
     }
 }
@@ -441,6 +436,17 @@
         [titleLabel setText:title];
         
 	}
+    
+    if (fileSelected == YES)
+    {
+        if (playing == YES)
+        {
+            playing = NO;
+            [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
+        }
+        
+        [self freeAudio];
+    }
     
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
 }
