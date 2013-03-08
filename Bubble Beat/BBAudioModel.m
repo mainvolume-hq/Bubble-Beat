@@ -411,7 +411,7 @@ static float middleEarFilter(float input)
 
 - (void)clearMusicLibraryBuffer
 {
-    memset(musicLibraryBuffer, 0.0, NUM_SECONDS * sampleRate * sizeof(float));
+    memset(musicLibraryBuffer, 0.0, NUM_SECONDS * sampleRate);
 }
 
 @end
