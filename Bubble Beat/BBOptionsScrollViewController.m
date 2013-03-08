@@ -87,8 +87,7 @@
 - (void) applicationClosing
 {
     playing = NO;
-    [playPauseButton setTitle:@">" forState:UIControlStateNormal];
-    [queue setSuspended:YES];
+    [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
     restart = YES;
 }
 
