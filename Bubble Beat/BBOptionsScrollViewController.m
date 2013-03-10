@@ -453,6 +453,7 @@
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)inputMediaPicker
 {
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
+    importFlag = NO;
 }
 
 
