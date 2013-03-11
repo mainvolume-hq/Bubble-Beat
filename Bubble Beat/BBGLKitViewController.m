@@ -10,7 +10,7 @@
 #import "BBAudioModel.h"
 
 #define biggestBubble 200
-#define smallestBubble 20
+#define smallestBubble 3
 
 @interface BBGLKitViewController ()
 
@@ -139,6 +139,7 @@
     [ellipse setRadius:radius];
     [ellipse setColor:GLKVector4Make(red, green, blue, transparency)];
     [ellipse setPosition:GLKVector2Make([[UIScreen mainScreen] bounds].size.height - 115 - radius, [[UIScreen mainScreen] bounds].size.width - 140)];
+    //[ellipse setPosition:GLKVector2Make([[UIScreen mainScreen] bounds].size.height - 115, [[UIScreen mainScreen] bounds].size.width - 140)];
     ellipse.left = 0;
     ellipse.top = 0;
     ellipse.bottom = [[UIScreen mainScreen] bounds].size.width;

@@ -44,6 +44,8 @@
     Float32* right;
     
     NSOperationQueue* queue;            // onset detection queue
+    
+    float upperThresh;
 //    BOOL    gotOnset;
 //    float   salience;
     

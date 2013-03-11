@@ -64,6 +64,18 @@
     <resources>
         <image name="bubble2.png" width="500" height="521"/>
     </resources>
+    <classes>
+        <class className="BBMainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BBMainViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backButtonPressed"/>
+                <relationship kind="action" name="bubbleButtonPressed"/>
+                <relationship kind="action" name="optionsButtonPressed"/>
+                <relationship kind="outlet" name="optionsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

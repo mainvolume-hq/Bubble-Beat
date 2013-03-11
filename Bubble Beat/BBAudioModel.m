@@ -351,6 +351,11 @@ static float middleEarFilter(float input)
     NSLog(@"AudioSession === CurrentHardwareIOBufferDuration: %3.2fms", audioSessionProperty32 * 1000.0f);
     NSLog(@"AudioSession === block size: %i", blockSizeCheck);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(setUpperThreshold:)
+                                                 name:@"upper_threshold"
+                                               object:nil];
+    
 }
 
 - (void)setMicrophoneInput
@@ -412,6 +417,17 @@ static float middleEarFilter(float input)
 - (void)clearMusicLibraryBuffer
 {
     memset(musicLibraryBuffer, 0.0, NUM_SECONDS * sampleRate);
+}
+
+- (void) setUpperThreshold:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:@"upper_threshold"]){
+        
+        NSNumber *thresh = [notification object];
+        [BBAudioModel sharedAudioModel]->peak_picker->u_threshold = [thresh floatValue];
+           
+    }
+        
 }
 
 @end

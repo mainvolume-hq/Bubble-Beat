@@ -10,6 +10,12 @@
 #import "BBAudioModel.h"
 #import "MySlider.h"
 
+#define defaultUpperThresholdScale 0.25
+#define maxBubbleScale 3
+#define minBubbleScale 0.05
+#define maxUpperThreshold 0.3
+#define minUpperThreshold 0.005
+
 @interface BBMainViewController () {
     float bubbleSizeScale;
     bool firstLoad;
@@ -145,9 +151,6 @@
 
 -(void)setUpScrollView{
     
-//    NSArray *subviewArray = [[NSBundle mainBundle] loadNibNamed:@"OptionsScrollView" owner:self options:nil];
-//    optionsScrollView = [subviewArray objectAtIndex:0];
-    
     optionsScrollViewController = [[BBOptionsScrollViewController alloc] initWithNibName:@"OptionsScrollView" bundle:[NSBundle mainBundle]];
     optionsScrollView = optionsScrollViewController.view;
     CGRect rect = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
@@ -161,11 +164,6 @@
     
     //-- Default and max/min values --//
     bubbleSizeScale = 0.5;
-    float defaultUpperThresholdScale = 0.5;
-    float maxBubbleScale = 1;
-    float minBubbleScale = 0;
-    float maxUpperThreshold = 1;
-    float minUpperThreshold = 0;
     
     //-- Layout -//
     float upperLowerPadding = 50; //pixels either side
@@ -214,16 +212,14 @@
 -(void)sizeChanged:(id) sender{
     UISlider *tempSlider = sender;
     bubbleSizeScale = tempSlider.value;
- 
 }
 
 -(void)quantityChanged:(id) sender{
     UISlider *tempSlider = sender;
-    float newUpperThresholdScale = tempSlider.value;
-    //use newUpperThresholdScale to scale the upper threshold
-    
-    //supress the unused warning for now
-    #pragma unused(newUpperThresholdScale)
+    NSNumber *newUpperThresholdScale = [NSNumber numberWithFloat:maxUpperThreshold + minUpperThreshold - tempSlider.value];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"upper_threshold"
+     object:newUpperThresholdScale];
     
 }
 
@@ -277,7 +273,7 @@
 -(void)onsetDetected: (NSNotification *) notification
 {
     float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];    
-    float size = salience * bubbleSizeScale * 40;
+    float size = powf(((salience * bubbleSizeScale)+2),3.f);
     
     [bubbleFactory makeBubbleWithSize:size];
     
