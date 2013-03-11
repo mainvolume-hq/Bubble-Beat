@@ -23,7 +23,6 @@
 @synthesize playPauseButton;
 @synthesize restartButton;
 @synthesize musicLibraryButton;
-@synthesize nextButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -88,8 +87,7 @@
 - (void) applicationClosing
 {
     playing = NO;
-    [playPauseButton setTitle:@">" forState:UIControlStateNormal];
-    [queue setSuspended:YES];
+    [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
     restart = YES;
 }
 
@@ -124,22 +122,22 @@
                 [sender setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
                 playing = NO;
             }
-            else{
+            else
+            {
 
                 [sender setImage:[UIImage imageNamed:@"pauseButton.png"] forState:UIControlStateNormal];
             
+                // set state to playing
+                playing = YES;
             
-            // set state to playing
-            playing = YES;
+                // start background process to load audio file if new file recently loaded
+                if (fileSelected == YES)
+                {
+                    [self startAudioFileOperation];
+                    fileSelected = NO;
+                }
             
-            // start background process to load audio file if new file recently loaded
-            if (fileSelected == YES)
-            {
-                [self startAudioFileOperation];
-                fileSelected = NO;
-            }
-            
-            [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
+                [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
                 if ([queue isSuspended] == YES)
                     [queue setSuspended:NO];
                 
@@ -173,8 +171,8 @@
 	readPosition = 0;
 	initialRead = NO;
 	
-	for (int i = 0; i < mediaBufferSize; ++i)
-		mediaBuffer[0] = 0.0; //zero out contents of buffer
+	for (int i = 0; i < mediaBufferSize; i++)
+		mediaBuffer[i] = 0.0; //zero out contents of buffer
 
 }
 
@@ -246,6 +244,9 @@
                 {
                     earlyFinish = NO;
                     [[BBAudioModel sharedAudioModel] clearMusicLibraryBuffer];
+                    
+                    for (int i = 0; i < mediaBufferSize; i++)
+                        mediaBuffer[i] = 0.0; //zero out contents of buffer
                     break;
                 }
                 if (playing == NO)
@@ -372,7 +373,7 @@
     if (importFlag == NO)
     {
         importFlag = YES;
-        [self freeAudio];
+        //[self freeAudio];
         [self showMediaPicker];
     }
 }
@@ -383,7 +384,6 @@
     {
         playing = NO;
         [[BBAudioModel sharedAudioModel] setCanReadMusicFile:NO];
-        [playPauseButton setTitle:@">" forState:UIControlStateNormal];
     }
     
     //stop background loading thread
@@ -436,12 +436,24 @@
         
 	}
     
+    if (fileSelected == YES)
+    {
+        if (playing == YES)
+        {
+            playing = NO;
+            [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
+        }
+        
+        [self freeAudio];
+    }
+    
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)mediaPickerDidCancel:(MPMediaPickerController *)inputMediaPicker
 {
     [inputMediaPicker dismissViewControllerAnimated:YES completion:NULL];
+    importFlag = NO;
 }
 
 
