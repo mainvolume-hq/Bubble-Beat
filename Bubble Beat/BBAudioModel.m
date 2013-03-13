@@ -60,7 +60,10 @@ static OSStatus renderCallback(void *inRefCon,
             // update position through the songfile to determine where we're at
             model->musicLibraryCurrentPosition += inNumberFrames;
             if (model->musicLibraryCurrentPosition >= model->musicLibraryDuration)
+            {
                 model->canReadMusicFile = NO;
+                model->musicLibraryCurrentPosition = 0;     // reset position
+            }
             
             (*(model->musicLibraryReadPosition)) = musicPosition;
         }

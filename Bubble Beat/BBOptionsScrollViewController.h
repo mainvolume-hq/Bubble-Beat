@@ -36,6 +36,7 @@
     BOOL fileSelected;
     BOOL playButtonState;                   // YES = Playing, NO = Paused
     BOOL firstLoad;
+    BOOL fileFinished;                      // YES = file reached end of playback, NO = file has not reached end
 }
 
 @property (nonatomic, weak) UIViewController* parentViewController;

@@ -56,6 +56,8 @@
     fileSelected = NO;
     firstLoad = YES;
     
+    fileFinished = YES;
+    
     writePosition = 0;
     readPosition = 0;
     
@@ -73,7 +75,7 @@
     [restartButton setAlpha:0.3];
     
     // Setup notification center method for changing playback parameters when app is closing
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationClosing)name:UIApplicationWillResignActiveNotification object:NULL];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationClosing) name:UIApplicationWillResignActiveNotification object:nil];
     
 }
 
@@ -84,11 +86,18 @@
 }
 
 
-- (void) applicationClosing
+- (void)applicationClosing
 {
     playing = NO;
     [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
     restart = YES;
+}
+
+- (void)songFinished
+{
+    playing = NO;
+    [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
+    fileFinished = YES;
 }
 
 
@@ -136,11 +145,14 @@
                     [self startAudioFileOperation];
                     fileSelected = NO;
                 }
+                else if (fileFinished == YES && currentSong != nil)
+                {
+                    [self exportAssetAtURL:currentSong];
+                    [self startAudioFileOperation];
+                }
             
                 [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
-                if ([queue isSuspended] == YES)
-                    [queue setSuspended:NO];
-                
+
             }
             
             break;
@@ -161,7 +173,7 @@
 
 #pragma mark - Song Related Methods -
 
-- (void)exportAssetAtURL:(NSURL*)assetURL withTitle:(NSString*)title withArtist:(NSString*)artist
+- (void)exportAssetAtURL:(NSURL*)assetURL
 {    
     currentSong = assetURL;
 	
@@ -194,6 +206,7 @@
 {
 	
 	loadingInBackground = YES;
+    fileFinished = NO;
 	
 	//http://developer.apple.com/library/ios/#documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/05_MediaRepresentations.html
 	NSDictionary* options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
@@ -243,6 +256,7 @@
                 if(earlyFinish == YES)
                 {
                     earlyFinish = NO;
+                    finished = YES;
                     [[BBAudioModel sharedAudioModel] clearMusicLibraryBuffer];
                     
                     for (int i = 0; i < mediaBufferSize; i++)
@@ -340,18 +354,28 @@
                         initialRead = YES;
                         [BBAudioModel sharedAudioModel].canReadMusicFile = YES;
                     }
-                    else
+                    else if (!finished)
                     {
                         usleep(100);
+                        if ([BBAudioModel sharedAudioModel].canReadMusicFile == NO)
+                            finished = YES;
                     }
-				
+                }
+                
+                if (finished)
+                {
+                    break;
                 }
             }
+            
+
         }
 			
 		[filereader cancelReading];
 		loadingInBackground = NO;
-		
+
+        [self performSelectorOnMainThread:@selector(songFinished) withObject:nil waitUntilDone:YES];
+        
 		return;
     }
 	
@@ -428,7 +452,7 @@
             [restartButton setAlpha:1];
         }
         
-		[self exportAssetAtURL:assetURL withTitle:title withArtist:artist];
+		[self exportAssetAtURL:assetURL];
         
         
         [artistLabel setText:artist];
