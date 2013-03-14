@@ -14,7 +14,7 @@
 #define maxBubbleScale 3
 #define minBubbleScale 0.05
 #define maxUpperThreshold 0.3
-#define minUpperThreshold 0.005
+#define minUpperThreshold 0.001
 
 @interface BBMainViewController () {
     float bubbleSizeScale;
