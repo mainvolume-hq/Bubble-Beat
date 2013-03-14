@@ -10,7 +10,7 @@
 #import "BBAudioModel.h"
 #import "MySlider.h"
 
-#define defaultUpperThresholdScale 0.25
+#define defaultUpperThresholdScale 0.18
 #define maxBubbleScale 3
 #define minBubbleScale 0.05
 #define maxUpperThreshold 0.3
@@ -163,7 +163,7 @@
 -(void)setUpSliders{
     
     //-- Default and max/min values --//
-    bubbleSizeScale = 0.5;
+    bubbleSizeScale = 1.2;
     
     //-- Layout -//
     float upperLowerPadding = 50; //pixels either side
