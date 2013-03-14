@@ -225,7 +225,7 @@
 
 -(IBAction)bubbleButtonPressed{
     
-    [bubbleFactory makeBubbleWithSize:20.0];
+    //[bubbleFactory makeBubbleWithSize:20.0];
     //[bubbleFactory MakeBubbleBackground];
 }
 
@@ -272,10 +272,14 @@
 
 -(void)onsetDetected: (NSNotification *) notification
 {
-    float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];    
+    float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];
+    
+    printf("salience = %f\n",salience);
     float size = powf(((salience * bubbleSizeScale)+2),3.f);
     
-    [bubbleFactory makeBubbleWithSize:size];
+    float transparency = (salience-1)*3;
+    
+    [bubbleFactory makeBubbleWithSize:size andTransparency:transparency];
     
 }
 

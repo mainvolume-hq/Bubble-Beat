@@ -121,12 +121,12 @@
         [removeBubbleArray removeAllObjects];
 }
 
--(void)makeBubbleWithSize:(float) bubbleSize{
+-(void)makeBubbleWithSize:(float) bubbleSize andTransparency:(float) trans{
     
     float radius = bubbleSize;
     if (radius<smallestBubble) radius=smallestBubble;
     if (radius>biggestBubble) radius = biggestBubble;
-    float transparency = bubbleSize/50;
+    float transparency = trans;
     if (transparency > 1) transparency = 1;
     float x_vel = 8 + arc4random_uniform(100)/500.0f - 1;
     float y_vel = arc4random_uniform(1000)/125.0f - 2;

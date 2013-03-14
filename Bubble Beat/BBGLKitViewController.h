@@ -21,6 +21,6 @@
 @property (nonatomic,strong) NSMutableArray *bubbles;
 @property (nonatomic,strong) NSMutableArray *removeBubbleArray;
 
--(void)makeBubbleWithSize:(float) bubbleSize;
+-(void)makeBubbleWithSize:(float) bubbleSize andTransparency:(float)trans;
 
 @end
