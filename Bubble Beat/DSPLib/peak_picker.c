@@ -21,7 +21,7 @@ PEAK_PICKER* newPeakPicker()
     peakPicker-> debounce_iterator =    0;
     peakPicker-> debounce_threshold =   0;
     
-    peakPicker-> u_threshold =          0.01;
+    peakPicker-> u_threshold =          0.18;
     peakPicker-> l_threshold =          0;
     peakPicker-> u_threshold_scale =    2;
     peakPicker-> l_threshold_scale =    2;

@@ -10,7 +10,8 @@
 #import "BBAudioModel.h"
 #import "MySlider.h"
 
-#define defaultUpperThresholdScale 0.18
+
+#define defaultUpperThresholdScale 0.18 //make sure this is the same as the one in peak_picker.c
 #define maxBubbleScale 3
 #define minBubbleScale 0.05
 #define maxUpperThreshold 0.3
@@ -19,7 +20,7 @@
 @interface BBMainViewController () {
     float bubbleSizeScale;
     bool firstLoad;
-    
+    float upperThreshold;
     
     
 }
@@ -55,6 +56,8 @@
     [[BBAudioModel sharedAudioModel] setupAudioUnit];
     [[BBAudioModel sharedAudioModel] startAudioUnit];
     [[BBAudioModel sharedAudioModel] startAudioSession];
+    
+    upperThreshold = defaultUpperThresholdScale;
     
     [self animateSplashScreens];
     
@@ -216,6 +219,7 @@
 
 -(void)quantityChanged:(id) sender{
     UISlider *tempSlider = sender;
+    upperThreshold = maxUpperThreshold + minUpperThreshold - tempSlider.value;
     NSNumber *newUpperThresholdScale = [NSNumber numberWithFloat:maxUpperThreshold + minUpperThreshold - tempSlider.value];
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"upper_threshold"
@@ -274,10 +278,11 @@
 {
     float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];
     
-    printf("salience = %f\n",salience);
+    printf("salience = %f  diff = %f\n",salience,(salience-1)-upperThreshold);
+    
     float size = powf(((salience * bubbleSizeScale)+2),3.f);
     
-    float transparency = (salience-1)*3;
+    float transparency = ((salience-1) - upperThreshold)*3;
     
     [bubbleFactory makeBubbleWithSize:size andTransparency:transparency];
     
