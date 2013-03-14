@@ -276,10 +276,7 @@
 
 -(void)onsetDetected: (NSNotification *) notification
 {
-    float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];
-    
-    printf("salience = %f  diff = %f\n",salience,(salience-1)-upperThreshold);
-    
+    float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];    
     float size = powf(((salience * bubbleSizeScale)+2),3.f);
     
     float transparency = ((salience-1) - upperThreshold)*3;
