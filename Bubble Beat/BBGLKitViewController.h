@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GLKit/GLKit.h>
 #import "TREEllipse.h"
+#import "Bubble.h"
 
 @interface BBGLKitViewController : GLKViewController <GLKViewDelegate, GLKViewControllerDelegate>{
     

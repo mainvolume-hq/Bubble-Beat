@@ -108,6 +108,7 @@
         {
             [bubble setPosition:GLKVector2Make(bubble.position.x - bubble.x_velocity, bubble.position.y - bubble.y_velocity)];
             [bubble setColor:GLKVector4Make(bubble.color.r, bubble.color.g, bubble.color.b, bubble.color.a - alphaDecay)];
+            //[bubble setColor:GLKVector4Make(bubble.color.r, bubble.color.g, bubble.color.b, bubble.color.a)];
             [bubble setRadius:bubble.radius*radiusSwell];
         }
     }
@@ -120,6 +121,7 @@
     if ([removeBubbleArray count] > 0)
         [removeBubbleArray removeAllObjects];
 }
+
 
 -(void)makeBubbleWithSize:(float) bubbleSize andTransparency:(float) trans{
     
@@ -135,21 +137,20 @@
     CGFloat red = 0.0, green = 0.0, blue = 0.0, alpha = 0.0;
     [color getRed:&red green:&green blue:&blue alpha:&alpha];
     
-    TREEllipse *ellipse = [[TREEllipse alloc] init];
-    [ellipse setRadius:radius];
-    [ellipse setColor:GLKVector4Make(red, green, blue, transparency)];
-    [ellipse setPosition:GLKVector2Make([[UIScreen mainScreen] bounds].size.height - 115 - radius, [[UIScreen mainScreen] bounds].size.width - 140)];
-    //[ellipse setPosition:GLKVector2Make([[UIScreen mainScreen] bounds].size.height - 115, [[UIScreen mainScreen] bounds].size.width - 140)];
-    ellipse.left = 0;
-    ellipse.top = 0;
-    ellipse.bottom = [[UIScreen mainScreen] bounds].size.width;
-    ellipse.right = [[UIScreen mainScreen] bounds].size.height;
+    Bubble* newBubble = [[Bubble alloc] initWithColor:GLKVector4Make(red, green, blue, transparency)];
+    [newBubble setUseConstantColor:NO];
+    [newBubble setRadius:radius];
+    [newBubble setPosition:GLKVector2Make([[UIScreen mainScreen] bounds].size.height - 115 - radius, [[UIScreen mainScreen] bounds].size.width - 140)];
     
-    [ellipse setDrawingStyle:GL_TRIANGLE_FAN];
-    [ellipse setX_velocity:x_vel];
-    [ellipse setY_velocity:y_vel];
-     
-    [bubbles addObject:ellipse];
+    newBubble.left = 0;
+    newBubble.top = 0;
+    newBubble.bottom = [[UIScreen mainScreen] bounds].size.width;
+    newBubble.right = [[UIScreen mainScreen] bounds].size.height;
+
+    [newBubble setX_velocity:x_vel];
+    [newBubble setY_velocity:y_vel];
+    
+    [bubbles addObject:newBubble];
 
 }
 
@@ -158,5 +159,29 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - Touch Callbacks -
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSSet* beginTouches = [event allTouches];
+    for (UITouch* touch in beginTouches)
+    {
+        CGPoint touchLocation = [touch locationInView:self.view];
+        GLKVector2 press = GLKVector2Make(touchLocation.x, touchLocation.y);
+        
+        // need to get the top bubble, which is the last rendered one obviously
+        for (int b = bubbles.count - 1; b >= 0; b--)
+        {
+            if ([bubbles[b] isInside:press])
+            {
+                [bubbles[b] setBurst:YES];
+                break;
+            }
+        }
+    }
+}
+
 
 @end

@@ -8,7 +8,7 @@
 
 #import "TREEllipse.h"
 
-#define EE_ELLIPSE_RESOLUTION 64
+#define EE_ELLIPSE_RESOLUTION 65
 #define M_TAU (2*M_PI)
 
 @implementation TREEllipse
@@ -21,9 +21,11 @@
 
 -(void)updateVertices 
 {
-    for (int i = 0; i < EE_ELLIPSE_RESOLUTION; i++)
+    self.vertices[0] = GLKVector2Make(0, 0);
+    
+    for (int i = 1; i < EE_ELLIPSE_RESOLUTION; i++)
     {
-        float theta = ((float)i) / EE_ELLIPSE_RESOLUTION * M_TAU;
+        float theta = ((float)i) / (EE_ELLIPSE_RESOLUTION - 2) * M_TAU;
         self.vertices[i] = GLKVector2Make(cos(theta) * radius, sin(theta) * radius);
     }
 }

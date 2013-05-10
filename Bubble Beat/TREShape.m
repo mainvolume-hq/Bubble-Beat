@@ -22,6 +22,7 @@ static GLKBaseEffect *effect;
 @synthesize lineWidth;
 @synthesize drawingStyle;
 @synthesize number;
+@synthesize useConstantColor;
 
 + (void)initialize
 {
@@ -58,6 +59,7 @@ static GLKBaseEffect *effect;
         
         lineWidth = 1.0;
         drawingStyle = GL_TRIANGLE_FAN;
+        useConstantColor = YES;
     }
     return self;
 }
@@ -88,7 +90,7 @@ static GLKBaseEffect *effect;
 
 - (void)render
 {
-    effect.useConstantColor = YES;
+    effect.useConstantColor = useConstantColor;
     effect.constantColor = self.color;
     
     GLKMatrix4 scaleMatrix = GLKMatrix4MakeScale(scale.x, scale.y, depth);
@@ -105,9 +107,18 @@ static GLKBaseEffect *effect;
     
     glLineWidth(lineWidth);
     
+    if (!useConstantColor) {
+        glEnableVertexAttribArray(GLKVertexAttribColor);
+        glVertexAttribPointer(GLKVertexAttribColor, 4, GL_FLOAT, GL_FALSE, 0, self.vertexColors);
+    }
+    
     glEnableVertexAttribArray(GLKVertexAttribPosition);
     glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE, 0, self.vertices);
     glDrawArrays(drawingStyle, 0, self.numVertices);
+    
+    if (!useConstantColor)
+        glDisableVertexAttribArray(GLKVertexAttribColor);
+    
     glDisableVertexAttribArray(GLKVertexAttribPosition);
     glDisable(GL_BLEND);
 }

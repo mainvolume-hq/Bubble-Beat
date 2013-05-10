@@ -14,6 +14,8 @@
     NSMutableData *vertexData;
     NSMutableData *vertexColorData;
     
+    GLboolean useConstantColor;
+    
     GLKVector4 color;
     GLKVector2 position;
     GLKVector2 scale;
@@ -34,6 +36,7 @@
 @property GLfloat lineWidth;
 @property GLubyte drawingStyle;
 @property int number;
+@property GLboolean useConstantColor;
 
 - (void)update;
 - (void)render;
