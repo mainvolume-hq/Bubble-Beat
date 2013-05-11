@@ -36,6 +36,7 @@ typedef struct t_bark
     float*    filteredEven;
     
     int       windowSize;
+    int       halfWindowSize;
     int       sampleRate;
 } BARK;
 

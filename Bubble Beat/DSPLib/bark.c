@@ -23,12 +23,12 @@ BARK* newBark(int windowSize, int sampleRate)
     assert(POWER_OF_TWO(windowSize));
     bark->windowSize = windowSize;
     bark->sampleRate = sampleRate;
+    bark->halfWindowSize = windowSize / 2;
     
     newBarkBands(bark);
     
-    float halfWave = bark->windowSize / 2;
-    bark->filteredOdd = (float *)malloc(halfWave * sizeof(float));
-    bark->filteredEven = (float *)malloc(halfWave * sizeof(float));
+    bark->filteredOdd = (float *)malloc(bark->halfWindowSize * sizeof(float));
+    bark->filteredEven = (float *)malloc(bark->halfWindowSize * sizeof(float));
     
     return bark;
 }
@@ -47,10 +47,10 @@ void newBarkBands(BARK* bark)
 {
     for (int i = 0; i < NUM_BARK_FILTER_BUFS; i++)
     {
-        float halfWave = bark->windowSize / 2;
+        float halfWave = bark->halfWindowSize;
         bark->filterBands[i].band = (float *)malloc(halfWave * sizeof(float));
         
-        for (int j = 0; j < bark->windowSize / 2; j++)
+        for (int j = 0; j < bark->halfWindowSize; j++)
             bark->filterBands[i].band[j] = 0.0;
     }
     
@@ -74,7 +74,7 @@ void createBarkFilterbank(BARK* bark)
     // NUM_BARKS is still 24, but we have an array of length 26, so we've added lower and upper limits
     for (int i = 0; i < NUM_BARKS; i++)
     {
-        for (int j = 0; j < bark->windowSize / 2; j++)
+        for (int j = 0; j < bark->halfWindowSize; j++)
         {
             float frequency = period * j;
             
@@ -105,7 +105,7 @@ void createBarkFilterbank(BARK* bark)
 // TODO: fix this function, the analysis buffer will be in COMPLEX_SPLIT form
 void multiplyBarkFilterbank(BARK* bark, float* analysis)
 {
-    for (int i = 0; i < bark->windowSize / 2; i++)
+    for (int i = 0; i < bark->halfWindowSize; i++)
     {
         bark->filteredOdd[i] = bark->filterBands[0].band[i] * analysis[i];           // non overlapping bands starting at 0
         bark->filteredEven[i] = bark->filterBands[1].band[i] * analysis[i];          // non overlapping bands starting at 50 (first bark center)
@@ -128,12 +128,19 @@ void condenseAnalysis(BARK* bark, float* analysis)
     
     for (int i = 0; i < NUM_BARKS; i++)
     {
-        for (int j = 0; j < (bark->windowSize / 2); j++)
+        for (int j = 0; j < bark->halfWindowSize; j++)
         {
             float frequency = period * j;
             
             if (frequency >= barkCenterFreq[i] && frequency < barkCenterFreq[i + 2])
+            {
                 bark->barkBins[i] += analysis[j];
+            }
+            else if (frequency > barkCenterFreq[i + 2])
+            {
+                // If we're passed the upper threshold, then we can break out of this loop sooner
+                break;
+            }
         }
     }
 }

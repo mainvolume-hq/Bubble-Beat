@@ -52,12 +52,22 @@ void accumulate_bin_differences(PEAK_PICKER* pp, BARK* bark){
     for (int i=0; i<length; i++) {
         diff = diff + (bark->barkBins[i] - bark->prevBarkBins[i]);
     }
-
+//    for (int i=0; i<length; i++) {
+//        diff = diff + pow(bark->barkBins[i] - bark->prevBarkBins[i], 2);
+//    }
+//
+//    pp->bark_difference = sqrt(diff);
+    
     pp->bark_difference = diff;
     
-    
-    
 }
+
+//void accumulate_bin_differences(PEAK_PICKER* pp, BARK* bark)
+//{
+//    vDSP_vsub(bark->barkBins, 1, bark->prevBarkBins, 1, bark->prevBarkBins, 1, NUM_BARKS);
+//    vDSP_vsq(bark->prevBarkBins, 1, bark->prevBarkBins, 1, NUM_BARKS);
+//    vDSP_sve(bark->prevBarkBins, 1, &pp->bark_difference, NUM_BARKS);
+//}
 
 void applyMask(PEAK_PICKER* pp){
     

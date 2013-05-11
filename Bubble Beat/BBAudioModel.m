@@ -69,11 +69,8 @@ static OSStatus renderCallback(void *inRefCon,
         }
         else    // we're not allowed to read from these buffers, spit out 0.0's
         {
-            for (int sample = 0; sample < inNumberFrames; sample++)
-            {
-                model->left[sample] = 0.0;
-                model->right[sample] = 0.0;
-            }
+            vDSP_vclr(model->left, 1, inNumberFrames);
+            vDSP_vclr(model->right, 1, inNumberFrames);
         }
     }
     
@@ -83,11 +80,18 @@ static OSStatus renderCallback(void *inRefCon,
         model->monoAnalysisBuffer[i] = model->monoAnalysisBuffer[i + inNumberFrames];
     
     // input convert to mono and shift into analysis buffer
-    for (int i = 0; i < inNumberFrames; i++)
+//    for (int i = 0; i < inNumberFrames; i++)
+//    {
+//        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
+//        mono = outerEarFilter(mono);
+//        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
+//    }
+    
+    // sum channels
+    vDSP_vadd(model->left, 1, model->right, 1, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
+    if (numInputChannels > 1)
     {
-        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
-        mono = outerEarFilter(mono);
-        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
+        vDSP_vsdiv(model->monoAnalysisBuffer + sizeDiff, 1, &numInputChannels, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
     }
     
     // fft takes care of windowing for us
@@ -232,10 +236,6 @@ static float middleEarFilter(float input)
         canReadMusicFile = NO;                  // initially say that we can't read from this buffer
         peak_picker = newPeakPicker();
         
-        queue = [[NSOperationQueue alloc] init];
-        
-//        gotOnset = NO;
-//        salience = 0.0;
     }
     
     return self;

@@ -14,6 +14,8 @@
 #include <assert.h>
 #include "bark.h"
 
+#import <Accelerate/Accelerate.h>
+
 typedef struct t_peak_picker {
     float   u_threshold, l_threshold;
     float   bark_difference;
