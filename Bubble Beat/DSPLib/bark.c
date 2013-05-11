@@ -27,8 +27,8 @@ BARK* newBark(int windowSize, int sampleRate)
     
     newBarkBands(bark);
     
-    bark->filteredOdd = (float *)malloc(bark->halfWindowSize * sizeof(float));
-    bark->filteredEven = (float *)malloc(bark->halfWindowSize * sizeof(float));
+    bark->filteredOdd = (float *)calloc(bark->halfWindowSize, sizeof(float));
+    bark->filteredEven = (float *)calloc(bark->halfWindowSize, sizeof(float));
     
     return bark;
 }
@@ -105,23 +105,19 @@ void createBarkFilterbank(BARK* bark)
 // TODO: fix this function, the analysis buffer will be in COMPLEX_SPLIT form
 void multiplyBarkFilterbank(BARK* bark, float* analysis)
 {
-    for (int i = 0; i < bark->halfWindowSize; i++)
-    {
-        bark->filteredOdd[i] = bark->filterBands[0].band[i] * analysis[i];           // non overlapping bands starting at 0
-        bark->filteredEven[i] = bark->filterBands[1].band[i] * analysis[i];          // non overlapping bands starting at 50 (first bark center)
-        analysis[i] = bark->filteredOdd[i] + bark->filteredEven[i];
-    }
+    vDSP_vmul(bark->filterBands[0].band, 1, analysis, 1, bark->filteredOdd, 1, bark->halfWindowSize);       // non overlapping bands starting at 0
+    vDSP_vmul(bark->filterBands[1].band, 1, analysis, 1, bark->filteredEven, 1, bark->halfWindowSize);      // non overlapping bands starting at 50 (first bark center)
+    vDSP_vadd(bark->filteredOdd, 1, bark->filteredEven, 1, analysis, 1, bark->halfWindowSize);
 }
 
-void iterateBarkBins(BARK* bark){
-    int length = sizeof(bark->barkBins) / sizeof(float);
-    for (int i = 0; i<length; i++) {
-        bark->prevBarkBins[i] = bark->barkBins[i];
-    }
+void iterateBarkBins(BARK* bark)
+{    
+    memcpy(bark->prevBarkBins, bark->barkBins, NUM_BARKS * sizeof(float));
 }
 
 # pragma mark - Bark Utility Functions -
 
+// TODO: This is still a big bottle-neck in the processing chain
 void condenseAnalysis(BARK* bark, float* analysis)
 {
     float period = bark->sampleRate / bark->windowSize;
@@ -147,8 +143,7 @@ void condenseAnalysis(BARK* bark, float* analysis)
 
 void multiplyLoudness(BARK* bark)
 {
-    for (int i = 0; i < NUM_BARKS; i++)
-        bark->barkBins[i] = bark->barkBins[i]*bandWeightings[i];
+    vDSP_vmul(bark->barkBins, 1, bandWeightings, 1, bark->barkBins, 1, NUM_BARKS);
 }
 
 

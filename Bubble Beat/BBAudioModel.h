@@ -43,11 +43,15 @@
     Float32* left;
     Float32* right;
     
-    NSOperationQueue* queue;            // onset detection queue
+    NSTimer* updateTimer;
+    
+//    NSOperationQueue* queue;            // onset detection queue
     
     float upperThresh;
-//    BOOL    gotOnset;
-//    float   salience;
+    int renderTime;
+    
+    BOOL    gotOnset;
+    float   salience;
     
 }
 
@@ -71,6 +75,9 @@
 @property BOOL canReadMusicFile;
 @property BOOL inputType;
 @property double musicLibraryDuration;
+
+@property BOOL gotOnset;
+@property float salience;
 
 @end
 

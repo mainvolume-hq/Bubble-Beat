@@ -19,6 +19,8 @@
 @synthesize canReadMusicFile;
 @synthesize inputType;
 @synthesize musicLibraryDuration;
+@synthesize gotOnset;
+@synthesize salience;
 
 #pragma mark - Audio Render Callback -
 
@@ -80,19 +82,19 @@ static OSStatus renderCallback(void *inRefCon,
         model->monoAnalysisBuffer[i] = model->monoAnalysisBuffer[i + inNumberFrames];
     
     // input convert to mono and shift into analysis buffer
-//    for (int i = 0; i < inNumberFrames; i++)
-//    {
-//        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
-//        mono = outerEarFilter(mono);
-//        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
-//    }
+    for (int i = 0; i < inNumberFrames; i++)
+    {
+        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
+        mono = outerEarFilter(mono);
+        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
+    }
     
     // sum channels
-    vDSP_vadd(model->left, 1, model->right, 1, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
-    if (numInputChannels > 1)
-    {
-        vDSP_vsdiv(model->monoAnalysisBuffer + sizeDiff, 1, &numInputChannels, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
-    }
+//    vDSP_vadd(model->left, 1, model->right, 1, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
+//    if (numInputChannels > 1)
+//    {
+//        vDSP_vsdiv(model->monoAnalysisBuffer + sizeDiff, 1, &numInputChannels, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
+//    }
     
     // fft takes care of windowing for us
     fft(model->fftFrame, model->monoAnalysisBuffer);
@@ -124,7 +126,9 @@ static OSStatus renderCallback(void *inRefCon,
         //find peaks
         if(pickPeaks(model->peak_picker))
         {
-            [model onsetDetected:model->peak_picker->peak_value];
+//            [model onsetDetected:model->peak_picker->peak_value];
+            model->gotOnset = YES;
+            model->salience = model->peak_picker->peak_value;
         }
         
     }
@@ -217,11 +221,11 @@ static float middleEarFilter(float input)
     if (self)
     {
         sampleRate = 44100;
-        blockSize = 512;                // equals hopsize also
+        blockSize = 256;                // equals hopsize also
         hopSize = blockSize;
         windowSize = 2 * hopSize;       // 2x overlap
-        musicLibraryBuffer = (float *)malloc(NUM_SECONDS * sampleRate * sizeof(float));
-        monoAnalysisBuffer = (float *)malloc(windowSize * sizeof(float));
+        musicLibraryBuffer = (float *)calloc(NUM_SECONDS * sampleRate, sizeof(float));
+        monoAnalysisBuffer = (float *)calloc(windowSize, sizeof(float));
         
         fft = newFFT(windowSize);
         createWindow(fft, HANN);
@@ -235,6 +239,11 @@ static float middleEarFilter(float input)
         inputType = mic;
         canReadMusicFile = NO;                  // initially say that we can't read from this buffer
         peak_picker = newPeakPicker();
+        
+        gotOnset = NO;
+        salience = 0.0;
+        
+        [self initTimer];
         
     }
     
@@ -305,6 +314,7 @@ static float middleEarFilter(float input)
     // set format for input (bus 1) 
     err = AudioUnitSetProperty(bbUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &streamFormat, sizeof(AudioStreamBasicDescription));
     NSAssert1(err == noErr, @"Error setting stream format: %hd", err);
+
     
     // Output
     // Setup rendering function on the unit
@@ -320,6 +330,8 @@ static float middleEarFilter(float input)
     // Setup audio input handling function
     // AUInputSample
     
+    // Try setting up a post render callback
+    //AudioUnitAddRenderNotify(bbUnit, postRenderCallback, (__bridge void *)self);
 }
 
 - (void)setupAudioSession
@@ -397,16 +409,33 @@ static float middleEarFilter(float input)
     NSAssert1(err == noErr, @"Error initializing unit: %hd", err);
 }
 
-- (void)onsetDetected:(float)salience
+- (void)onsetDetected:(float)_salience
 {
     
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:exp(salience)] forKey:@"salience"];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:exp(_salience)] forKey:@"salience"];
     
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"onsetDetected"
      object:nil
      userInfo:userInfo];
 
+}
+
+- (void)initTimer
+{
+    updateTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0 / blockSize)
+                                     target:self selector:@selector(pollValues:)
+                                   userInfo:nil
+                                    repeats:YES];
+}
+
+- (void)pollValues:(NSTimer *)paramTimer
+{
+    if (gotOnset)
+    {
+        gotOnset = NO;
+        [self onsetDetected:salience];
+    }
 }
 
 - (void)setupMediaBuffers:(float *)readBuffer position:(int *)readPosition size:(int)size

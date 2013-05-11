@@ -13,9 +13,12 @@
 #define DSPLIB_BARK
 
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include "constants.h"
 #include "util.h"
+
+#import <Accelerate/Accelerate.h>
 
 #define NUM_BARKS 24
 #define NUM_BARK_FILTER_BUFS 2
