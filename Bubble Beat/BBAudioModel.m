@@ -82,19 +82,19 @@ static OSStatus renderCallback(void *inRefCon,
         model->monoAnalysisBuffer[i] = model->monoAnalysisBuffer[i + inNumberFrames];
     
     // input convert to mono and shift into analysis buffer
-    for (int i = 0; i < inNumberFrames; i++)
-    {
-        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
-        mono = outerEarFilter(mono);
-        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
-    }
+//    for (int i = 0; i < inNumberFrames; i++)
+//    {
+//        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
+//        mono = outerEarFilter(mono);
+//        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
+//    }
     
     // sum channels
-//    vDSP_vadd(model->left, 1, model->right, 1, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
-//    if (numInputChannels > 1)
-//    {
-//        vDSP_vsdiv(model->monoAnalysisBuffer + sizeDiff, 1, &numInputChannels, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
-//    }
+    vDSP_vadd(model->left, 1, model->right, 1, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
+    if (numInputChannels > 1)
+    {
+        vDSP_vsdiv(model->monoAnalysisBuffer + sizeDiff, 1, &numInputChannels, model->monoAnalysisBuffer + sizeDiff, 1, inNumberFrames);
+    }
     
     // fft takes care of windowing for us
     fft(model->fftFrame, model->monoAnalysisBuffer);
@@ -423,7 +423,7 @@ static float middleEarFilter(float input)
 
 - (void)initTimer
 {
-    updateTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0 / blockSize)
+    updateTimer = [NSTimer scheduledTimerWithTimeInterval:(1.0 / (blockSize * 2.0))
                                      target:self selector:@selector(pollValues:)
                                    userInfo:nil
                                     repeats:YES];

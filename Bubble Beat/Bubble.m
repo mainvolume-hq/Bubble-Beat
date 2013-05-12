@@ -40,13 +40,13 @@
         self.vertexColors[0] = GLKVector4Make(_color.r, _color.g,_color.b, burstAlpha);
         for (int i = 1; i < self.numVertices; i++)
         {
-            self.vertexColors[i] = GLKVector4Make(_color.r, _color.g,_color.b, burstAlpha + 0.15);
+            self.vertexColors[i] = GLKVector4Make(_color.r, _color.g,_color.b, burstAlpha + 0.3);
         }
     }
     else
     {
-        self.vertexColors[0] = GLKVector4Make(_color.r, _color.g,_color.b, _color.a);
-        for (int i = 1; i < self.numVertices; i++)
+        //self.vertexColors[0] = GLKVector4Make(_color.r, _color.g,_color.b, _color.a);
+        for (int i = 0; i < self.numVertices; i++)
         {
             self.vertexColors[i] = _color;
         }
@@ -62,7 +62,10 @@
 
 -(void)setBurst:(BOOL)_burst
 {
-    burstAlpha = color.a;
+    if (!burst)
+    {
+        burstAlpha = color.a;
+    }
     burst = _burst;
 }
 

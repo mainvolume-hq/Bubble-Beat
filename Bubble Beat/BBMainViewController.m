@@ -11,11 +11,17 @@
 #import "MySlider.h"
 
 
-#define defaultUpperThresholdScale 0.18 //make sure this is the same as the one in peak_picker.c
-#define maxBubbleScale 3
-#define minBubbleScale 0.05
-#define maxUpperThreshold 0.3
-#define minUpperThreshold 0.001
+//#define defaultUpperThresholdScale 0.18 //make sure this is the same as the one in peak_picker.c
+//#define maxBubbleScale 3
+//#define minBubbleScale 0.05
+//#define maxUpperThreshold 0.3
+//#define minUpperThreshold 0.001
+
+#define defaultUpperThresholdScale 0.3 //make sure this is the same as the one in peak_picker.c
+#define maxBubbleScale 2
+#define minBubbleScale 0.01
+#define maxUpperThreshold 1.0
+#define minUpperThreshold 0.05
 
 @interface BBMainViewController () {
     float bubbleSizeScale;
@@ -166,7 +172,8 @@
 -(void)setUpSliders{
     
     //-- Default and max/min values --//
-    bubbleSizeScale = 1.2;
+    //bubbleSizeScale = 1.2;
+    bubbleSizeScale = 0.8;
     
     //-- Layout -//
     float upperLowerPadding = 50; //pixels either side
@@ -277,7 +284,7 @@
 -(void)onsetDetected: (NSNotification *) notification
 {
     float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];    
-    float size = powf(((salience * bubbleSizeScale)+2),3.f);
+    float size = powf(((salience * bubbleSizeScale) + 2), 3.f);
     
     float transparency = ((salience-1) - upperThreshold)*3;
     
