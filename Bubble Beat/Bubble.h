@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "TREEllipse.h"
 
+#define POP_THRESHOLD 1
+
 @interface Bubble : TREEllipse
 {
-    BOOL burst;                 // NO = middle vertex same color
+    BOOL burst;                         // NO = middle vertex same color
     float burstAlpha;
     
+    int popUpdateCounter;               // this is a counter that's used to determine if the radius should decay or increase
 }
 
 @property BOOL burst;

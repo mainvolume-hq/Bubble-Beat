@@ -27,7 +27,7 @@ PEAK_PICKER* newPeakPicker()
     peakPicker-> u_threshold_scale =    2;
     peakPicker-> l_threshold_scale =    2;
     
-    peakPicker-> cof_threshold =        5;
+    peakPicker-> cof_threshold =        10;
     peakPicker-> cof_iterator =         0;
     peakPicker-> cof_flag =             0;
     peakPicker-> maskingDecay =         0.7;
@@ -68,6 +68,31 @@ void accumulate_bin_differences(PEAK_PICKER* pp, BARK* bark)
     vDSP_vsub(bark->prevBarkBins, 1, bark->barkBins, 1, bark->prevBarkBins, 1, NUM_BARKS);
     vDSP_sve(bark->prevBarkBins, 1, &pp->bark_difference, NUM_BARKS);
 }
+
+
+//void accumulate_bin_differences(PEAK_PICKER* pp, BARK* bark)
+//{
+//    float absBinDiff[NUM_BARKS];
+//    float halfWaveBin[NUM_BARKS];
+//    //float scale = 0.5;
+//    
+//    vDSP_vsub(bark->prevBarkBins, 1, bark->barkBins, 1, bark->prevBarkBins, 1, NUM_BARKS);
+//    
+//    // halfwave portion ----
+//    
+//    // abs
+//    vDSP_vabs(bark->prevBarkBins, 1, absBinDiff, 1, NUM_BARKS);
+//    // sum
+//    vDSP_vadd(bark->prevBarkBins, 1, absBinDiff, 1, halfWaveBin, 1, NUM_BARKS);
+//    // divide by 2
+//    //vDSP_vsmul(halfWaveBin, 1, &scale, halfWaveBin, 1, NUM_BARKS);
+//    
+//    // square
+//    vDSP_vsq(halfWaveBin, 1, bark->prevBarkBins, 1, NUM_BARKS);
+//    
+//    
+//    vDSP_sve(bark->prevBarkBins, 1, &pp->bark_difference, NUM_BARKS);
+//}
 
 void applyMask(PEAK_PICKER* pp){
     

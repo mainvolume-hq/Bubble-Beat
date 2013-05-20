@@ -27,6 +27,8 @@
         position = GLKVector2Make(0,0);
         scale = GLKVector2Make(1.0, 1.0);
         depth = 0.0;
+        
+        popUpdateCounter = 0;
 
     }
     return self;
@@ -59,6 +61,32 @@
 {
     return color;
 }
+
+-(void)setRadius:(float)_radius
+{
+    if (burst)
+    {
+        if (popUpdateCounter < POP_THRESHOLD)
+        {
+            [super setRadius:_radius * 0.8];
+            popUpdateCounter++;
+        }
+        else
+        {
+            [super setRadius:_radius * 1.1];
+        }
+    }
+    else
+    {
+        [super setRadius:_radius];
+    }
+}
+
+-(float)radius
+{
+    return super.radius;
+}
+
 
 -(void)setBurst:(BOOL)_burst
 {

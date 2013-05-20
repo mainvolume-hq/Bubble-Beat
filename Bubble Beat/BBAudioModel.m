@@ -87,6 +87,8 @@ static OSStatus renderCallback(void *inRefCon,
 //        float mono = (model->left[i] + model->right[i]) / numInputChannels;               // I think one of these channels will just have 0.0s if it's set to mic input
 //        mono = outerEarFilter(mono);
 //        model->monoAnalysisBuffer[sizeDiff + i] = middleEarFilter(mono);
+//        
+////        model->monoAnalysisBuffer[sizeDiff + i] = (model->left[i] + model->right[i]) / numInputChannels;
 //    }
     
     // sum channels

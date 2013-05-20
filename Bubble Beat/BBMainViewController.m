@@ -18,10 +18,10 @@
 //#define minUpperThreshold 0.001
 
 #define defaultUpperThresholdScale 0.3 //make sure this is the same as the one in peak_picker.c
-#define maxBubbleScale 2
-#define minBubbleScale 0.01
-#define maxUpperThreshold 1.0
-#define minUpperThreshold 0.05
+#define maxBubbleScale 3
+#define minBubbleScale 0.05
+#define maxUpperThreshold 0.5
+#define minUpperThreshold 0.001
 
 @interface BBMainViewController () {
     float bubbleSizeScale;
@@ -172,8 +172,8 @@
 -(void)setUpSliders{
     
     //-- Default and max/min values --//
-    //bubbleSizeScale = 1.2;
-    bubbleSizeScale = 0.8;
+    bubbleSizeScale = 1.2;
+    //bubbleSizeScale = 0.8;
     
     //-- Layout -//
     float upperLowerPadding = 50; //pixels either side
@@ -231,6 +231,8 @@
     [[NSNotificationCenter defaultCenter]
      postNotificationName:@"upper_threshold"
      object:newUpperThresholdScale];
+    
+    NSLog(@"Slider: %f, Threshold: %f", tempSlider.value, upperThreshold);
     
 }
 

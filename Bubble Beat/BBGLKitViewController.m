@@ -48,7 +48,7 @@
     view.drawableMultisample = GLKViewDrawableMultisample4X;
     view.multipleTouchEnabled = YES;
     
-    alphaDecay = 0.015;
+    alphaDecay = 0.008;
     radiusSwell = 1.01;
     bubbles = [[NSMutableArray alloc]init];
     removeBubbleArray = [[NSMutableArray alloc] init];
