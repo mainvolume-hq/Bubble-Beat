@@ -172,7 +172,7 @@
 -(void)setUpSliders{
     
     //-- Default and max/min values --//
-    bubbleSizeScale = 1.2;
+    bubbleSizeScale = 1.5;
     //bubbleSizeScale = 0.8;
     
     //-- Layout -//
@@ -286,7 +286,9 @@
 -(void)onsetDetected: (NSNotification *) notification
 {
     float salience = [[[notification userInfo]valueForKey:@"salience"]floatValue];    
-    float size = powf(((salience * bubbleSizeScale) + 2), 3.f);
+    //float size = powf(((salience * bubbleSizeScale) + 2), 2.0);
+    float size = powf(salience, bubbleSizeScale) * 15 + 5;
+
     
     float transparency = ((salience-1) - upperThreshold)*3;
     

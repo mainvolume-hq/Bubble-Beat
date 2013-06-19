@@ -15,26 +15,7 @@
 
 @interface BBOptionsScrollViewController : UIViewController
 {
-
-//    MPMediaPickerController* mediaPicker;
-//    NSURL* previousSong;
-//    NSURL* currentSong;
-//    NSOperationQueue* queue;
-    
     BBMediaPlayer* mediaPlayer;
-    
-//    float* mediaBuffer;                     // audio buffer for the iTunes song
-//    int mediaBufferSize;
-//    int writePosition;
-//    int readPosition;
-//    
-//    BOOL playing;                           // YES = audio currently playing, NO = not playing
-//    BOOL initialRead;                       //
-//    BOOL loadingInBackground;               // YES = loading audio file in background, NO = yeah you get it
-//    BOOL importFlag;                        // YES = currently importing, NO = not importing
-//    BOOL earlyFinish;
-//    BOOL restart;
-//    BOOL fileSelected;
     
     BOOL playButtonState;                   // YES = Playing, NO = Paused
     BOOL firstLoad;
@@ -52,8 +33,5 @@
 - (IBAction)valueChanged:(UISegmentedControl *)sender;
 - (IBAction)transportButtonPressed:(UIButton *)sender;
 - (IBAction)musicLibraryPressed:(UIButton *)sender;
-
-//- (void)mediaPicker:(MPMediaPickerController *)mediaPicker didPickMediaItems:(MPMediaItemCollection *)mediaItemCollection;
-//- (void)mediaPickerDidCancel:(MPMediaPickerController *)mediaPicker;
 
 @end
