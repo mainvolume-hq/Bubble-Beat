@@ -232,7 +232,7 @@
      postNotificationName:@"upper_threshold"
      object:newUpperThresholdScale];
     
-    NSLog(@"Slider: %f, Threshold: %f", tempSlider.value, upperThreshold);
+    //NSLog(@"Slider: %f, Threshold: %f", tempSlider.value, upperThreshold);
     
 }
 

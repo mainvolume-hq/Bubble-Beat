@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		420446AE173C0CD400771DE3 /* Bubble.m in Sources */ = {isa = PBXBuildFile; fileRef = 420446AD173C0CD400771DE3 /* Bubble.m */; };
+		4256DC171741200700EF113A /* BBMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4256DC161741200700EF113A /* BBMediaPlayer.m */; };
 		426DD69A166EB60E009788A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426DD699166EB60E009788A8 /* UIKit.framework */; };
 		426DD69C166EB60E009788A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426DD69B166EB60E009788A8 /* Foundation.framework */; };
 		426DD69E166EB60E009788A8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 426DD69D166EB60E009788A8 /* CoreGraphics.framework */; };
@@ -63,6 +64,8 @@
 /* Begin PBXFileReference section */
 		420446AC173C0CD400771DE3 /* Bubble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bubble.h; sourceTree = "<group>"; };
 		420446AD173C0CD400771DE3 /* Bubble.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bubble.m; sourceTree = "<group>"; };
+		4256DC151741200700EF113A /* BBMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBMediaPlayer.h; sourceTree = "<group>"; };
+		4256DC161741200700EF113A /* BBMediaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBMediaPlayer.m; sourceTree = "<group>"; };
 		426DD695166EB60E009788A8 /* Bubble Beat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bubble Beat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		426DD699166EB60E009788A8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		426DD69B166EB60E009788A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -209,6 +212,8 @@
 				602A4AE416A3D8A400BC4043 /* MySlider.m */,
 				420446AC173C0CD400771DE3 /* Bubble.h */,
 				420446AD173C0CD400771DE3 /* Bubble.m */,
+				4256DC151741200700EF113A /* BBMediaPlayer.h */,
+				4256DC161741200700EF113A /* BBMediaPlayer.m */,
 				602A4AEA16A3D8F900BC4043 /* Graphics */,
 				60BBB6DF169DE9F800E8E155 /* Shapes */,
 				426DD6A0166EB60E009788A8 /* Supporting Files */,
@@ -385,6 +390,7 @@
 				600740E816A7139100D09911 /* peak_picker.c in Sources */,
 				42B3556C16A9D6A10039D1FF /* BBOptionsScrollViewController.m in Sources */,
 				420446AE173C0CD400771DE3 /* Bubble.m in Sources */,
+				4256DC171741200700EF113A /* BBMediaPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
