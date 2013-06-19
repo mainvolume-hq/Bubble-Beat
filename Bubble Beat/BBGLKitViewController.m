@@ -98,9 +98,9 @@
 {    
     for(int i = 0; i < [bubbles count]; i++)
     {
-        TREEllipse *bubble = [bubbles objectAtIndex:i];
+        Bubble *bubble = [bubbles objectAtIndex:i];
         
-        if (bubble.position.x <= (0.0 - bubble.radius) || bubble.color.a < 0.0)
+        if (bubble.position.x <= (0.0 - bubble.radius) || bubble.color.a <= 0.0 || bubble.popped == YES)
         {
             [removeBubbleArray addObject:bubble];
         }
@@ -113,7 +113,7 @@
         }
     }
     
-    for (TREEllipse* index in removeBubbleArray)
+    for (Bubble* index in removeBubbleArray)
     {
         [bubbles removeObject:index];
     }

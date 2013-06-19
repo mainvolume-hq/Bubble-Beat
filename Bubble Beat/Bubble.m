@@ -12,6 +12,7 @@
 
 @synthesize burst;
 @synthesize burstAlpha;
+@synthesize popped;
 
 -(id)initWithColor:(GLKVector4)initColor
 {
@@ -19,6 +20,7 @@
     if (self)
     {
         burst = NO;
+        popped = NO;
         burstAlpha = 1.0;
         
         [self setUseConstantColor:NO];
@@ -69,12 +71,19 @@
         if (popUpdateCounter < POP_THRESHOLD)
         {
             [super setRadius:_radius * 0.8];
-            popUpdateCounter++;
         }
         else
         {
             [super setRadius:_radius * 1.1];
         }
+        
+        popUpdateCounter++;
+        
+        if (popUpdateCounter > POP_THRESHOLD + 2)
+        {
+            popped = YES;
+        }
+        
     }
     else
     {
@@ -104,8 +113,20 @@
 
 - (BOOL)isInside:(GLKVector2)press
 {
+    // TODO: only check x?
+    GLKVector2 canonicalPosition = self.position;
+    if (self.position.x <= 0.0)
+    {
+        float diffFromThresh = 0.0 - canonicalPosition.x;
+        canonicalPosition.x = self.position.x + diffFromThresh;
+        //press.x = press.x + diffFromThresh;
+    }
+    else
+    {
+        canonicalPosition = self.position;
+    }
     
-    GLKVector2 difference = GLKVector2Subtract(self.position, press);
+    GLKVector2 difference = GLKVector2Subtract(canonicalPosition, press);
     float distance = sqrt(GLKVector2DotProduct(difference, difference));
     
     if (distance < radius + 2.0)

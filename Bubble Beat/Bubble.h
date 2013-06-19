@@ -19,7 +19,8 @@
     int popUpdateCounter;               // this is a counter that's used to determine if the radius should decay or increase
 }
 
-@property BOOL burst;
+@property BOOL burst;                   // go through bursting animation
+@property BOOL popped;                  // done bursting
 @property float burstAlpha;
 
 -(id)initWithColor:(GLKVector4)initColor;
