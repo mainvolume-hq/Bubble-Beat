@@ -138,7 +138,7 @@
                     [BBAudioModel sharedAudioModel].canReadMusicFile = NO;
                     while (playing == NO && fileFinished == NO)
                     {
-                        usleep(100);            // TODO: This is the best option I can think of at the moment, maybe not ideal
+                        usleep(1000);            // TODO: This is the best option I can think of at the moment, maybe not ideal
                     }
                     
                 }

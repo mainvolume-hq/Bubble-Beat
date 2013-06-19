@@ -19,7 +19,7 @@ PEAK_PICKER* newPeakPicker()
     
     peakPicker-> flag =                 0;
     peakPicker-> debounce_iterator =    0;
-    peakPicker-> debounce_threshold =   0;
+    peakPicker-> debounce_threshold =   5;
     
 //    peakPicker-> u_threshold =          0.18;
     peakPicker->u_threshold =           0.3;
@@ -27,7 +27,7 @@ PEAK_PICKER* newPeakPicker()
     peakPicker-> u_threshold_scale =    2;
     peakPicker-> l_threshold_scale =    2;
     
-    peakPicker-> cof_threshold =        10;
+    peakPicker-> cof_threshold =        15;
     peakPicker-> cof_iterator =         0;
     peakPicker-> cof_flag =             0;
     peakPicker-> maskingDecay =         0.7;

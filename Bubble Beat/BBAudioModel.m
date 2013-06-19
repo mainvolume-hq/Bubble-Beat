@@ -163,7 +163,49 @@ static OSStatus renderCallback(void *inRefCon,
     return noErr;
 }
 
+#pragma mark - Audio Session Property Listener -
+
+void propertyListener(void *inClientData,
+                  AudioSessionPropertyID inID,
+                  UInt32                 inDataSize,
+                  const void *           inData)
+{
+    //BBAudioModel* model = (__bridge BBAudioModel*)inClientData;
+    if (inID == kAudioSessionProperty_AudioRouteChange)
+    {
+        BOOL check = CFDictionaryContainsKey(inData, kAudioSession_RouteChangeKey_Reason);
+        if (check)
+        {
+            //CFStringRef reason = CFDictionaryGetValue(inData, kAudioSession_RouteChangeKey_Reason);
+            //const char* str = CFStringGetCStringPtr(reason, kCFStringEncodingMacRoman);
+            //NSLog(@"Route Changed Reason: %@", reason);
+            //printf(str);
+            
+            CFDictionaryRef currentRouting = CFDictionaryGetValue(inData, kAudioSession_AudioRouteChangeKey_CurrentRouteDescription);
+            CFArrayRef outputs = CFDictionaryGetValue(currentRouting, kAudioSession_AudioRouteKey_Outputs);
+            CFDictionaryRef outputTypeDict = CFArrayGetValueAtIndex(outputs, 0);     // TODO: this assumes a lot
+            
+            CFStringRef outputType = CFDictionaryGetValue(outputTypeDict, kAudioSession_AudioRouteKey_Type);
+            //NSLog(@"Current output type: %@", outputType);
+            
+            if (CFStringCompare(outputType, kAudioSessionOutputRoute_Headphones, 0) == kCFCompareEqualTo)
+            {
+                UInt32 speaker = kAudioSessionOverrideAudioRoute_None;
+                AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(speaker), &speaker);
+            }
+            else if (CFStringCompare(outputType, kAudioSessionOutputRoute_BuiltInReceiver, 0) == kCFCompareEqualTo)
+            {
+                UInt32 speaker = kAudioSessionOverrideAudioRoute_Speaker;
+                AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(speaker), &speaker);
+            }
+            
+        }
+    }
+    
+}
+
 #pragma mark - Ear Filtering Functions -
+    
 static float outerEarFilter(float input)
 {
     //a(1)*y(n) = b(1)*x(n) + b(2)*x(n-1) + ... + b(nb+1)*x(n-nb) - a(2)*y(n-1) - ... - a(na+1)*y(n-na)
@@ -341,13 +383,18 @@ static float middleEarFilter(float input)
     OSStatus status;
     Float32 bufferDuration = (blockSize + 0.5) / sampleRate;           // add 0.5 to blockSize, need to so bufferDuration is correct value
     UInt32 category = kAudioSessionCategory_PlayAndRecord;
+    //UInt32 category = kAudioSessionCategory_SoloAmbientSound;
     UInt32 speaker = kAudioSessionOverrideAudioRoute_Speaker;
+    //UInt32 speaker = kAudioSessionOverrideAudioRoute_None;
     
     status = AudioSessionInitialize(NULL, NULL, NULL, (__bridge void *)self);
     status = AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(category), &category);
     status = AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(speaker), &speaker);
+    
     status = AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareSampleRate, sizeof(sampleRate), &sampleRate);
     status = AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(bufferDuration), &bufferDuration);
+    
+    status = AudioSessionAddPropertyListener(kAudioSessionProperty_AudioRouteChange, propertyListener, (__bridge void *)self);
     
     // TODO: Check where this should be set-able
     status = AudioSessionSetActive(true);
