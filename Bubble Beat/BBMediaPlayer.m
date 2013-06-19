@@ -146,6 +146,8 @@
                 if (restartSong)
                 {
                     [BBAudioModel sharedAudioModel].canReadMusicFile = NO;
+                    [self zeroMediaBuffer];
+                    [[BBAudioModel sharedAudioModel] clearMusicLibraryBuffer];
                     initialRead = NO;
                     
                     //a lot of repeat to code to restart: should really encapsulate in a class

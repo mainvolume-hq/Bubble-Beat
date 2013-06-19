@@ -91,8 +91,8 @@
 - (void)applicationClosing
 {
     [playPauseButton setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
+    [mediaPlayer reset];
     [mediaPlayer pause];            // Ideally, just pause (might need to reset also, TODO: why?)
-    //[mediaPlayer reset];
 }
 
 // Notification center callback for when mediapicker finishes

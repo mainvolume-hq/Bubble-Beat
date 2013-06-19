@@ -450,7 +450,7 @@ static float middleEarFilter(float input)
 
 - (void)clearMusicLibraryBuffer
 {
-    memset(musicLibraryBuffer, 0.0, NUM_SECONDS * sampleRate);
+    memset(musicLibraryBuffer, 0.0, sizeof(float) * musicLibraryBufferSize);
 }
 
 - (void) setUpperThreshold:(NSNotification *) notification
