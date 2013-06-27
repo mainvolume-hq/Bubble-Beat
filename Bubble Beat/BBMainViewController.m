@@ -17,11 +17,15 @@
 //#define maxUpperThreshold 0.3
 //#define minUpperThreshold 0.001
 
+// Threshold contstants
 #define defaultUpperThresholdScale 0.3 //make sure this is the same as the one in peak_picker.c
+#define maxUpperThreshold 0.75
+#define minUpperThreshold 0.0001
+
+// Bubble scale constants
 #define maxBubbleScale 3
 #define minBubbleScale 0.05
-#define maxUpperThreshold 0.5
-#define minUpperThreshold 0.001
+#define bubbleSizeScaleDefault 1.5
 
 @interface BBMainViewController () {
     float bubbleSizeScale;
@@ -172,8 +176,7 @@
 -(void)setUpSliders{
     
     //-- Default and max/min values --//
-    bubbleSizeScale = 1.5;
-    //bubbleSizeScale = 0.8;
+    bubbleSizeScale = bubbleSizeScaleDefault;
     
     //-- Layout -//
     float upperLowerPadding = 50; //pixels either side
