@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "TREEllipse.h"
 
-#define POP_THRESHOLD 1
+#define POP_THRESHOLD 2
 
 @interface Bubble : TREEllipse
 {
